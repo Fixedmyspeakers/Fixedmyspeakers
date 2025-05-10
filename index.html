@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phone Speaker Cleaner Tool</title>
+  <style> 
+    :root {
+      --primary: #007bff;
+      --success: #28a745;
+      --danger: #dc3545;
+      --bg: #ffffff;
+      --text: #222;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #eee;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background: linear-gradient(to right, #007bff, #6610f2);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    select {
+      margin-top: 10px;
+      padding: 5px;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      background: white;
+      color: #25D366;
+      font-weight: bold;
+      padding: 10px 16px;
+      margin-top: 15px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .whatsapp-btn img {
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    .whatsapp-btn:hover {
+      background: #e6e6e6;
+    }
+
+    main {
+      padding: 30px 20px;
+      max-width: 960px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      margin: 10px 5px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .start { background-color: var(--success); color: white; }
+    .stop { background-color: var(--danger); color: white; }
+    .mode, .share { background-color: var(--primary); color: white; }
+
+    input[type="range"] {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100px;
+      background: #222;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      background-color: #f1f1f1;
+      color: #444;
+    }
+
+    body.dark footer {
+      background: #1c1c1c;
+      color: #bbb;
+    }
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: white;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      flex-direction: column;
+    }
+
+    #loader::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 4px solid #fff;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      margin-top: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .btn {
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+      }
+    }
+
+    .animate {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+
+    .animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Floating WhatsApp */
+    .float-whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #25D366;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .float-whatsapp img {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Scroll to Top Button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 999;
+      display: none;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 22px;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: opacity 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+
+  <meta charset="UTF-8">
+  <title>Fancy Right Toggle Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+    }
+ 
+    /* Toggle Button */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 1002;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+ 
+    .menu-toggle span {
+      display: block;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+ 
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+ 
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+ 
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+ 
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 80px 20px;
+      transition: right 0.5s ease;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+    }
+ 
+    .side-menu.open {
+      right: 0;
+    }
+ 
+    .side-menu a {
+      color: #fff;
+      text-decoration: none;
+      margin: 20px 0;
+      font-size: 20px;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+ 
+    .side-menu.open a {
+      opacity: 1;
+      transform: translateX(0);
+    }
+ 
+    .side-menu a:hover {
+      color: #00e6e6;
+    }
+ 
+    .side-menu a i {
+      min-width: 20px;
+    }
+  </style>
+</head>
+<body>
+ 
+<!-- Toggle Button -->
+<div class="menu-toggle" id="menuToggle">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+ 
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <a href="#"><i class="fas fa-home"></i> Home</a>
+  <a href="#"><i class="fas fa-user"></i> About</a>
+  <a href="#"><i class="fas fa-briefcase"></i> Projects</a>
+  <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+</div>
+ 
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sideMenu = document.getElementById('sideMenu');
+ 
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    sideMenu.classList.toggle('open');
+  });
+ 
+  // Optional: close menu on outside click
+  window.addEventListener('click', function (e) {
+    if (!sideMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+      sideMenu.classList.remove('open');
+      menuToggle.classList.remove('active');
+    }
+  });
+</script>
+
+
+  <div id="loader">Loading Tool...</div>
+
+  <header>
+    <h1 id="headerTitle">🔊 Phone Speaker Cleaner Tool</h1>
+    <p id="headerDescription">Clean and eject water/dust from your phone speaker using sound frequency!</p>
+    
+    <select id="languageSelect" onchange="changeLanguage(event)">
+      <option value="en">English</option>
+      <option value="ne">Nepali</option>
+      <option value="hi">Hindi</option>
+    </select>
+
+    <a href="https://wa.me/+979827801575" target="_blank" class="whatsapp-btn">
+      <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
+      <span id="contactBtn">Contact via WhatsApp</span>
+    </a>
+  </header>
+
+  <main>
+    <section>
+      <h2 id="cleaningPanelTitle">Cleaning Panel</h2>
+      <button class="btn mode" onclick="startCleaning(165)" id="waterEjectBtn">Water Eject</button>
+      <button class="btn mode" onclick="startCleaning(300)" id="dustCleanBtn">Dust Clean</button>
+      <button class="btn mode" onclick="startCleaning(parseInt(freqSlider.value))" id="customBtn">Custom</button>
+      <p id="frequencyLabel">🎚️ Frequency: <span id="freqLabel">440</span> Hz</p>
+      <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()">
+      <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
+      <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
+      <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
+      <button class="btn mode" onclick="toggleDarkMode()" id="darkModeBtn">🌙 Toggle Dark Mode</button>
+      <button class="btn share" onclick="shareTool()" id="shareBtn">📤 Share Tool</button>
+      
+    </section>
+
+   
+
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+ 
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+ 
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+ 
+    section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
+    }
+ 
+    section:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+ 
+    section:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+ 
+    h2 {
+      color: #005792;
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+ 
+    p, li {
+      font-size: 1rem;
+    }
+ 
+    ul {
+      padding-left: 1.2rem;
+    }
+ 
+    li {
+      margin-bottom: 0.5rem;
+    }
+ 
+    strong {
+      color: #333;
+    }
+ 
+    .blog-item {
+      margin-bottom: 1.5rem;
+    }
+ 
+    .blog-item h3 {
+      margin: 0 0 0.3rem 0;
+      font-size: 1.1rem;
+      color: #0077b6;
+    }
+ 
+    .blog-item p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+ 
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+ 
+    @media screen and (max-width: 600px) {
+      h2 {
+        font-size: 1.25rem;
+      }
+ 
+      p, li {
+        font-size: 0.95rem;
+      }
+ 
+      section {
+        padding: 1.2rem;
+      }
+ 
+      .blog-item h3 {
+        font-size: 1rem;
+      }
+ 
+      .blog-item p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+ 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+ 
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+ 
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+ 
+    section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
+    }
+ 
+    section:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+ 
+    section:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+ 
+    h2 {
+      color: #005792;
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+ 
+    p, li {
+      font-size: 1rem;
+    }
+ 
+    ul {
+      padding-left: 1.2rem;
+    }
+ 
+    li {
+      margin-bottom: 0.5rem;
+    }
+ 
+    strong {
+      color: #333;
+    }
+ 
+    .blog-item {
+      margin-bottom: 1.5rem;
+    }
+ 
+    .blog-item h3 {
+      margin: 0 0 0.3rem 0;
+      font-size: 1.1rem;
+      color: #0077b6;
+    }
+ 
+    .blog-item p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+ 
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+ 
+    @media screen and (max-width: 600px) {
+      h2 {
+        font-size: 1.25rem;
+      }
+ 
+      p, li {
+        font-size: 0.95rem;
+      }
+ 
+      section {
+        padding: 1.2rem;
+      }
+ 
+      .blog-item h3 {
+        font-size: 1rem;
+      }
+ 
+      .blog-item p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+ 
+<main>
+ 
+  <section class="animate" aria-labelledby="featuresTitle">
+    <h2 id="featuresTitle">Features ⭐</h2>
+    <ul>
+      <li>🔊 High-frequency sound cleaning for dust and water removal</li>
+      <li>📱 Works on all smartphones, tablets, and speakers</li>
+      <li>⚙️ Simple and intuitive interface — no app download required</li>
+      <li>🌐 Fully browser-based, no data is sent anywhere</li>
+      <li>🧠 Smart cleaning tips and usage guide included</li>
+      <li>🆓 100% free to use with no hidden costs</li>
+    </ul>
+  </section>
+ 
+  <section class="animate" aria-labelledby="howToUseTitle">
+    <h2 id="howToUseTitle">How to Use 📱</h2>
+    <p id="howToUseDescription">
+      Follow these simple steps to clean your speaker using sound vibrations:
+      <ul>
+        <li>1️⃣ Turn your volume up to the highest level.</li>
+        <li>2️⃣ Place your phone face down on a flat, clean surface.</li>
+        <li>3️⃣ Tap the "Start Cleaning" button (if present) or play the sound manually.</li>
+        <li>4️⃣ Let it run for 1–2 minutes. Repeat if needed.</li>
+        <li>5️⃣ Wipe the speaker grill gently with a soft cloth 🧻.</li>
+      </ul>
+      Works best for water-clogged and dust-blocked speakers. Avoid using in extremely noisy or wet environments.
+    </p>
+  </section>
+ 
+  <section class="animate" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle">About the Tool 🔊</h2>
+    <p id="aboutDescription">
+      This tool helps clean your device’s speakers when blocked by water 💦 or dust 🧼 by playing a specially crafted sound frequency.
+      The vibrations created can push out moisture and dirt from the tiny speaker holes.
+      It’s safe, effective, and works completely in-browser — no downloads required!
+    </p>
+  </section>
+ 
+  <section class="animate" aria-labelledby="termsTitle">
+    <h2 id="termsTitle">Terms & Conditions ⚠️</h2>
+    <p id="termsDescription">
+      This tool is free to use and provided as-is. Results can vary depending on:
+      <ul>
+        <li>Your device type and speaker condition</li>
+        <li>Amount of debris or water trapped inside</li>
+        <li>Environmental noise and surface stability</li>
+      </ul>
+      Please use responsibly. The creator is not liable for any accidental damage due to misuse.
+    </p>
+  </section>
+ 
+  <section class="animate" aria-labelledby="privacyTitle">
+    <h2 id="privacyTitle">Privacy Policy 🔒</h2>
+    <p id="privacyDescription">
+      This tool values your privacy. Here's what you need to know:
+      <ul>
+        <li>No data is collected or sent to servers.</li>
+        <li>All operations happen within your browser only.</li>
+        <li>We do not track, store, or access any personal information.</li>
+      </ul>
+      It may temporarily use your speakers and microphone for audio output — but nothing is stored or recorded.
+    </p>
+  </section>
+ 
+  <section class="animate" aria-labelledby="designerTitle">
+    <h2 id="designerTitle">Designed by 👨‍💻</h2>
+    <p id="designerDescription">
+      Created with care by <strong>Bishal Mishra</strong>, a tech enthusiast passionate about building helpful, responsive tools for everyday use.
+      <br><br>
+      Feel free to reach out via WhatsApp (link above) if you have suggestions or feedback. Thanks for using the tool!
+    </p>
+  </section>
+ 
+ 
+ 
+  <section class="animate" aria-labelledby="blogsTitle">
+    <h2 id="blogsTitle">Blogs & News 📰</h2>
+    <div class="blog-item">
+      <h3>🔊 The Science Behind Speaker Cleaning</h3>
+      <p>Learn how high-frequency sound waves can dislodge water and dust particles from speaker grills using acoustic vibration technology.</p>
+    </div>
+    <div class="blog-item">
+      <h3>📱 3 Simple Tricks to Maintain Clean Speakers</h3>
+      <p>Tips for keeping your phone's audio quality crisp and clear by preventing buildup of grime and moisture.</p>
+    </div>
+    <div class="blog-item">
+      <h3>🆕 Update: New Cleaning Mode Added!</h3>
+      <p>We’ve introduced a new frequency pulse mode that enhances cleaning effectiveness on newer phone models.</p>
+    </div>
+  </section>
+ 
+</main>
+
+
+
+
+
+<style>
+  /* Enhanced FAQ Styles */
+  #faqTitle {
+    margin-top: 60px;
+    font-size: 28px;
+    color: #222;
+    text-align: center;
+    border-bottom: 2px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+  }
+
+  .faq-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 15px;
+  }
+
+  .faq-item {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-left: 5px solid #00bcd4;
+    background: #fff;
+  }
+
+  .faq-question {
+    background: #f9f9f9;
+    padding: 18px 20px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .faq-question:hover {
+    background: #e0f7fa;
+  }
+
+  .faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    font-size: 22px;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item.active .faq-question::after {
+    content: '-';
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 15px 20px;
+    font-size: 15px;
+    color: #444;
+    display: none;
+    background: #fcfcfc;
+    border-top: 1px solid #eee;
+    line-height: 1.6;
+  }
+
+  .faq-item.active .faq-answer {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {opacity: 0; transform: translateY(-5px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+
+<section class="animate">
+  <h2 id="faqTitle">Frequently Asked Questions (FAQ)</h2>
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <div class="faq-question">1. How does this speaker cleaner tool work?</div>
+      <div class="faq-answer">The tool plays specific audio frequencies that vibrate the speaker, helping to eject water and dust trapped inside.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">2. Is it safe to use on any smartphone?</div>
+      <div class="faq-answer">Yes, it's safe for most devices. Just make sure the volume isn't excessively high and the device is placed on a flat surface.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">3. How many times should I use this tool?</div>
+      <div class="faq-answer">Run it 2–3 times, or until the speaker sounds clearer. You can use it as needed.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">4. Can it fix physically damaged speakers?</div>
+      <div class="faq-answer">No. It can only help with moisture or dust buildup, not with broken or internally damaged components.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">5. Do I need to download or install anything?</div>
+      <div class="faq-answer">Not at all! Everything runs inside your browser, and no installation is needed.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">6. Is my data private while using this tool?</div>
+      <div class="faq-answer">Yes. This tool runs completely offline. It doesn't collect, store, or transmit any personal data.</div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach((question) => {
+    question.addEventListener('click', () => {
+      const item = question.parentElement;
+      item.classList.toggle('active');
+    });
+  });
+</script>
+
+  <footer>&copy; 2025 Safil | All rights reserved.</footer>
+<script>
+    let audioCtx, oscillator, gainNode, countdownInterval;
+    let countdown = 30;
+
+    function startCleaning() {
+      stopSound(); // ensure previous sound is stopped
+      const freq = parseInt(document.getElementById('freqSlider').value);
+
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      oscillator = audioCtx.createOscillator();
+      gainNode = audioCtx.createGain();
+
+      oscillator.type = 'square'; // more effective for cleaning
+      oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+
+      // Start countdown
+      countdown = 30;
+      document.getElementById('countdown').textContent = countdown;
+      countdownInterval = setInterval(() => {
+        countdown--;
+        document.getElementById('countdown').textContent = countdown;
+        if (countdown <= 0) stopSound();
+      }, 1000);
+    }
+
+    function stopSound() {
+      if (oscillator) {
+        try {
+          oscillator.stop();
+        } catch (e) {}
+        oscillator.disconnect();
+        oscillator = null;
+      }
+
+      if (audioCtx) {
+        try {
+          audioCtx.close();
+        } catch (e) {}
+        audioCtx = null;
+      }
+
+      clearInterval(countdownInterval);
+      document.getElementById('countdown').textContent = 0;
+    }
+
+    function updateFrequencyLabel() {
+      const freq = document.getElementById('freqSlider').value;
+      document.getElementById('freqLabel').textContent = freq;
+    }
+  </script>
+
+   <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">↑</button>
+
+  <audio id="click-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
+                                                                                          
+  <script>
+    const translations = {
+      en: {                                                                                                                                  
+        headerTitle: "🔊 Phone Speaker Cleaner Tool",
+        headerDescription: "Clean and eject water/dust from your phone speaker using sound frequency!",
+        cleaningPanelTitle: "Cleaning Panel",
+        waterEjectBtn: "Water Eject",
+        dustCleanBtn: "Dust Clean",
+        customBtn: "Custom",
+        frequencyLabel: "🎚️ Frequency: ",
+        timerLabel: "🕒 Timer: ",
+        startBtn: "▶️ Start",
+        stopBtn: "⏹️ Stop",
+        darkModeBtn: "🌙 Toggle Dark Mode",
+        shareBtn: "📤 Share Tool",
+        featuresTitle: "Features",
+        feature1: "Removes water & dust using vibration",
+        feature2: "Custom & preset frequency options",
+        feature3: "Real-time visual audio display",
+        feature4: "Dark mode support",
+        feature5: "One-click sharing",
+        feature6: "Mobile & desktop responsive",
+        howToUseTitle: "How to Use",
+        step1: "Choose a cleaning mode or custom frequency.",
+        step2: "Tap \"Start\" and point the speaker down.",
+        step3: "Let it run for 30 seconds.",
+        step4: "Repeat if needed.",
+        aboutTitle: "About",
+        aboutDescription: "This tool helps clean phone speakers clogged with water or dust by generating powerful audio frequencies. It works best when the phone is placed face down on a flat surface. The sound frequencies vibrate and push the debris out of the speaker grill. Ideal for smartphones, tablets, and any device with speakers affected by moisture or dirt buildup.",
+        termsTitle: "Terms & Conditions",
+        termsDescription: "This tool is provided as-is. Results may vary based on device model, speaker condition, and other factors. Use responsibly. We are not liable for any damage caused due to misuse. Please ensure the phone is placed securely while using the tool and avoid exposure to extreme conditions or liquids.",
+        privacyTitle: "Privacy Policy",
+        privacyDescription: "This tool does not collect or store any personal data. No data is transmitted to any server. All actions happen locally in your browser. The tool may require access to your device's speakers and microphone, but it does not store any information from your device. You can safely use this tool without worrying about data privacy.",
+        designerTitle: "Designed by",
+        designerDescription: "This tool was designed by <strong>Bishal Mishra</strong>. He specializes in creating user-friendly and responsive tools to improve the smartphone experience. If you have any feedback or suggestions, feel free to reach out through the WhatsApp link above."
+      },
+      ne: {
+        headerTitle: "🔊 फोन स्पीकर क्लिनर उपकरण",
+        headerDescription: "ध्वनि आवृत्तिको प्रयोग गरेर तपाईंको फोन स्पीकरबाट पानी/धूलो सफा र बाहिर निकाल्नुहोस्!",
+        cleaningPanelTitle: "सफा प्यानल",
+        waterEjectBtn: "पानी बाहिर निकाल्नुहोस्",
+        dustCleanBtn: "धूलो सफा गर्नुहोस्",
+        customBtn: "कस्टम",
+        frequencyLabel: "🎚️ आवृत्ति: ",
+        timerLabel: "🕒 समय: ",
+        startBtn: "▶️ सुरु गर्नुहोस्",
+        stopBtn: "⏹️ रोक्नुहोस्",
+        darkModeBtn: "🌙 डार्क मोड टगल गर्नुहोस्",
+        shareBtn: "📤 उपकरण साझा गर्नुहोस्",
+        featuresTitle: "विशेषताहरू",
+        feature1: "कम्पनको मद्दतले पानी र धूलो हटाउँछ",
+        feature2: "कस्टम र प्रीसेट आवृत्ति विकल्पहरू",
+        feature3: "वास्तविक समयमा ध्वनि प्रदर्शन",
+        feature4: "डार्क मोड समर्थन",
+        feature5: "एक क्लिक साझा गर्नुहोस्",
+        feature6: "मोबाइल र डेस्कटपमा उत्तरदायी",
+        howToUseTitle: "कसरी प्रयोग गर्ने",
+        step1: "सफा मोड वा कस्टम आवृत्ति चयन गर्नुहोस्।",
+        step2: "\"सुरु गर्नुहोस्\" थिच्नुहोस् र स्पीकर तल फर्काउनुहोस्।",
+        step3: "३० सेकेन्डको लागि यसलाई चल्न दिनुहोस्।",
+        step4: "आवश्यक परेमा पुनः प्रयास गर्नुहोस्।",
+        aboutTitle: "बारेमा",
+        aboutDescription: "यो उपकरण फोन स्पीकरबाट पानी र धूलो सफा गर्न मद्दत गर्दछ, शक्तिशाली ध्वनि आवृत्तिहरू उत्पन्न गरेर। यो फोनलाई समतल सतहमा अनुहार तल राख्दा सबैभन्दा राम्रो काम गर्दछ। ध्वनि आवृत्तिहरूले कम्पन गर्दछ र स्पीकर ग्रिलबाट मलबा बाहिर धकेल्दछन्। स्मार्टफोन, ट्याब्लेट र कुनै पनि उपकरणको लागि आदर्श, जसको स्पीकरहरू पानी वा धूलोले प्रभावित छन्।",
+        termsTitle: "नियम र शर्तहरू",
+        termsDescription: "यो उपकरण जस्तै छ त्यस्तै प्रदान गरिएको छ। परिणामहरू उपकरणको मोडेल, स्पीकरको अवस्थिति, र अन्य तत्वहरूमा आधारित भिन्न हुन सक्छ। जिम्मेवारीका साथ प्रयोग गर्नुहोस्। हामी कुनै पनि क्षतिको जिम्मेवारी लिँदैनौं। कृपया उपकरण प्रयोग गर्दा फोनलाई सुरक्षित रूपमा राख्नुहोस् र अत्यधिक अवस्थाहरू वा तरल पदार्थको सम्पर्कबाट बच्नुहोस्।",
+        privacyTitle: "गोपनीयता नीति",
+        privacyDescription: "यो उपकरण कुनै पनि व्यक्तिगत डेटा सङ्ग्रह या भण्डारण गर्दैन। कुनै पनि डेटा कुनै सर्भरमा प्रक्षिप्त हुँदैन। सबै क्रियाहरू तपाईंको ब्राउजरमा स्थानीय रूपमा हुन्छ। यो उपकरण तपाईंको उपकरणको स्पीकर र माइक्रोफोनको पहुँच आवश्यक हुन सक्छ, तर यसले तपाईंको उपकरणबाट कुनै जानकारी सङ्ग्रह गर्दैन। तपाईं सुरक्षित रूपमा यो उपकरण प्रयोग गर्न सक्नुहुन्छ बिना डेटा गोपनीयताबारे चिन्ता नगरी।",
+        designerTitle: "डिजाइनर द्वारा",
+        designerDescription: "यो उपकरण <strong>विशाल मिश्र</strong> द्वारा डिजाइन गरिएको हो। उनी स्मार्टफोन अनुभव सुधार गर्न प्रयोगकर्ता-अनुकूल र उत्तरदायी उपकरणहरू सिर्जना गर्न विशेषज्ञ छन्। यदि तपाईंलाई कुनै प्रतिक्रिया वा सल्लाह छ भने, माथिको व्हाट्सएप लिङ्क मार्फत हामीलाई सम्पर्क गर्न सक्नुहुन्छ।"
+      },
+      hi: {
+        headerTitle: "🔊 फोन स्पीकर क्लीनर टूल",
+        headerDescription: "ध्वनि आवृत्ति का उपयोग करके अपने फोन के स्पीकर से पानी/धूल को साफ और बाहर निकालें!",
+        cleaningPanelTitle: "साफ़ करने का पैनल",
+        waterEjectBtn: "पानी निकालें",
+        dustCleanBtn: "धूल साफ़ करें",
+        customBtn: "कस्टम",
+        frequencyLabel: "🎚️ आवृत्ति: ",
+        timerLabel: "🕒 समय: ",
+        startBtn: "▶️ शुरू करें",
+        stopBtn: "⏹️ बंद करें",
+        darkModeBtn: "🌙 डार्क मोड टॉगल करें",
+        shareBtn: "📤 टूल शेयर करें",
+        featuresTitle: "विशेषताएँ",
+        feature1: "कंपन के माध्यम से पानी और धूल हटाता है",
+        feature2: "कस्टम और प्रीसेट आवृत्ति विकल्प",
+        feature3: "रीयल-टाइम ध्वनि प्रदर्शनी",
+        feature4: "डार्क मोड समर्थन",
+        feature5: "एक-क्लिक साझा करना",
+        feature6: "मोबाइल और डेस्कटॉप उत्तरदायी",
+        howToUseTitle: "कैसे उपयोग करें",
+        step1: "साफ़ करने का मोड या कस्टम आवृत्ति चुनें।",
+        step2: "\"शुरू करें\" दबाएं और स्पीकर को नीचे की ओर रखें।",
+        step3: "इसे 30 सेकंड के लिए चलने दें।",
+        step4: "आवश्यक होने पर पुनः प्रयास करें।",
+        aboutTitle: "के बारे में",
+        aboutDescription: "यह उपकरण फोन के स्पीकर से पानी और धूल को साफ़ करने में मदद करता है, शक्तिशाली ध्वनि आवृत्तियों का उत्पादन करके। यह तब सबसे अच्छा काम करता है जब फोन को एक सपाट सतह पर चेहरा नीचे रखकर रखा जाता है। ध्वनि आवृत्तियाँ कंपन करती हैं और स्पीकर ग्रिल से मलबा बाहर निकालती हैं। स्मार्टफोन, टैबलेट और किसी भी उपकरण के लिए आदर्श है जो पानी या धूल के कारण प्रभावित हो।",
+        termsTitle: "नियम और शर्तें",
+        termsDescription: "यह उपकरण जैसी है वैसी प्रदान की जाती है। परिणाम उपकरण के मॉडल, स्पीकर की स्थिति, और अन्य कारकों पर आधारित हो सकते हैं। जिम्मेदारी से उपयोग करें। हम किसी भी क्षति के लिए जिम्मेदार नहीं हैं। कृपया सुनिश्चित करें कि फोन को सुरक्षित रूप से रखा जाए और अत्यधिक स्थितियों या तरल से बचें।",
+        privacyTitle: "गोपनीयता नीति",
+        privacyDescription: "यह उपकरण कोई व्यक्तिगत डेटा संग्रहित या संग्रहीत नहीं करता है। कोई डेटा किसी सर्वर पर स्थानांतरित नहीं किया जाता है। सभी क्रियाएँ आपके ब्राउज़र में स्थानीय रूप से होती हैं। यह उपकरण आपके डिवाइस के स्पीकर और माइक्रोफोन तक पहुँच की आवश्यकता हो सकती है, लेकिन यह आपके डिवाइस से कोई जानकारी संग्रहीत नहीं करता है। आप बिना डेटा गोपनीयता के बारे में चिंता किए इस उपकरण का सुरक्षित रूप से उपयोग कर सकते हैं।",
+        designerTitle: "डिज़ाइन किया गया द्वारा",
+        designerDescription: "यह उपकरण <strong>विशाल मिश्रा</strong> द्वारा डिज़ाइन किया गया है। वह स्मार्टफोन अनुभव को बेहतर बनाने के लिए उपयोगकर्ता-अनुकूल और उत्तरदायी उपकरण बनाने में विशेषज्ञ हैं। यदि आपके पास कोई प्रतिक्रिया या सुझाव है, तो कृपया ऊपर दिए गए व्हाट्सएप लिंक के माध्यम से संपर्क करें।"
+      }
+    };
+
+    function changeLanguage(event) {
+      const lang = event.target.value;
+      const textElements = document.querySelectorAll('[id]');
+      textElements.forEach(el => {
+        const key = el.id;
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+    }
+    function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
+    function shareTool() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Phone Speaker Cleaner Tool',
+      text: 'Clean your phone speakers with this simple tool!',
+      url: window.location.href
+    }).catch(console.error);
+  } else {
+    alert('Sharing not supported on this browser. Please copy the URL manually.');
+  }
+}
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').style.display =
+    window.scrollY > 100 ? 'block' : 'none';
+});
+window.addEventListener('load', () => {
+  document.getElementById('loader').style.display = 'none';
+});
+
+
+
+    window.onload = () => {
+      document.getElementById("loader").style.display = "none";
+      document.querySelectorAll('.animate').forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('visible');
+        }, index * 300);
+      });
+    };
+  </script>
+</body>
+</html>
+
+
+#index.html
