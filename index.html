@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Phone Speaker Cleaner Tool</title>
-  <style> 
+  <style>
+
     :root {
       --primary: #007bff;
       --success: #28a745;
@@ -216,135 +217,6 @@
 </head>
 <body>
 
-
-  <meta charset="UTF-8">
-  <title>Fancy Right Toggle Menu</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
-    }
- 
-    /* Toggle Button */
-    .menu-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 30px;
-      cursor: pointer;
-      z-index: 1002;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
- 
-    .menu-toggle span {
-      display: block;
-      height: 4px;
-      background: #333;
-      border-radius: 2px;
-      transition: 0.4s;
-    }
- 
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
- 
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
- 
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
- 
-    /* Side Menu */
-    .side-menu {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      width: 250px;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      padding: 80px 20px;
-      transition: right 0.5s ease;
-      z-index: 1001;
-      display: flex;
-      flex-direction: column;
-    }
- 
-    .side-menu.open {
-      right: 0;
-    }
- 
-    .side-menu a {
-      color: #fff;
-      text-decoration: none;
-      margin: 20px 0;
-      font-size: 20px;
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
- 
-    .side-menu.open a {
-      opacity: 1;
-      transform: translateX(0);
-    }
- 
-    .side-menu a:hover {
-      color: #00e6e6;
-    }
- 
-    .side-menu a i {
-      min-width: 20px;
-    }
-  </style>
-</head>
-<body>
- 
-<!-- Toggle Button -->
-<div class="menu-toggle" id="menuToggle">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
- 
-<!-- Side Menu -->
-<div class="side-menu" id="sideMenu">
-  <a href="#"><i class="fas fa-home"></i> Home</a>
-  <a href="#"><i class="fas fa-user"></i> About</a>
-  <a href="#"><i class="fas fa-briefcase"></i> Projects</a>
-  <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-</div>
- 
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sideMenu = document.getElementById('sideMenu');
- 
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    sideMenu.classList.toggle('open');
-  });
- 
-  // Optional: close menu on outside click
-  window.addEventListener('click', function (e) {
-    if (!sideMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-      sideMenu.classList.remove('open');
-      menuToggle.classList.remove('active');
-    }
-  });
-</script>
-
-
   <div id="loader">Loading Tool...</div>
 
   <header>
@@ -383,312 +255,615 @@
 
    <style>
     * {
+
       box-sizing: border-box;
+
     }
- 
+
+
+
     body {
+
       font-family: 'Segoe UI', sans-serif;
+
       margin: 0;
+
       padding: 0;
+
       background: #f0f4f8;
+
       color: #333;
+
       line-height: 1.6;
+
     }
- 
+
+
+
     main {
+
       max-width: 900px;
+
       margin: auto;
+
       padding: 2rem 1rem;
+
     }
- 
+
+
+
     section {
+
       background: #ffffff;
+
       border-radius: 12px;
+
       padding: 1.5rem 1.5rem;
+
       margin-bottom: 2rem;
+
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
       opacity: 0;
+
       transform: translateY(30px);
+
       animation: fadeInUp 1s forwards;
+
     }
- 
+
+
+
     section:nth-child(even) {
+
       animation-delay: 0.2s;
+
     }
- 
+
+
+
     section:nth-child(odd) {
+
       animation-delay: 0.4s;
+
     }
- 
+
+
+
     h2 {
+
       color: #005792;
+
       margin-top: 0;
+
       font-size: 1.5rem;
+
     }
- 
+
+
+
     p, li {
+
       font-size: 1rem;
+
     }
- 
+
+
+
     ul {
+
       padding-left: 1.2rem;
+
     }
- 
+
+
+
     li {
+
       margin-bottom: 0.5rem;
+
     }
- 
+
+
+
     strong {
+
       color: #333;
+
     }
- 
+
+
+
     .blog-item {
+
       margin-bottom: 1.5rem;
+
     }
- 
+
+
+
     .blog-item h3 {
+
       margin: 0 0 0.3rem 0;
+
       font-size: 1.1rem;
+
       color: #0077b6;
+
     }
- 
+
+
+
     .blog-item p {
+
       margin: 0;
+
       font-size: 0.95rem;
+
     }
- 
+
+
+
     @keyframes fadeInUp {
+
       to {
+
         opacity: 1;
+
         transform: translateY(0);
+
       }
+
     }
- 
+
+
+
     @media screen and (max-width: 600px) {
+
       h2 {
+
         font-size: 1.25rem;
+
       }
- 
+
+
+
       p, li {
+
         font-size: 0.95rem;
+
       }
- 
+
+
+
       section {
+
         padding: 1.2rem;
+
       }
- 
+
+
+
       .blog-item h3 {
+
         font-size: 1rem;
+
       }
- 
+
+
+
       .blog-item p {
+
         font-size: 0.9rem;
+
       }
+
     }
+
   </style>
+
 </head>
+
 <body>
- 
+
+
+
   <style>
+
     * {
+
       box-sizing: border-box;
+
     }
- 
+
+
+
     body {
+
       font-family: 'Segoe UI', sans-serif;
+
       margin: 0;
+
       padding: 0;
+
       background: #f0f4f8;
+
       color: #333;
+
       line-height: 1.6;
+
     }
- 
+
+
+
     main {
+
       max-width: 900px;
+
       margin: auto;
+
       padding: 2rem 1rem;
+
     }
- 
+
+
+
     section {
+
       background: #ffffff;
+
       border-radius: 12px;
+
       padding: 1.5rem 1.5rem;
+
       margin-bottom: 2rem;
+
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
       opacity: 0;
+
       transform: translateY(30px);
+
       animation: fadeInUp 1s forwards;
+
     }
- 
+
+
+
     section:nth-child(even) {
+
       animation-delay: 0.2s;
+
     }
- 
+
+
+
     section:nth-child(odd) {
+
       animation-delay: 0.4s;
+
     }
- 
+
+
+
     h2 {
+
       color: #005792;
+
       margin-top: 0;
+
       font-size: 1.5rem;
+
     }
- 
+
+
+
     p, li {
+
       font-size: 1rem;
+
     }
- 
+
+
+
     ul {
+
       padding-left: 1.2rem;
+
     }
- 
+
+
+
     li {
+
       margin-bottom: 0.5rem;
+
     }
- 
+
+
+
     strong {
+
       color: #333;
+
     }
- 
+
+
+
     .blog-item {
+
       margin-bottom: 1.5rem;
+
     }
- 
+
+
+
     .blog-item h3 {
+
       margin: 0 0 0.3rem 0;
+
       font-size: 1.1rem;
+
       color: #0077b6;
+
     }
- 
+
+
+
     .blog-item p {
+
       margin: 0;
+
       font-size: 0.95rem;
+
     }
- 
+
+
+
     @keyframes fadeInUp {
+
       to {
+
         opacity: 1;
+
         transform: translateY(0);
+
       }
+
     }
- 
+
+
+
     @media screen and (max-width: 600px) {
+
       h2 {
+
         font-size: 1.25rem;
+
       }
- 
+
+
+
       p, li {
+
         font-size: 0.95rem;
+
       }
- 
+
+
+
       section {
+
         padding: 1.2rem;
+
       }
- 
+
+
+
       .blog-item h3 {
+
         font-size: 1rem;
+
       }
- 
+
+
+
       .blog-item p {
+
         font-size: 0.9rem;
+
       }
+
     }
+
   </style>
+
 </head>
+
 <body>
- 
+
+
+
 <main>
- 
+
+
+
   <section class="animate" aria-labelledby="featuresTitle">
+
     <h2 id="featuresTitle">Features ⭐</h2>
+
     <ul>
+
       <li>🔊 High-frequency sound cleaning for dust and water removal</li>
+
       <li>📱 Works on all smartphones, tablets, and speakers</li>
+
       <li>⚙️ Simple and intuitive interface — no app download required</li>
+
       <li>🌐 Fully browser-based, no data is sent anywhere</li>
+
       <li>🧠 Smart cleaning tips and usage guide included</li>
+
       <li>🆓 100% free to use with no hidden costs</li>
+
     </ul>
+
   </section>
- 
+
+
+
   <section class="animate" aria-labelledby="howToUseTitle">
+
     <h2 id="howToUseTitle">How to Use 📱</h2>
+
     <p id="howToUseDescription">
+
       Follow these simple steps to clean your speaker using sound vibrations:
+
       <ul>
+
         <li>1️⃣ Turn your volume up to the highest level.</li>
+
         <li>2️⃣ Place your phone face down on a flat, clean surface.</li>
+
         <li>3️⃣ Tap the "Start Cleaning" button (if present) or play the sound manually.</li>
+
         <li>4️⃣ Let it run for 1–2 minutes. Repeat if needed.</li>
+
         <li>5️⃣ Wipe the speaker grill gently with a soft cloth 🧻.</li>
+
       </ul>
+
       Works best for water-clogged and dust-blocked speakers. Avoid using in extremely noisy or wet environments.
+
     </p>
+
   </section>
- 
+
+
+
   <section class="animate" aria-labelledby="aboutTitle">
+
     <h2 id="aboutTitle">About the Tool 🔊</h2>
+
     <p id="aboutDescription">
+
       This tool helps clean your device’s speakers when blocked by water 💦 or dust 🧼 by playing a specially crafted sound frequency.
+
       The vibrations created can push out moisture and dirt from the tiny speaker holes.
+
       It’s safe, effective, and works completely in-browser — no downloads required!
+
     </p>
+
   </section>
- 
+
+
+
   <section class="animate" aria-labelledby="termsTitle">
+
     <h2 id="termsTitle">Terms & Conditions ⚠️</h2>
+
     <p id="termsDescription">
+
       This tool is free to use and provided as-is. Results can vary depending on:
+
       <ul>
+
         <li>Your device type and speaker condition</li>
+
         <li>Amount of debris or water trapped inside</li>
+
         <li>Environmental noise and surface stability</li>
+
       </ul>
+
       Please use responsibly. The creator is not liable for any accidental damage due to misuse.
+
     </p>
+
   </section>
- 
+
+
+
   <section class="animate" aria-labelledby="privacyTitle">
+
     <h2 id="privacyTitle">Privacy Policy 🔒</h2>
+
     <p id="privacyDescription">
+
       This tool values your privacy. Here's what you need to know:
+
       <ul>
+
         <li>No data is collected or sent to servers.</li>
+
         <li>All operations happen within your browser only.</li>
+
         <li>We do not track, store, or access any personal information.</li>
+
       </ul>
+
       It may temporarily use your speakers and microphone for audio output — but nothing is stored or recorded.
+
     </p>
+
   </section>
- 
+
+
+
   <section class="animate" aria-labelledby="designerTitle">
+
     <h2 id="designerTitle">Designed by 👨‍💻</h2>
+
     <p id="designerDescription">
+
       Created with care by <strong>Bishal Mishra</strong>, a tech enthusiast passionate about building helpful, responsive tools for everyday use.
+
       <br><br>
+
       Feel free to reach out via WhatsApp (link above) if you have suggestions or feedback. Thanks for using the tool!
+
     </p>
+
   </section>
- 
- 
- 
+
+
+
   <section class="animate" aria-labelledby="blogsTitle">
+
     <h2 id="blogsTitle">Blogs & News 📰</h2>
+
     <div class="blog-item">
+
       <h3>🔊 The Science Behind Speaker Cleaning</h3>
+
       <p>Learn how high-frequency sound waves can dislodge water and dust particles from speaker grills using acoustic vibration technology.</p>
+
     </div>
+
     <div class="blog-item">
+
       <h3>📱 3 Simple Tricks to Maintain Clean Speakers</h3>
+
       <p>Tips for keeping your phone's audio quality crisp and clear by preventing buildup of grime and moisture.</p>
+
     </div>
+
     <div class="blog-item">
+
       <h3>🆕 Update: New Cleaning Mode Added!</h3>
+
       <p>We’ve introduced a new frequency pulse mode that enhances cleaning effectiveness on newer phone models.</p>
+
     </div>
+
   </section>
- 
+
+
+
 </main>
+
 
 
 
@@ -1030,6 +1205,3 @@ window.addEventListener('load', () => {
   </script>
 </body>
 </html>
-
-
-#index.html
