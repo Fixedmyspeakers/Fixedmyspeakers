@@ -197,22 +197,30 @@
     }
 
     /* Scroll to Top Button */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      z-index: 999;
-      display: none;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 22px;
-      padding: 10px 14px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: opacity 0.3s;
+#scrollTopBtn {
+  position: fixed;
+  bottom: 40px;
+  right: 25px;
+  z-index: 999;
+  display: none;
+  background: linear-gradient(145deg, #0066ff, #3399ff);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  padding: 14px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+#scrollTopBtn:hover {
+  background: linear-gradient(145deg, #0052cc, #3385ff);
+  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
+  transform: scale(1.1)
     }
+    
   </style>
 </head>
 <body>
