@@ -690,6 +690,9 @@
 </head>
 
 <body>
+<h3>Cleaning History</h3>
+  
+<ul id="cleaning-history" style="font-family: sans-serif;"></ul>
 
 
 
@@ -1200,6 +1203,22 @@ window.addEventListener('scroll', () => {
 window.addEventListener('load', () => {
   document.getElementById('loader').style.display = 'none';
 });
+
+    function saveCleaningHistory() {
+  const history = JSON.parse(localStorage.getItem("cleaningHistory")) || [];
+  const timestamp = new Date().toLocaleString();
+  history.unshift(timestamp); // Add to start
+  if (history.length > 5) history.pop(); // Limit to 5 entries
+  localStorage.setItem("cleaningHistory", JSON.stringify(history));
+  updateHistoryUI();
+}
+
+function updateHistoryUI() {
+  const history = JSON.parse(localStorage.getItem("cleaningHistory")) || [];
+  const list = document.getElementById("cleaning-history");
+  list.innerHTML = history.map(item => `<li>${item}</li>`).join('');
+}
+saveCleaningHistory();
 
 
 
