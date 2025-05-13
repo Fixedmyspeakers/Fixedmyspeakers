@@ -247,6 +247,63 @@
       <p id="frequencyLabel">🎚️ Frequency: <span id="freqLabel">440</span> Hz</p>
       <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()">
       <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
+
+<div class="voice-assistant">
+  <label for="langSelect">Assistant Language:</label>
+  <select id="langSelect">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी</option>
+    <option value="ne">नेपाली</option>
+  </select>
+  <button id="voiceGuideBtn">Guide Me</button>
+</div>
+
+<style>
+.voice-assistant {
+  text-align: center;
+  margin: 20px auto;
+  font-family: sans-serif;
+}
+.voice-assistant select,
+.voice-assistant button {
+  margin: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+#voiceGuideBtn {
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+#voiceGuideBtn:hover {
+  background: #218838;
+}
+</style>
+
+<script>
+const langSelect = document.getElementById('langSelect');
+const voiceBtn = document.getElementById('voiceGuideBtn');
+
+const messages = {
+  en: "Welcome to the Phone Speaker Cleaner tool. Tap the clean button, turn up your volume, and let the sound remove dust and water.",
+  hi: "फोन स्पीकर क्लीनर टूल में आपका स्वागत है। क्लीन बटन दबाएँ, वॉल्यूम बढ़ाएँ और ध्वनि से धूल और पानी हटाएँ।",
+  ne: "फोन स्पीकर क्लिनर उपकरणमा स्वागत छ। क्लिन बटन थिच्नुहोस्, भोल्युम बढाउनुहोस् र ध्वनिबाट धूलो तथा पानी हटाउनुहोस्।"
+};
+
+voiceBtn.onclick = () => {
+  const msg = new SpeechSynthesisUtterance();
+  const lang = langSelect.value;
+  msg.text = messages[lang];
+  msg.lang = lang === 'hi' ? 'hi-IN' : lang === 'ne' ? 'ne-NP' : 'en-US';
+  msg.rate = 0.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(msg);
+};
+</script>
+
       <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
       <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
       <button class="btn share" onclick="shareTool()" id="shareBtn">📤 Share Tool</button>
@@ -986,6 +1043,10 @@
     });
   });
 </script>
+
+
+
+
 
 <div class="rating-box">
   <h2>Rate This Tool</h2>
