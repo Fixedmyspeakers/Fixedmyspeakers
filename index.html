@@ -6,18 +6,14 @@
   <link rel="icon" type="image/png" href="images/favicon.png.png">
   <title>Fix My Speaker</title>
   <style>
+    
 
     :root {
-      --primary: #007bff;
+      --primary: #FFA500;
       --success: #28a745;
       --danger: #dc3545;
       --bg: #ffffff;
       --text: #222;
-    }
-
-    body.dark {
-      --bg: #121212;
-      --text: #eee;
     }
 
     body {
@@ -128,11 +124,7 @@
       color: #444;
     }
 
-    body.dark footer {
-      background: #1c1c1c;
-      color: #bbb;
-    }
-
+  
     #loader {
       position: fixed;
       inset: 0;
@@ -197,6 +189,7 @@
       height: 40px;
     }
 
+ 
     /* Scroll to Top Button */
 #scrollTopBtn {
   position: fixed;
@@ -222,9 +215,9 @@
   transform: scale(1.1)
     }
     
+    
   </style>
 </head>
-<body>
 
   <div id="loader">Loading Tool...</div>
 
@@ -233,6 +226,7 @@
     <p id="headerDescription">Clean and eject water/dust from your phone speaker using sound frequency!</p>
     
     <select id="languageSelect" onchange="changeLanguage(event)">
+      <option value="en">Language</option>
       <option value="en">English</option>
       <option value="ne">Nepali</option>
       <option value="hi">Hindi</option>
@@ -255,7 +249,6 @@
       <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
       <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
       <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
-      <button class="btn mode" onclick="toggleDarkMode()" id="darkModeBtn">🌙 Toggle Dark Mode</button>
       <button class="btn share" onclick="shareTool()" id="shareBtn">📤 Share Tool</button>
       
     </section>
@@ -469,15 +462,8 @@
 
     }
 
-  </style>
-
-</head>
-
-<body>
 
 
-
-  <style>
 
     * {
 
@@ -686,10 +672,6 @@
     }
 
   </style>
-
-</head>
-
-<body>
 <h3>Cleaning History</h3>
   
 <ul id="cleaning-history" style="font-family: sans-serif;"></ul>
@@ -871,13 +853,6 @@
     </div>
 
   </section>
-
-
-
-</main>
-
-
-
 
 
 
@@ -1076,13 +1051,11 @@
         timerLabel: "🕒 Timer: ",
         startBtn: "▶️ Start",
         stopBtn: "⏹️ Stop",
-        darkModeBtn: "🌙 Toggle Dark Mode",
         shareBtn: "📤 Share Tool",
         featuresTitle: "Features",
         feature1: "Removes water & dust using vibration",
         feature2: "Custom & preset frequency options",
         feature3: "Real-time visual audio display",
-        feature4: "Dark mode support",
         feature5: "One-click sharing",
         feature6: "Mobile & desktop responsive",
         howToUseTitle: "How to Use",
@@ -1110,7 +1083,6 @@
         timerLabel: "🕒 समय: ",
         startBtn: "▶️ सुरु गर्नुहोस्",
         stopBtn: "⏹️ रोक्नुहोस्",
-        darkModeBtn: "🌙 डार्क मोड टगल गर्नुहोस्",
         shareBtn: "📤 उपकरण साझा गर्नुहोस्",
         featuresTitle: "विशेषताहरू",
         feature1: "कम्पनको मद्दतले पानी र धूलो हटाउँछ",
@@ -1144,7 +1116,6 @@
         timerLabel: "🕒 समय: ",
         startBtn: "▶️ शुरू करें",
         stopBtn: "⏹️ बंद करें",
-        darkModeBtn: "🌙 डार्क मोड टॉगल करें",
         shareBtn: "📤 टूल शेयर करें",
         featuresTitle: "विशेषताएँ",
         feature1: "कंपन के माध्यम से पानी और धूल हटाता है",
@@ -1179,9 +1150,7 @@
         }
       });
     }
-    function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-}
+    
     function shareTool() {
   if (navigator.share) {
     navigator.share({
@@ -1219,6 +1188,7 @@ function updateHistoryUI() {
   list.innerHTML = history.map(item => `<li>${item}</li>`).join('');
 }
 saveCleaningHistory();
+    
 
 
 
