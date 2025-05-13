@@ -978,6 +978,72 @@
   });
 </script>
 
+<div class="rating-box">
+  <h2>Rate This Tool</h2>
+  <p>How helpful was the Phone Speaker Cleaner?</p>
+  <div class="stars" id="stars">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+  <div class="emoji" id="emoji"></div>
+  <div class="rating-result" id="ratingResult">Select a rating</div>
+  <textarea id="comment" rows="3" placeholder="Write a comment or suggestion..."></textarea>
+  <button id="submitBtn">Submit Feedback</button>
+  <div class="thank-you" id="thankYou"></div>
+</div>
+
+<style>
+.rating-box{background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.1);padding:25px;text-align:center;max-width:440px;margin:40px auto;font-family:sans-serif}
+.rating-box h2{margin:0 0 8px}
+.stars{display:flex;justify-content:center;gap:10px;margin:10px 0}
+.star{font-size:2rem;color:#ccc;cursor:pointer;transition:.2s}
+.star.selected,.star.hovered{color:#fc0;transform:scale(1.2)}
+textarea{width:100%;margin-top:10px;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px}
+button{margin-top:10px;padding:10px 20px;border:none;background:#007bff;color:#fff;border-radius:8px;cursor:pointer}
+button:hover{background:#0056b3}
+.thank-you{margin-top:10px;font-size:14px}
+.emoji{font-size:1.5rem;height:30px;margin:5px 0}
+.rating-result{font-size:15px;height:24px}
+</style>
+
+<script>
+const stars = document.querySelectorAll('.star'), ratingResult = document.getElementById('ratingResult'), emoji = document.getElementById('emoji'), thankYou = document.getElementById('thankYou'), submitBtn = document.getElementById('submitBtn'), commentBox = document.getElementById('comment');
+let selected = localStorage.getItem('userRating') || 0;
+const emojiMap = {1:'😠',2:'☹️',3:'😐',4:'🙂',5:'😍'};
+
+commentBox.value = localStorage.getItem('userComment') || '';
+commentBox.oninput = () => localStorage.setItem('userComment', commentBox.value);
+
+function updateStars(rating,isSel){stars.forEach(s=>{s.classList.remove('hovered','selected');if(s.dataset.value<=rating)s.classList.add(isSel?'selected':'hovered')})}
+if(selected>0){updateStars(selected,1);emoji.textContent=emojiMap[selected];ratingResult.textContent=`You rated: ${selected} star${selected>1?'s':''}`}
+
+stars.forEach(s=>{
+  s.onmouseover=()=>{updateStars(s.dataset.value,0);emoji.textContent=emojiMap[s.dataset.value]};
+  s.onmouseout=()=>{updateStars(selected,1);emoji.textContent=emojiMap[selected]||''};
+  s.onclick=()=>{selected=s.dataset.value;localStorage.setItem('userRating',selected);updateStars(selected,1);emoji.textContent=emojiMap[selected];ratingResult.textContent=`You rated: ${selected} star${selected>1?'s':''}`};
+});
+
+submitBtn.onclick=()=>{
+  if(!selected)return alert("Please select a rating before submitting.");
+  const comment = commentBox.value.trim();
+  if(comment && comment.length<5)return alert("Comment is too short.");
+  submitBtn.textContent = "Submitting..."; submitBtn.disabled = true;
+  fetch('https://example.com/api/submit-rating',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({rating:selected,emoji:emojiMap[selected],comment})
+  })
+  .then(r=>{if(r.ok){thankYou.textContent="Thank you! Your feedback has been submitted.";localStorage.removeItem('userComment')}else throw 0})
+  .catch(()=>{thankYou.textContent="Error submitting feedback.";thankYou.style.color="red"})
+  .finally(()=>setTimeout(()=>{
+    commentBox.value='';thankYou.textContent='';submitBtn.textContent='Submit Feedback';submitBtn.disabled=false;
+  },5000));
+};
+</script>
+
   <footer>&copy; Bishal Mishra 2025  | All rights reserved.</footer>
 <script>
     let audioCtx, oscillator, gainNode, countdownInterval;
