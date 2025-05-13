@@ -304,6 +304,44 @@ voiceBtn.onclick = () => {
 };
 </script>
 
+<div class="share-buttons">
+  <p>Share your experience:</p>
+  <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
+  <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
+  <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
+</div>
+
+<style>
+.share-buttons {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.share-btn {
+  display: inline-block;
+  margin: 6px 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+  transition: background 0.3s;
+}
+.whatsapp { background: #25D366; }
+.facebook { background: #4267B2; }
+.gmail { background: #D44638; }
+.share-btn:hover { opacity: 0.9; }
+</style>
+
+<script>
+const shareLink = encodeURIComponent(location.href);
+const shareMsg = encodeURIComponent("I just cleaned my phone speaker using this tool! Try it here:");
+
+document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareMsg}%20${shareLink}`;
+document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${shareLink}`;
+document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view=cm&to=&su=Check%20this%20out!&body=${shareMsg}%20${shareLink}`;
+</script>
+
       <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
       <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
       <button class="btn share" onclick="shareTool()" id="shareBtn">📤 Share Tool</button>
