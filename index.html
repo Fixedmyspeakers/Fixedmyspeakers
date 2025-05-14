@@ -1447,38 +1447,33 @@ saveCleaningHistory();
   <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
 </div>
 
-<!-- Profile Dropdown Menu -->
-<div id="profileMenu" style="display:none; position:absolute; top:60px; right:10px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:220px; overflow:hidden; font-family:sans-serif; z-index:9999;">
-  <div style="display:flex; align-items:center; padding:12px; background:#f5f5f5; border-bottom:1px solid #eee;">
-    <img id="menuPhoto" src="" style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
+<!-- Profile Dropdown -->
+<div id="profileMenu" style="display:none; position:absolute; top:60px; right:10px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:240px; font-family:sans-serif; z-index:9999;">
+  <div style="display:flex; align-items:center; padding:12px; background:#f9f9f9; border-bottom:1px solid #eee;">
+    <img id="menuPhoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
     <div>
       <div id="menuName" style="font-weight:600; font-size:14px;">Username</div>
       <div id="menuEmail" style="font-size:12px; color:#666;">user@example.com</div>
     </div>
   </div>
-  <div onclick="openEditProfile()" style="padding:10px; cursor:pointer;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='white'">✏️ Edit Profile</div>
-  <div onclick="logout()" style="padding:10px; cursor:pointer;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='white'">🚪 Logout</div>
+  <label style="display:block; padding:10px; border-bottom:1px solid #eee; cursor:pointer;">
+    📷 Upload Picture
+    <input id="uploadPic" type="file" accept="image/*" style="display:none;">
+  </label>
+  <div onclick="logout()" style="padding:10px; cursor:pointer;">🚪 Logout</div>
 </div>
 
 <!-- Auth Popup -->
-<div id="authPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; width: 90%; max-width: 400px;">
-  <h2 id="formTitle" style="text-align: center;">Sign In</h2>
-  <input id="email" type="email" placeholder="Email" style="width:100%; padding:10px; margin:5px 0;">
-  <input id="password" type="password" placeholder="Password" style="width:100%; padding:10px; margin:5px 0;">
-  <button id="authAction" style="width:100%; padding:10px; background:#4CAF50; color:white; border:none;">Sign In</button>
-  <p style="text-align:center;"><span id="toggleAuth" style="cursor:pointer; color:#007bff;">Don't have an account? Sign Up</span></p>
-  <button id="googleSignIn" style="width:100%; padding:10px; background:#DB4437; color:white; border:none; display:flex; align-items:center; justify-content:center; gap:10px;">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:20px;"> Sign in with Google
-  </button>
-</div>
-
-<!-- Edit Profile Popup -->
-<div id="editProfilePopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:1.5rem; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:9999; max-width:300px;">
-  <h3 style="text-align:center;">Edit Profile</h3>
-  <input id="newName" type="text" placeholder="New Name" style="width:100%; padding:8px; margin:5px 0;">
-  <input id="newPhoto" type="text" placeholder="Photo URL" style="width:100%; padding:8px; margin:5px 0;">
-  <button onclick="saveProfile()" style="width:100%; padding:8px; background:#4CAF50; color:white; border:none;">Save</button>
-  <button onclick="document.getElementById('editProfilePopup').style.display='none'" style="width:100%; padding:8px; background:#ccc; margin-top:5px; border:none;">Cancel</button>
+<div id="authPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; max-width: 400px; width: 90%;">
+  <h3 id="formTitle" style="text-align: center;">Sign In</h3>
+  <input id="email" type="email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
+  <input id="password" type="password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
+  <button id="authAction" style="width:100%; background:#4CAF50; color:white; padding:10px; border:none; border-radius:5px;">Sign In</button>
+  <p style="text-align:center; margin:10px;">or</p>
+  <button id="googleSignIn" style="width:100%; background:#DB4437; color:white; padding:10px; border:none; border-radius:5px;">Sign in with Google</button>
+  <p style="text-align:center; margin-top:15px;">
+    <span id="toggleAuth" style="color:#007BFF; cursor:pointer;">Don't have an account? Sign Up</span>
+  </p>
 </div>
 
 <script type="module">
@@ -1493,6 +1488,12 @@ saveCleaningHistory();
     signInWithPopup,
     updateProfile
   } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDpIY1tJ9hJQ_Dmnz6HEBu1-gkyhMbl7D8",
@@ -1505,103 +1506,102 @@ saveCleaningHistory();
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const storage = getStorage(app);
   const provider = new GoogleAuthProvider();
+
+  const profileToggle = document.getElementById('profileToggle');
+  const profileMenu = document.getElementById('profileMenu');
+  const authPopup = document.getElementById('authPopup');
+  const toggleAuth = document.getElementById('toggleAuth');
+  const authAction = document.getElementById('authAction');
+  const googleSignInBtn = document.getElementById('googleSignIn');
+  const uploadInput = document.getElementById('uploadPic');
 
   let isSignUp = false;
 
-  const authPopup = document.getElementById("authPopup");
-  const toggleAuth = document.getElementById("toggleAuth");
-  const authAction = document.getElementById("authAction");
-  const formTitle = document.getElementById("formTitle");
+  profileToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (auth.currentUser) {
+      profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+    } else {
+      authPopup.style.display = 'block';
+    }
+  });
 
-  toggleAuth.onclick = () => {
+  document.addEventListener('click', (e) => {
+    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.style.display = 'none';
+    }
+  });
+
+  toggleAuth.addEventListener('click', () => {
     isSignUp = !isSignUp;
-    formTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
-    authAction.textContent = isSignUp ? "Sign Up" : "Sign In";
-    toggleAuth.textContent = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
-  };
+    document.getElementById('formTitle').innerText = isSignUp ? "Sign Up" : "Sign In";
+    authAction.innerText = isSignUp ? "Sign Up" : "Sign In";
+    toggleAuth.innerText = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
+  });
 
-  authAction.onclick = async () => {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+  authAction.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!email || !password) return alert("Please enter email and password.");
     try {
       if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
-      authPopup.style.display = "none";
+      authPopup.style.display = 'none';
     } catch (err) {
       alert(err.message);
     }
-  };
+  });
 
-  document.getElementById("googleSignIn").onclick = async () => {
+  googleSignInBtn.addEventListener('click', async () => {
     try {
       await signInWithPopup(auth, provider);
-      authPopup.style.display = "none";
+      authPopup.style.display = 'none';
     } catch (err) {
       alert(err.message);
     }
-  };
+  });
+
+  function logout() {
+    signOut(auth).then(() => {
+      location.reload();
+    });
+  }
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const name = user.displayName || user.email.split('@')[0];
       const photo = user.photoURL || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
-      document.getElementById("menuPhoto").src = photo;
-      document.getElementById("menuName").innerText = name;
-      document.getElementById("menuEmail").innerText = user.email;
-      document.getElementById("profileToggle").innerHTML = `<img src="${photo}" style="width: 40px; height: 40px; border-radius: 50%;">`;
+
+      document.getElementById('menuName').innerText = name;
+      document.getElementById('menuEmail').innerText = user.email;
+      document.getElementById('menuPhoto').src = photo;
+      profileToggle.innerHTML = `<img src="${photo}" style="width: 40px; height: 40px; border-radius: 50%;">`;
+
+      authPopup.style.display = 'none';
     }
   });
 
-  // Toggle menu
-  const profileToggle = document.getElementById("profileToggle");
-  profileToggle.onclick = () => {
-    if (auth.currentUser) {
-      const menu = document.getElementById("profileMenu");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    } else {
-      authPopup.style.display = "block";
-    }
-  };
-
-  document.addEventListener("click", (e) => {
-    const menu = document.getElementById("profileMenu");
-    if (!profileToggle.contains(e.target) && !menu.contains(e.target)) {
-      menu.style.display = "none";
-    }
-  });
-
-  // Logout
-  window.logout = async function () {
-    await signOut(auth);
-    location.reload();
-  };
-
-  // Edit Profile
-  window.openEditProfile = () => {
-    document.getElementById("editProfilePopup").style.display = "block";
+  // Upload Profile Picture
+  uploadInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
     const user = auth.currentUser;
-    if (user) {
-      document.getElementById("newName").value = user.displayName || '';
-      document.getElementById("newPhoto").value = user.photoURL || '';
-    }
-  };
+    if (!user) return alert("Not signed in");
 
-  window.saveProfile = async () => {
-    const name = document.getElementById("newName").value.trim();
-    const photo = document.getElementById("newPhoto").value.trim();
-    try {
-      await updateProfile(auth.currentUser, { displayName: name, photoURL: photo });
-      document.getElementById("editProfilePopup").style.display = "none";
-      location.reload();
-    } catch (err) {
-      alert("Failed to update profile: " + err.message);
-    }
-  };
-</script>
+    const storageRef = ref(storage, `profilePictures/${user.uid}`);
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    await updateProfile(user, { photoURL: downloadURL });
+    document.getElementById('menuPhoto').src = downloadURL;
+    profileToggle.innerHTML = `<img src="${downloadURL}" style="width:40px; height:40px; border-radius:50%;">`;
+    alert("Profile picture updated!");
+  });
+
 
 </script>
 </body>
