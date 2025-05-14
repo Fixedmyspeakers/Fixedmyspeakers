@@ -1447,6 +1447,16 @@ saveCleaningHistory();
   <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
 </div>
 
+<!-- Profile Dropdown -->
+<div id="profileMenu" style="display:none; position:absolute; top:60px; right:10px; background:white; box-shadow:0 0 10px rgba(0,0,0,0.1); border-radius:6px; z-index:9999; width:160px;">
+  <div style="padding:10px; border-bottom:1px solid #eee;" id="displayName">User</div>
+  <div style="padding:10px; cursor:pointer;" onclick="editProfile()">Edit Profile</div>
+  <div style="padding:10px; cursor:pointer;" onclick="logout()">Logout</div>
+</div>
+
+
+
+
 <!-- Auth Popup -->
 <div id="authPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; width: 90%; max-width: 400px;">
   <div style="text-align: right;"><button id="skipBtn" style="background: none; border: none; color: #888; cursor: pointer;">Skip</button></div>
@@ -1591,7 +1601,47 @@ saveCleaningHistory();
     if (code === 'auth/popup-closed-by-user') return "Popup closed before sign-in.";
     return error.message;
   }
-</script>
 
+
+// Toggle profile menu
+profileToggle.addEventListener('click', () => {
+  if (auth.currentUser) {
+    const menu = document.getElementById('profileMenu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  } else {
+    authPopup.style.display = 'block';
+  }
+});
+
+// Logout function
+function logout() {
+  signOut(auth).then(() => {
+    localStorage.removeItem('authUser');
+    location.reload();
+  });
+}
+
+// Edit Profile placeholder
+function editProfile() {
+  alert("Profile editing not implemented yet.");
+}
+
+// Show user info after login
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const name = user.displayName || user.email.split('@')[0];
+    document.getElementById('displayName').innerText = name;
+    profileToggle.innerHTML = `<img src="${user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png'}" style="width:40px; height:40px; border-radius:50%;">`;
+    authPopup.style.display = 'none';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!profileToggle.contains(e.target) && !document.getElementById('profileMenu').contains(e.target)) {
+    document.getElementById('profileMenu').style.display = 'none';
+  }
+});
+
+</script>
 </body>
 </html>
