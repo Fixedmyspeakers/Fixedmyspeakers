@@ -1447,7 +1447,7 @@ saveCleaningHistory();
   <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
 </div>
 
-<!-- Profile Dropdown -->
+<!-- Dropdown Profile Menu -->
 <div id="profileMenu" style="display:none; position:absolute; top:60px; right:10px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:220px; overflow:hidden; font-family:sans-serif; z-index:9999;">
   <div style="display:flex; align-items:center; padding:12px; background:#f5f5f5; border-bottom:1px solid #eee;">
     <img id="menuPhoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
@@ -1456,21 +1456,31 @@ saveCleaningHistory();
       <div id="menuEmail" style="font-size:12px; color:#666;">user@example.com</div>
     </div>
   </div>
-  <div style="padding:10px; cursor:pointer;" onclick="editProfile()">✏️ Edit Profile</div>
-  <div style="padding:10px; cursor:pointer;" onclick="logout()">🚪 Logout</div>
+  <div onclick="editProfile()" style="padding:10px; cursor:pointer;" onmouseover="this.style.background='#eee'" onmouseout="this.style.background='white'">✏️ Edit Profile</div>
+  <div onclick="logout()" style="padding:10px; cursor:pointer;" onmouseover="this.style.background='#eee'" onmouseout="this.style.background='white'">🚪 Logout</div>
 </div>
 
-<!-- Firebase Scripts -->
+<!-- Auth Popup Form -->
+<div id="authPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; width: 90%; max-width: 400px;">
+  <div style="text-align: right;"><button id="skipBtn" style="background: none; border: none; color: #888; cursor: pointer;">Skip</button></div>
+  <h2 id="formTitle" style="margin-bottom: 1rem; text-align: center;">Sign In</h2>
+  <input id="email" type="email" placeholder="Email" style="width: 100%; padding: 0.75rem; margin-bottom: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+  <input id="password" type="password" placeholder="Password" style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 5px;">
+  <button id="authAction" style="width: 100%; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Sign In</button>
+  <div style="text-align: center; margin: 1rem 0; font-size: 0.9rem;">or</div>
+  <button id="googleSignIn" style="width: 100%; padding: 0.75rem; background: #DB4437; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 20px; height: 20px;"> Sign in with Google
+  </button>
+  <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+    <span id="toggleAuth" style="color: #007BFF; cursor: pointer;">Don't have an account? Sign Up</span>
+  </p>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
   import {
-    getAuth,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup
+    getAuth, onAuthStateChanged, signInWithEmailAndPassword,
+    createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup
   } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
   const firebaseConfig = {
@@ -1487,59 +1497,99 @@ saveCleaningHistory();
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const profileToggle = document.getElementById('profileToggle');
-  const profileMenu = document.getElementById('profileMenu');
+  const authPopup = document.getElementById("authPopup");
+  const profileMenu = document.getElementById("profileMenu");
+  const profileToggle = document.getElementById("profileToggle");
+  const formTitle = document.getElementById("formTitle");
+  const toggleAuth = document.getElementById("toggleAuth");
+  const authAction = document.getElementById("authAction");
+  const googleSignInBtn = document.getElementById("googleSignIn");
 
-  // Toggle dropdown
-  profileToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (auth.currentUser) {
-      profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-    } else {
-      signInWithPopup(auth, provider).catch(err => alert(getFriendlyError(err)));
+  let isSignUp = false;
+
+  // Toggle form between SignIn/SignUp
+  toggleAuth.addEventListener("click", () => {
+    isSignUp = !isSignUp;
+    formTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
+    authAction.textContent = isSignUp ? "Sign Up" : "Sign In";
+    toggleAuth.textContent = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
+  });
+
+  // Email Auth
+  authAction.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    if (!email || !password) return alert("Please enter both email and password.");
+    try {
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+      authPopup.style.display = "none";
+    } catch (error) {
+      alert(getFriendlyError(error));
     }
   });
 
-  // Auto-fill user data on login
+  // Google Sign In
+  googleSignInBtn.addEventListener("click", async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      authPopup.style.display = "none";
+    } catch (error) {
+      alert(getFriendlyError(error));
+    }
+  });
+
+  // Toggle Profile Dropdown
+  profileToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (auth.currentUser) {
+      profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
+    } else {
+      authPopup.style.display = "block";
+    }
+  });
+
+  // Click outside to close menu
+  document.addEventListener("click", (e) => {
+    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.style.display = "none";
+    }
+  });
+
+  // Show user profile info
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const name = user.displayName || user.email.split('@')[0];
-      const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-      document.getElementById('menuPhoto').src = photo;
-      document.getElementById('menuName').innerText = name;
-      document.getElementById('menuEmail').innerText = user.email;
+      const name = user.displayName || user.email.split("@")[0];
+      const email = user.email;
+      const photo = user.photoURL || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+      document.getElementById("menuPhoto").src = photo;
+      document.getElementById("menuName").innerText = name;
+      document.getElementById("menuEmail").innerText = email;
       profileToggle.innerHTML = `<img src="${photo}" style="width:40px; height:40px; border-radius:50%;">`;
     }
   });
 
-  // Hide dropdown on outside click
-  document.addEventListener('click', (e) => {
-    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
-      profileMenu.style.display = 'none';
-    }
-  });
-
-  // Logout function
   function logout() {
     signOut(auth).then(() => {
-      localStorage.removeItem('authUser');
-      location.reload();
+      profileMenu.style.display = "none";
     });
   }
 
-  // Placeholder Edit Profile
   function editProfile() {
-    alert("Edit Profile functionality not implemented yet.");
+    alert("Edit profile not implemented yet.");
   }
 
   function getFriendlyError(error) {
     const code = error.code;
-    if (code === 'auth/invalid-email') return "Invalid email format.";
-    if (code === 'auth/user-not-found') return "User not found.";
-    if (code === 'auth/wrong-password') return "Incorrect password.";
-    if (code === 'auth/email-already-in-use') return "Email already in use.";
-    if (code === 'auth/popup-closed-by-user') return "Google Sign-In popup closed.";
-    if (code === 'auth/unauthorized-domain') return "Check your Firebase Authorized Domains.";
+    if (code === "auth/invalid-email") return "Invalid email.";
+    if (code === "auth/user-not-found") return "User not found.";
+    if (code === "auth/wrong-password") return "Wrong password.";
+    if (code === "auth/email-already-in-use") return "Email already in use.";
+    if (code === "auth/popup-closed-by-user") return "Google sign-in cancelled.";
+    if (code === "auth/unauthorized-domain") return "Unauthorized domain. Check Firebase settings.";
     return error.message;
   }
 </script>
