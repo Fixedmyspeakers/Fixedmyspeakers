@@ -1454,6 +1454,7 @@ saveCleaningHistory();
     <div>
       <div id="menuName" style="font-weight:600; font-size:14px;">Username</div>
       <div id="menuEmail" style="font-size:12px; color:#666;">user@example.com</div>
+      <div id="menuVerified" style="font-size:11px; color:green;"></div>
     </div>
   </div>
   <label style="display:block; padding:10px; border-bottom:1px solid #eee; cursor:pointer;">
@@ -1468,6 +1469,7 @@ saveCleaningHistory();
   <h3 id="formTitle" style="text-align: center;">Sign In</h3>
   <input id="email" type="email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
   <input id="password" type="password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
+  <p style="text-align:right; font-size:12px;"><a href="#" id="resetPasswordLink">Forgot Password?</a></p>
   <button id="authAction" style="width:100%; background:#4CAF50; color:white; padding:10px; border:none; border-radius:5px;">Sign In</button>
   <p style="text-align:center; margin:10px;">or</p>
   <button id="googleSignIn" style="width:100%; background:#DB4437; color:white; padding:10px; border:none; border-radius:5px;">Sign in with Google</button>
@@ -1483,9 +1485,11 @@ saveCleaningHistory();
     onAuthStateChanged,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
     signOut,
     GoogleAuthProvider,
     signInWithPopup,
+    sendEmailVerification,
     updateProfile
   } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
   import {
@@ -1509,13 +1513,10 @@ saveCleaningHistory();
   const storage = getStorage(app);
   const provider = new GoogleAuthProvider();
 
-  const profileToggle = document.getElementById('profileToggle');
-  const profileMenu = document.getElementById('profileMenu');
-  const authPopup = document.getElementById('authPopup');
   const toggleAuth = document.getElementById('toggleAuth');
   const authAction = document.getElementById('authAction');
   const googleSignInBtn = document.getElementById('googleSignIn');
-  const uploadInput = document.getElementById('uploadPic');
+  const resetPasswordLink = document.getElementById('resetPasswordLink');
 
   let isSignUp = false;
 
@@ -1547,7 +1548,9 @@ saveCleaningHistory();
     if (!email || !password) return alert("Please enter email and password.");
     try {
       if (isSignUp) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(userCred.user);
+        alert("Verification email sent. Please check your inbox.");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
@@ -1559,26 +1562,42 @@ saveCleaningHistory();
 
   googleSignInBtn.addEventListener('click', async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      if (!result.user.emailVerified) {
+        await sendEmailVerification(result.user);
+        alert("Google sign-in successful. Verification email sent.");
+      }
       authPopup.style.display = 'none';
     } catch (err) {
       alert(err.message);
     }
   });
 
+  resetPasswordLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email) return alert("Enter your email first.");
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Reset link sent to your email.");
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
   function logout() {
-    signOut(auth).then(() => {
-      location.reload();
-    });
+    signOut(auth).then(() => location.reload());
   }
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const name = user.displayName || user.email.split('@')[0];
       const photo = user.photoURL || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+      const verified = user.emailVerified ? "Verified" : "Not Verified";
 
       document.getElementById('menuName').innerText = name;
       document.getElementById('menuEmail').innerText = user.email;
+      document.getElementById('menuVerified').innerText = `(${verified})`;
       document.getElementById('menuPhoto').src = photo;
       profileToggle.innerHTML = `<img src="${photo}" style="width: 40px; height: 40px; border-radius: 50%;">`;
 
@@ -1586,8 +1605,7 @@ saveCleaningHistory();
     }
   });
 
-  // Upload Profile Picture
-  uploadInput.addEventListener('change', async (e) => {
+  uploadPic.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const user = auth.currentUser;
@@ -1597,11 +1615,11 @@ saveCleaningHistory();
     await uploadBytes(storageRef, file);
     const downloadURL = await getDownloadURL(storageRef);
     await updateProfile(user, { photoURL: downloadURL });
+
     document.getElementById('menuPhoto').src = downloadURL;
     profileToggle.innerHTML = `<img src="${downloadURL}" style="width:40px; height:40px; border-radius:50%;">`;
     alert("Profile picture updated!");
   });
-
 
 </script>
 </body>
