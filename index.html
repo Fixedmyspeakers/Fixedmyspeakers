@@ -1441,5 +1441,157 @@ saveCleaningHistory();
       });
     };
   </script>
+
+<!-- Profile Icon -->
+<div id="profileToggle" style="position: fixed; top: 10px; right: 10px; cursor: pointer; z-index: 9999;">
+  <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+</div>
+
+<!-- Auth Popup -->
+<div id="authPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; width: 90%; max-width: 400px;">
+  <div style="text-align: right;"><button id="skipBtn" style="background: none; border: none; color: #888; cursor: pointer;">Skip</button></div>
+  <h2 id="formTitle" style="margin-bottom: 1rem; text-align: center;">Sign In</h2>
+  <input id="email" type="email" placeholder="Email" style="width: 100%; padding: 0.75rem; margin-bottom: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+  <input id="password" type="password" placeholder="Password" style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 5px;">
+  <button id="authAction" style="width: 100%; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Sign In</button>
+  <div style="text-align: center; margin: 1rem 0; font-size: 0.9rem;">or</div>
+  <button id="googleSignIn" style="width: 100%; padding: 0.75rem; background: #DB4437; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 20px; height: 20px;"> Sign in with Google
+  </button>
+  <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+    <span id="toggleAuth" style="color: #007BFF; cursor: pointer;">Don't have an account? Sign Up</span>
+  </p>
+</div>
+
+<!-- Sign Out Button -->
+<button id="signOutBtn" style="display:none; position: fixed; top: 60px; right: 10px; background: #f44336; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; z-index:9999;">
+  Sign Out
+</button>
+
+<!-- Firebase & Auth Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    GoogleAuthProvider,
+    signInWithPopup
+  } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDpIY1tJ9hJQ_Dmnz6HEBu1-gkyhMbl7D8",
+    authDomain: "speakercleanerapp.firebaseapp.com",
+    projectId: "speakercleanerapp",
+    storageBucket: "speakercleanerapp.appspot.com",
+    messagingSenderId: "757487409389",
+    appId: "1:757487409389:web:15a6b21a17a973dace14e4",
+    measurementId: "G-GCR370HQ7B"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const profileToggle = document.getElementById('profileToggle');
+  const authPopup = document.getElementById('authPopup');
+  const skipBtn = document.getElementById('skipBtn');
+  const toggleAuth = document.getElementById('toggleAuth');
+  const authAction = document.getElementById('authAction');
+  const formTitle = document.getElementById('formTitle');
+  const googleSignInBtn = document.getElementById('googleSignIn');
+  const signOutBtn = document.getElementById('signOutBtn');
+
+  let isSignUp = false;
+
+  profileToggle.addEventListener('click', () => {
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('email').focus();
+    authPopup.style.display = 'block';
+  });
+
+  skipBtn.addEventListener('click', () => {
+    authPopup.style.display = 'none';
+  });
+
+  toggleAuth.addEventListener('click', () => {
+    isSignUp = !isSignUp;
+    formTitle.textContent = isSignUp ? 'Sign Up' : 'Sign In';
+    authAction.textContent = isSignUp ? 'Sign Up' : 'Sign In';
+    toggleAuth.textContent = isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up";
+  });
+
+  authAction.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!email || !password) return alert("Please enter both email and password.");
+    try {
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+      authPopup.style.display = 'none';
+      localStorage.setItem('authUser', 'true');
+    } catch (error) {
+      alert(getFriendlyError(error));
+    }
+  });
+
+  googleSignInBtn.addEventListener('click', async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      authPopup.style.display = 'none';
+      localStorage.setItem('authUser', 'true');
+    } catch (error) {
+      alert(getFriendlyError(error));
+    }
+  });
+
+  signOutBtn.addEventListener('click', async () => {
+    await signOut(auth);
+    localStorage.removeItem('authUser');
+    authPopup.style.display = 'none';
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      profileToggle.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" style="width: 40px; height: 40px; border-radius: 50%;">`;
+      signOutBtn.style.display = 'block';
+    } else {
+      profileToggle.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" style="width: 40px; height: 40px; border-radius: 50%;">`;
+      signOutBtn.style.display = 'none';
+    }
+  });
+
+  let popupShown = false;
+  window.addEventListener('scroll', () => {
+    if (!popupShown && window.scrollY > 100) {
+      popupShown = true;
+      setTimeout(() => {
+        if (!auth.currentUser) {
+          authPopup.style.display = 'block';
+          setTimeout(() => {
+            if (!auth.currentUser) authPopup.style.display = 'none';
+          }, 5000);
+        }
+      }, 5000);
+    }
+  });
+
+  function getFriendlyError(error) {
+    const code = error.code;
+    if (code === 'auth/invalid-email') return "Invalid email format.";
+    if (code === 'auth/user-not-found') return "User not found.";
+    if (code === 'auth/wrong-password') return "Incorrect password.";
+    if (code === 'auth/email-already-in-use') return "Email already in use.";
+    if (code === 'auth/popup-closed-by-user') return "Popup closed before sign-in.";
+    return error.message;
+  }
+</script>
+
 </body>
 </html>
