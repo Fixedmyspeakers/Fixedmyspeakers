@@ -1521,16 +1521,18 @@ saveCleaningHistory();
 
   let isSignUp = false;
 
-  profileToggle.addEventListener('click', () => {
-    document.getElementById('email').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('email').focus();
-    authPopup.style.display = 'block';
-  });
+  profileToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
 
-  skipBtn.addEventListener('click', () => {
-    authPopup.style.display = 'none';
-  });
+  // If user is signed in, toggle dropdown ONLY
+  if (auth.currentUser) {
+    document.getElementById('profileMenu').style.display =
+      document.getElementById('profileMenu').style.display === 'block' ? 'none' : 'block';
+  } else {
+    // Only show authPopup if not signed in
+    authPopup.style.display = 'block';
+  }
+});
 
   toggleAuth.addEventListener('click', () => {
     isSignUp = !isSignUp;
@@ -1572,23 +1574,28 @@ saveCleaningHistory();
     authPopup.style.display = 'none';
   });
 
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('profileMenu');
+  if (!profileToggle.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+
   onAuthStateChanged(auth, (user) => {
   if (user) {
+    // Hide auth popup forever once signed in
+    authPopup.style.display = 'none';
+
+    // Show profile picture & dropdown info
     const name = user.displayName || user.email.split('@')[0];
     const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-
-    // Update profile icon
-    profileToggle.innerHTML = `<img src="${photo}" style="width:40px; height:40px; border-radius:50%;">`;
-
-    // Fill dropdown details
     document.getElementById('menuPhoto').src = photo;
     document.getElementById('menuName').innerText = name;
     document.getElementById('menuEmail').innerText = user.email;
-
-    // Hide auth popup
-    authPopup.style.display = 'none';
+    profileToggle.innerHTML = `<img src="${photo}" style="width:40px; height:40px; border-radius:50%;">`;
   }
 });
+
 
   let popupShown = false;
   window.addEventListener('scroll', () => {
