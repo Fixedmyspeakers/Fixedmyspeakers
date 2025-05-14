@@ -1446,45 +1446,44 @@ saveCleaningHistory();
 
 
 <!-- Profile Icon -->
-<div id="profileToggle" style="position:fixed; top:10px; right:10px; z-index:9999; cursor:pointer;">
-  <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" id="profileIcon" style="width:40px; height:40px; border-radius:50%;">
+<div id="profileToggle" style="position:fixed;top:10px;right:10px;cursor:pointer;z-index:9999;">
+  <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" id="profileIcon" style="width:40px;height:40px;border-radius:50%;">
 </div>
 
-<!-- Dropdown Menu -->
-<div id="profileMenu" style="display:none; position:absolute; top:60px; right:10px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:240px; font-family:sans-serif; z-index:9999;">
-  <div style="padding:12px; display:flex; align-items:center; border-bottom:1px solid #eee; background:#f9f9f9;">
-    <img id="menuPhoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
+<!-- Profile Dropdown Menu -->
+<div id="profileMenu" style="display:none;position:absolute;top:60px;right:10px;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:240px;font-family:sans-serif;z-index:9999;">
+  <div style="padding:12px;border-bottom:1px solid #eee;display:flex;align-items:center;">
+    <img id="menuPhoto" src="" style="width:40px;height:40px;border-radius:50%;margin-right:10px;">
     <div>
-      <div id="menuName" style="font-weight:bold;"></div>
-      <div id="menuEmail" style="font-size:12px; color:#666;"></div>
+      <div id="menuName" style="font-weight:bold;font-size:14px;"></div>
+      <div id="menuEmail" style="font-size:12px;color:#555;"></div>
+      <div id="emailVerified" style="font-size:11px;color:#f44336;"></div>
     </div>
   </div>
-  <div id="verifyStatus" style="padding:10px; font-size:12px; color:#555;"></div>
-  <div onclick="editProfile()" style="padding:10px; cursor:pointer;">✏️ Edit Profile</div>
-  <div onclick="sendPasswordReset()" style="padding:10px; cursor:pointer;">🔑 Reset Password</div>
-  <div onclick="sendVerification()" style="padding:10px; cursor:pointer;">✅ Verify Email</div>
-  <div onclick="logout()" style="padding:10px; cursor:pointer;">🚪 Logout</div>
+  <div onclick="triggerProfileUpload()" style="padding:10px;cursor:pointer;">✏️ Edit Profile Photo</div>
+  <div onclick="sendVerificationEmail()" style="padding:10px;cursor:pointer;">✅ Verify Email</div>
+  <div onclick="sendResetPassword()" style="padding:10px;cursor:pointer;">🔐 Reset Password</div>
+  <div onclick="logout()" style="padding:10px;cursor:pointer;">🚪 Logout</div>
 </div>
+<input type="file" id="uploadProfileInput" accept="image/*" style="display:none;">
 
 <!-- Auth Popup -->
-<div id="authPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:2rem; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.2); z-index:9999; width:90%; max-width:400px;">
-  <h2 id="formTitle">Sign In</h2>
-  <input id="email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px;">
-  <input id="password" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:10px;">
-  <button id="authAction" style="width:100%; padding:10px; background:#4CAF50; color:#fff;">Sign In</button>
-  <div style="text-align:center; margin:10px;">or</div>
-  <button id="googleSignIn" style="width:100%; padding:10px; background:#DB4437; color:#fff;">Sign in with Google</button>
-  <p style="text-align:center; margin-top:15px;"><span id="toggleAuth" style="color:#007BFF; cursor:pointer;">Don't have an account? Sign Up</span></p>
+<div id="authPopup" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:2rem;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.2);z-index:9999;width:90%;max-width:400px;">
+  <h3 id="formTitle">Sign In</h3>
+  <input id="email" type="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:8px;">
+  <input id="password" type="password" placeholder="Password" style="width:100%;padding:10px;margin-bottom:8px;">
+  <button id="authAction" style="width:100%;padding:10px;margin-bottom:10px;">Sign In</button>
+  <button id="googleSignIn" style="width:100%;padding:10px;background:#db4437;color:white;border:none;margin-bottom:10px;">Sign in with Google</button>
+  <p style="text-align:center;font-size:14px;"><span id="toggleAuth" style="color:#007bff;cursor:pointer;">Don't have an account? Sign Up</span></p>
 </div>
 
-<!-- Firebase Script -->
+<!-- Firebase Auth Script -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
   import {
-    getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
-    signInWithEmailAndPassword, signOut, GoogleAuthProvider,
-    signInWithPopup, sendEmailVerification, sendPasswordResetEmail,
-    updateProfile
+    getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,
+    sendPasswordResetEmail, sendEmailVerification, updateProfile
   } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
@@ -1500,18 +1499,19 @@ saveCleaningHistory();
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
-  const storage = getStorage(app);
+  const storage = getStorage();
 
-  let isSignUp = false;
   const profileToggle = document.getElementById('profileToggle');
   const profileMenu = document.getElementById('profileMenu');
   const authPopup = document.getElementById('authPopup');
   const authAction = document.getElementById('authAction');
   const toggleAuth = document.getElementById('toggleAuth');
   const googleSignIn = document.getElementById('googleSignIn');
+  const uploadInput = document.getElementById('uploadProfileInput');
 
-  profileToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
+  let isSignUp = false;
+
+  profileToggle.addEventListener('click', () => {
     if (auth.currentUser) {
       profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
     } else {
@@ -1519,96 +1519,98 @@ saveCleaningHistory();
     }
   });
 
-  toggleAuth.onclick = () => {
-    isSignUp = !isSignUp;
-    document.getElementById('formTitle').innerText = isSignUp ? "Sign Up" : "Sign In";
-    authAction.innerText = isSignUp ? "Sign Up" : "Sign In";
-    toggleAuth.innerText = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
-  };
+  document.addEventListener('click', (e) => {
+    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.style.display = 'none';
+    }
+  });
 
-  authAction.onclick = async () => {
+  toggleAuth.addEventListener('click', () => {
+    isSignUp = !isSignUp;
+    document.getElementById('formTitle').innerText = isSignUp ? 'Sign Up' : 'Sign In';
+    authAction.innerText = isSignUp ? 'Sign Up' : 'Sign In';
+    toggleAuth.innerText = isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up";
+  });
+
+  authAction.addEventListener('click', async () => {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
-    if (!email || !password) return alert("Please enter email and password.");
+    if (!email || !password) return alert("Please fill in both fields.");
     try {
-      if (isSignUp) {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-      }
+      isSignUp
+        ? await createUserWithEmailAndPassword(auth, email, password)
+        : await signInWithEmailAndPassword(auth, email, password);
       authPopup.style.display = 'none';
     } catch (err) {
       alert(err.message);
     }
-  };
+  });
 
-  googleSignIn.onclick = async () => {
+  googleSignIn.addEventListener('click', async () => {
     try {
       await signInWithPopup(auth, provider);
       authPopup.style.display = 'none';
     } catch (err) {
       alert(err.message);
     }
-  };
+  });
 
-  async function logout() {
-    await signOut(auth);
-    profileMenu.style.display = 'none';
-    location.reload();
-  }
-
-  async function sendVerification() {
-    if (!auth.currentUser.emailVerified) {
-      await sendEmailVerification(auth.currentUser);
-      alert("Verification email sent.");
+  window.logout = async () => {
+    try {
+      await signOut(auth);
+      location.reload();
+    } catch (e) {
+      alert("Logout failed.");
     }
-  }
-
-  async function sendPasswordReset() {
-    const email = auth.currentUser.email;
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset email sent to " + email);
-  }
-
-  async function editProfile() {
-    const fileInput = document.createElement('input');
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    fileInput.onchange = async () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-      const storageRef = ref(storage, `profilePhotos/${auth.currentUser.uid}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      await updateProfile(auth.currentUser, { photoURL: url });
-      updateUserUI(auth.currentUser);
-    };
-    fileInput.click();
-  }
-
-  function updateUserUI(user) {
-    const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-    const name = user.displayName || user.email.split('@')[0];
-    document.getElementById('menuPhoto').src = photo;
-    document.getElementById('menuName').innerText = name;
-    document.getElementById('menuEmail').innerText = user.email;
-    document.getElementById('verifyStatus').innerText = user.emailVerified ? '✅ Email Verified' : '⚠️ Email Not Verified';
-    document.getElementById('profileIcon').src = photo;
-  }
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      updateUserUI(user);
+      const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
+      const name = user.displayName || user.email.split('@')[0];
+      const verified = user.emailVerified ? "Verified" : "Not Verified";
+
+      document.getElementById('profileIcon').src = photo;
+      document.getElementById('menuPhoto').src = photo;
+      document.getElementById('menuName').innerText = name;
+      document.getElementById('menuEmail').innerText = user.email;
+      document.getElementById('emailVerified').innerText = verified;
       authPopup.style.display = 'none';
     }
   });
 
-  // Hide dropdown on outside click
-  document.addEventListener('click', (e) => {
-    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
-      profileMenu.style.display = 'none';
+  window.triggerProfileUpload = () => uploadInput.click();
+
+  uploadInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file || !auth.currentUser) return;
+    const user = auth.currentUser;
+    const fileRef = ref(storage, `profiles/${user.uid}.jpg`);
+    try {
+      await uploadBytes(fileRef, file);
+      const photoURL = await getDownloadURL(fileRef);
+      await updateProfile(user, { photoURL });
+      document.getElementById('profileIcon').src = photoURL;
+      document.getElementById('menuPhoto').src = photoURL;
+      alert("Profile picture updated.");
+    } catch (err) {
+      alert("Upload failed.");
     }
   });
+
+  window.sendVerificationEmail = async () => {
+    if (auth.currentUser && !auth.currentUser.emailVerified) {
+      await sendEmailVerification(auth.currentUser);
+      alert("Verification email sent.");
+    }
+  };
+
+  window.sendResetPassword = async () => {
+    if (auth.currentUser?.email) {
+      await sendPasswordResetEmail(auth, auth.currentUser.email);
+      alert("Password reset email sent.");
+    }
+  };
 </script>
 
 </body>
