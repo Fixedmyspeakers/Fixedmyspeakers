@@ -1,29 +1,26 @@
-import { getMessaging, getToken } from "firebase/messaging";
+// firebase-messaging-sw.js
+importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js");
 
-// Initialize Firebase App first...
+firebase.initializeApp({
+  apiKey: "AIzaSyDpIY1tJ9hJQ_Dmnz6HEBu1-gkyhMbl7D8",
+  authDomain: "speakercleanerapp.firebaseapp.com",
+  projectId: "speakercleanerapp",
+  storageBucket: "speakercleanerapp.firebasestorage.app",
+  messagingSenderId: "757487409389",
+  appId: "1:757487409389:web:15a6b21a17a973dace14e4",
+  measurementId: "G-GCR370HQ7B"
+});
 
-const messaging = getMessaging();
+const messaging = firebase.messaging();
 
-Notification.requestPermission().then((permission) => {
-  if (permission === 'granted') {
-    navigator.serviceWorker.ready.then((registration) => {
-      getToken(messaging, {
-        vapidKey: "BPKg-ZUxoKIoLaWU_SAAAFNfuF99elQc-AXoeNIV8z2qoGjJGGj7SemR1Plbr4nXxeP82PrbwjcWefQuMQF7xWw",
-        serviceWorkerRegistration: registration,
-      })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log('FCM Token:', currentToken);
-          // Send this token to your server or save it
-        } else {
-          console.log('No registration token available. Request permission to generate one.');
-        }
-      })
-      .catch((err) => {
-        console.error('An error occurred while retrieving token. ', err);
-      });
-    });
-  } else {
-    console.log('Notification permission denied');
-  }
+messaging.onBackgroundMessage((payload) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: '/icon.png' // optional icon
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
