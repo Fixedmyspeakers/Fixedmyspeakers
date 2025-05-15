@@ -1611,6 +1611,40 @@ saveCleaningHistory();
       alert("Password reset email sent.");
     }
   };
+
+// Initialize Firebase Cloud Messaging
+const messaging = firebase.messaging();
+
+// Register service worker and request notification permission
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(function (registration) {
+      console.log('✅ Service Worker registered:', registration);
+
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          messaging.getToken({
+            vapidKey: "BPKg-ZUxoKIoLaWU_SAAAFNfuF99elQc-AXoeNIV8z2qoGjJGGj7SemR1Plbr4nXxeP82PrbwjcWefQuMQF7xWw",
+            serviceWorkerRegistration: registration
+          }).then((currentToken) => {
+            if (currentToken) {
+              console.log('🔔 FCM Token:', currentToken);
+              // Optional: Send token to your server here
+            } else {
+              console.warn('No FCM token received. User may have denied permission.');
+            }
+          }).catch((err) => {
+            console.error('❌ Error getting FCM token:', err);
+          });
+        } else {
+          console.warn('Notification permission not granted');
+        }
+      });
+    }).catch(function (err) {
+      console.error('❌ Service Worker registration failed:', err);
+    });
+}
+
 </script>
 
 </body>
