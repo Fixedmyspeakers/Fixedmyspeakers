@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/png" href="images/favicon.png.png">
-  <title>Fix My Speaker</title>
-  <style>
-    
+<title>Fix My Speaker - Clean Dust & Water with Sound Waves</title>
+<meta name="description" content="Fixedmyspeaker.com lets you clean your phone speaker using high-frequency sound to eject water and dust. Free, fast, and effective online tool." />
+<meta name="keywords" content="fix my speaker, speaker cleaner, remove water from speaker, speaker sound fix, clean phone speaker, phone speaker repair" />
+<meta name="robots" content="index, follow">
+<style>
 
     :root {
       --primary: #FFA500;
@@ -215,8 +217,47 @@
   transform: scale(1.1)
     }
     
+
+<!-- FEEDBACK UI -->
+<div id="feedbackOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:999;"></div>
+
+<div id="feedbackPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9); background:#fff; border-radius:12px; width:90%; max-width:350px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3); z-index:1000; transition:transform 0.2s ease;">
+  <h2 style="margin:0 0 10px; font-size:20px; color:#333; text-align:center;">Was this cleaning helpful?</h2>
+  <div style="display:flex; justify-content:space-around; margin:15px 0;">
+    <button class="emojiBtn" onclick="submitFeedback('great')">👍<br><small>Great</small></button>
+    <button class="emojiBtn" onclick="submitFeedback('okay')">😐<br><small>Okay</small></button>
+    <button class="emojiBtn" onclick="submitFeedback('bad')">👎<br><small>Bad</small></button>
+  </div>
+  <textarea id="feedbackComment" placeholder="Any suggestions?" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; resize:none;"></textarea>
+  <div style="text-align:right; margin-top:10px;">
+    <button onclick="closeFeedbackPopup()" style="background:none; border:none; color:#007bff; font-size:14px;">Close</button>
+  </div>
+</div>
+
+<style>
+  .emojiBtn {
+    background: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    width: 70px;
+    transition: all 0.2s ease;
+  }
+  .emojiBtn:hover {
+    border-color: #007bff;
+    background: #e9f3ff;
+  }
+  .emojiBtn small {
+    display: block;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #555;
+  }
+</style>
+
     
-  </style>
 </head>
 
   <div id="loader">Loading Tool...</div>
@@ -928,9 +969,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
 
 
 
-
-
-  <section class="animate" aria-labelledby="blogsTitle" id="blog-section">
+<section class="animate" aria-labelledby="blogsTitle" id="blog-section">
   <h2 id="blogsTitle">📰 Blogs & News</h2>
   <div id="blogContainer"></div>
 </section>
@@ -978,7 +1017,6 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     display: none;
     margin-top: 0.5rem;
     font-size: 0.95rem;
-    line-height: 1.6;
   }
 </style>
 
@@ -986,85 +1024,45 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   const blogs = [
     {
       title: "🔊 The Science Behind Speaker Cleaning",
-      summary: "How high-frequency sound removes dust and water from your phone's speaker.",
+      summary: "Discover how high-frequency sound waves dislodge water and dust particles from your speaker using acoustic vibration technology.",
       author: "Bishal Mishra",
       date: "May 10, 2025",
-      content: `High-frequency sound waves cause micro vibrations that help shake loose water droplets and dust particles trapped in the speaker grill. This method is inspired by the same technology used in ultrasonic cleaning for jewelry and electronics. 
-        Our tool utilizes carefully tested audio tones that are loud but safe for your hardware. Avoid using very low frequencies below 80Hz or extremely high tones above 20kHz.`
+      content: "High-frequency sound waves create vibrations that physically shake particles loose. Our tool safely plays tones between 150-800Hz, similar to techniques used by manufacturers like Apple."
     },
     {
       title: "📱 3 Simple Tricks to Maintain Clean Speakers",
-      summary: "Prevent buildup and keep your phone speaker sounding crisp.",
+      summary: "Keep your phone's audio crisp with these practical maintenance tips to avoid moisture and dust buildup.",
       author: "Narayan Giri",
       date: "May 5, 2025",
-      content: `1. Keep your phone away from high humidity areas like bathrooms. 
-        2. Use a soft toothbrush to gently clean the grill once a week. 
-        3. Use our cleaning tool after any exposure to sweat, rain, or moisture.
-        A regular cleaning routine will keep your audio output loud and clear.`
+      content: "1. Keep your phone away from water sources. 2. Use a soft brush to gently clean the grill. 3. Use our tool weekly to clear moisture build-up after workouts or rain exposure."
     },
     {
       title: "🆕 Update: New Cleaning Mode Added!",
-      summary: "We’ve added a new powerful cleaning pulse for deeper water expulsion.",
+      summary: "We’ve introduced a new frequency pulse mode tailored for iPhones, Galaxy S-series, and other modern smartphones.",
       author: "Neha Jaiswal",
       date: "May 2, 2025",
-      content: `Our new mode alternates between 300Hz and 1500Hz in a loop to target different types of debris and moisture. It works especially well on newer iPhones and Samsung models where water might get stuck deeper inside the grill mesh.
-        This pulse mimics real-world vibration frequencies found in acoustic cleaning chambers.`
+      content: "The new mode plays alternating low and high pulses to dislodge even sticky debris. You’ll notice deeper rumble patterns – this is intentional to maximize expulsion."
     },
     {
       title: "🛠️ How to Fix Muffled Phone Speaker",
-      summary: "Is your phone speaker quiet or unclear? Here's how to restore it.",
+      summary: "A step-by-step guide to resolve muffled or weak speaker sound caused by trapped water or dust.",
       author: "Bishal Mishra",
       date: "April 28, 2025",
-      content: `If your speaker sounds muffled:
-        • First dry it with a soft cloth.
-        • Play our cleaner for 30 seconds.
-        • Tilt the phone downward while running it.
-        • Repeat cleaning every 2-3 minutes until clarity is restored.
-        If the issue continues, it may be internal water damage or trapped wax/dust.`
+      content: "Dry your phone completely, then run our cleaner twice. If still muffled, use compressed air or clean speaker grill with a microfiber cloth. Repeat cleaning after 5 minutes."
     },
     {
       title: "🌊 Water in Your Speaker? Here’s What to Do",
-      summary: "Quickly remove water from your phone speaker safely.",
+      summary: "Learn how to safely eject water using sound without damaging your phone’s components.",
       author: "Narayan Giri",
       date: "April 22, 2025",
-      content: `Avoid using heat or compressed air. Instead:
-        • Play our cleaning tone with volume maxed.
-        • Tilt the phone grill-side down at an angle.
-        • Use tissue paper on the grill to absorb expelled moisture.
-        • Repeat 2–3 times, then allow the phone to dry naturally.
-        Never charge the phone if any water is suspected inside.`
+      content: "Water can block sound waves. Use our sound pulses and tilt your phone grill-side down during playback. Avoid charging until fully dry."
     },
     {
       title: "📊 Do Sound Wave Cleaners Actually Work?",
-      summary: "We tested multiple sound-based speaker cleaner tools.",
+      summary: "We tested 5 sound-based speaker cleaner tools. See how they compare and which one is safest.",
       author: "Neha Jaiswal",
       date: "April 15, 2025",
-      content: `Out of 5 tools tested, only 2 expelled visible moisture. Our tool ranked #1 for speed, loudness, and result consistency.
-        Unlike fake sound effects, we use raw sine wave tones scientifically shown to cause acoustic displacement, making our cleaner truly effective.`
-    },
-    {
-      title: "🔄 How Often Should You Clean Your Phone Speaker?",
-      summary: "Best cleaning schedule for healthy audio output.",
-      author: "Bishal Mishra",
-      date: "April 8, 2025",
-      content: `Light users can clean once a month. But if you're often outdoors, sweating, or near water, use our cleaner weekly. 
-        Also run it after workouts, beach visits, or rainy days to maintain optimal sound.`
-    },
-    {
-      title: "🎧 Why Does Speaker Sound Get Worse After Water Exposure?",
-      summary: "Understanding temporary sound distortion after contact with water.",
-      author: "Narayan Giri",
-      date: "April 2, 2025",
-      content: `Water can block speaker membranes or form droplets in the grill mesh, damping sound vibrations. Our sound tool forces those droplets out using vibration and air pressure without damage to components.
-        Once dried, performance usually returns to normal.`
-    },
-    {
-      title: "📦 Behind the Scenes: How We Built This Tool",
-      summary: "A look into the tech and testing behind our speaker cleaner.",
-      author: "Neha Jaiswal",
-      date: "March 28, 2025",
-      content: `We experimented with various tone patterns, from sawtooth waves to low-frequency pulses. After dozens of trials, we optimized a range between 150Hz–1200Hz for maximum cleaning without distortion.
-        UI was built to be lightweight, fast, and mobile-optimized.`
+      content: "Our tool ranked #1 in average debris removal. Others had issues like poor UI, slow playback, or no loop. FixMySpeaker.com uses high-performance Web Audio API."
     }
   ];
 
@@ -1091,15 +1089,8 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   }
 </script>
 
-
-
-
-
-
-
-
-<!-- FAQ SECTION WITH SCHEMA, VOICE, TOGGLE, SEARCH -->
 <style>
+  /* Enhanced FAQ Styles */
   #faqTitle {
     margin-top: 60px;
     font-size: 28px;
@@ -1107,38 +1098,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     text-align: center;
     border-bottom: 2px solid #444;
     padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-
-  .faq-search {
-    max-width: 600px;
-    margin: 0 auto 20px;
-    text-align: center;
-  }
-
-  .faq-search input {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    outline: none;
-  }
-
-  .faq-toggle {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .faq-toggle button {
-    background-color: #00bcd4;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    margin: 0 5px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
+    margin-bottom: 30px;
   }
 
   .faq-container {
@@ -1152,8 +1112,9 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     overflow: hidden;
-    background: #fff;
+    transition: all 0.3s ease;
     border-left: 5px solid #00bcd4;
+    background: #fff;
   }
 
   .faq-question {
@@ -1164,22 +1125,23 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     cursor: pointer;
     position: relative;
     transition: background 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .faq-question:hover {
     background: #e0f7fa;
   }
 
-  .faq-arrow {
-    font-size: 20px;
+  .faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    font-size: 22px;
     transition: transform 0.3s ease;
   }
 
-  .faq-item.active .faq-arrow {
-    transform: rotate(90deg);
+  .faq-item.active .faq-question::after {
+    content: '-';
+    transform: rotate(180deg);
   }
 
   .faq-answer {
@@ -1197,126 +1159,59 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     animation: slideDown 0.3s ease-out;
   }
 
-  .faq-voice {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #00796b;
-    cursor: pointer;
-    text-align: right;
-  }
-
   @keyframes slideDown {
     from {opacity: 0; transform: translateY(-5px);}
     to {opacity: 1; transform: translateY(0);}
   }
 </style>
 
-<section class="animate" itemscope itemtype="https://schema.org/FAQPage">
+<section class="animate">
   <h2 id="faqTitle">Frequently Asked Questions (FAQ)</h2>
+  <div class="faq-container">
 
-  <div class="faq-search">
-    <input type="text" id="faqSearch" placeholder="Search your question... 🔍">
-  </div>
-
-  <div class="faq-toggle">
-    <button onclick="toggleAll(true)">Expand All</button>
-    <button onclick="toggleAll(false)">Collapse All</button>
-  </div>
-
-  <div class="faq-container" id="faqContainer">
-
-    <!-- FAQ ITEM -->
-    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="faq-question">
-        <span itemprop="name">How does this speaker cleaner tool work?</span>
-        <span class="faq-arrow">▶</span>
-      </div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">It plays sound waves that vibrate your speaker, helping eject water and dust stuck inside.</div>
-        <div class="faq-voice" onclick="speakText(this)">🔊 Speak</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-question">1. How does this speaker cleaner tool work?</div>
+      <div class="faq-answer">The tool plays specific audio frequencies that vibrate the speaker, helping to eject water and dust trapped inside.</div>
     </div>
 
-    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="faq-question">
-        <span itemprop="name">Is it compatible with all smartphones?</span>
-        <span class="faq-arrow">▶</span>
-      </div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes, the tool works with iPhones, Android phones, and most modern smartphones with built-in speakers.</div>
-        <div class="faq-voice" onclick="speakText(this)">🔊 Speak</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-question">2. Is it safe to use on any smartphone?</div>
+      <div class="faq-answer">Yes, it's safe for most devices. Just make sure the volume isn't excessively high and the device is placed on a flat surface.</div>
     </div>
 
-    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="faq-question">
-        <span itemprop="name">How many times should I run the cleaning?</span>
-        <span class="faq-arrow">▶</span>
-      </div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Running it 2–3 times is usually enough, especially after water exposure.</div>
-        <div class="faq-voice" onclick="speakText(this)">🔊 Speak</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-question">3. How many times should I use this tool?</div>
+      <div class="faq-answer">Run it 2–3 times, or until the speaker sounds clearer. You can use it as needed.</div>
     </div>
 
-    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="faq-question">
-        <span itemprop="name">Is this tool free and safe?</span>
-        <span class="faq-arrow">▶</span>
-      </div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">Yes, it is 100% free and runs directly in your browser without collecting data.</div>
-        <div class="faq-voice" onclick="speakText(this)">🔊 Speak</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-question">4. Can it fix physically damaged speakers?</div>
+      <div class="faq-answer">No. It can only help with moisture or dust buildup, not with broken or internally damaged components.</div>
     </div>
 
-    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="faq-question">
-        <span itemprop="name">Can it repair physical speaker damage?</span>
-        <span class="faq-arrow">▶</span>
-      </div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text">No, it only helps with water or dust. For hardware issues, consult a technician.</div>
-        <div class="faq-voice" onclick="speakText(this)">🔊 Speak</div>
-      </div>
+    <div class="faq-item">
+      <div class="faq-question">5. Do I need to download or install anything?</div>
+      <div class="faq-answer">Not at all! Everything runs inside your browser, and no installation is needed.</div>
     </div>
 
-    <!-- Add more items here -->
+    <div class="faq-item">
+      <div class="faq-question">6. Is my data private while using this tool?</div>
+      <div class="faq-answer">Yes. This tool runs completely offline. It doesn't collect, store, or transmit any personal data.</div>
+    </div>
+
   </div>
 </section>
 
 <script>
-  // Accordion toggle
-  document.querySelectorAll('.faq-question').forEach(question => {
+  document.querySelectorAll('.faq-question').forEach((question) => {
     question.addEventListener('click', () => {
-      question.parentElement.classList.toggle('active');
+      const item = question.parentElement;
+      item.classList.toggle('active');
     });
   });
-
-  // FAQ search filter
-  document.getElementById('faqSearch').addEventListener('input', function () {
-    const query = this.value.toLowerCase();
-    document.querySelectorAll('.faq-item').forEach(item => {
-      const text = item.innerText.toLowerCase();
-      item.style.display = text.includes(query) ? 'block' : 'none';
-    });
-  });
-
-  // Expand / Collapse All
-  function toggleAll(expand) {
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.classList.toggle('active', expand);
-    });
-  }
-
-  // Voice speaking
-  function speakText(el) {
-    const text = el.parentElement.querySelector('[itemprop="text"]').innerText;
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'en-US';
-    window.speechSynthesis.speak(utter);
-  }
 </script>
+
+
 
 
 
@@ -1846,37 +1741,58 @@ saveCleaningHistory();
     }
   };
 
-// Initialize Firebase Cloud Messaging
-const messaging = firebase.messaging();
+let cleaningTimeout;
 
-// Register service worker and request notification permission
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/firebase-messaging-sw.js')
-    .then(function (registration) {
-      console.log('✅ Service Worker registered:', registration);
+document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("stopBtn").disabled = false;
 
-      Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          messaging.getToken({
-            vapidKey: "BPKg-ZUxoKIoLaWU_SAAAFNfuF99elQc-AXoeNIV8z2qoGjJGGj7SemR1Plbr4nXxeP82PrbwjcWefQuMQF7xWw",
-            serviceWorkerRegistration: registration
-          }).then((currentToken) => {
-            if (currentToken) {
-              console.log('🔔 FCM Token:', currentToken);
-              // Optional: Send token to your server here
-            } else {
-              console.warn('No FCM token received. User may have denied permission.');
-            }
-          }).catch((err) => {
-            console.error('❌ Error getting FCM token:', err);
-          });
-        } else {
-          console.warn('Notification permission not granted');
-        }
-      });
-    }).catch(function (err) {
-      console.error('❌ Service Worker registration failed:', err);
-    });
+  // Your cleaning logic here (e.g., play sound)
+
+  cleaningTimeout = setTimeout(() => {
+    stopCleaning();
+  }, 30000); // Auto stop after 30 sec
+});
+
+document.getElementById("stopBtn").addEventListener("click", () => {
+  stopCleaning();
+});
+
+function stopCleaning() {
+  clearTimeout(cleaningTimeout);
+
+  // Stop cleaning logic here (e.g., pause sound)
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("stopBtn").disabled = true;
+
+  setTimeout(showFeedbackPopup, 500); // Show feedback after 0.5s
+}
+
+function showFeedbackPopup() {
+  document.getElementById('feedbackPopup').style.display = 'block';
+  document.getElementById('feedbackOverlay').style.display = 'block';
+  requestAnimationFrame(() => {
+    document.getElementById('feedbackPopup').style.transform = 'translate(-50%,-50%) scale(1)';
+  });
+}
+
+function closeFeedbackPopup() {
+  document.getElementById('feedbackPopup').style.transform = 'translate(-50%,-50%) scale(0.9)';
+  setTimeout(() => {
+    document.getElementById('feedbackPopup').style.display = 'none';
+    document.getElementById('feedbackOverlay').style.display = 'none';
+    document.getElementById('feedbackComment').value = '';
+  }, 200);
+}
+
+function submitFeedback(rating) {
+  const comment = document.getElementById('feedbackComment').value.trim();
+  const feedback = { rating, comment: comment || null, time: new Date().toISOString() };
+  const all = JSON.parse(localStorage.getItem('feedbackData') || '[]');
+  all.push(feedback);
+  localStorage.setItem('feedbackData', JSON.stringify(all));
+  alert('Thanks for your feedback!');
+  closeFeedbackPopup();
 }
 
 </script>
