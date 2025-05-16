@@ -1473,6 +1473,167 @@ function launchConfetti() {
 }
 </script>
 
+
+<!-- 🌟 Testimonial Section with Slider + Submission Form -->
+<section id="testimonial-section" style="padding: 40px 20px; background: #f5f5f5;">
+  <h2 style="text-align: center; font-size: 28px;">💬 What Users Are Saying</h2>
+  <div class="testimonial-carousel">
+    <div class="testimonial-slide active">
+      <img src="https://i.imgur.com/1X1KjFc.png" alt="Bishal Mishra" class="testimonial-img">
+      <p class="testimonial-text">“This tool saved my phone after it fell in water. Highly recommend it!”</p>
+      <h4 class="testimonial-name">Bishal Mishra</h4>
+      <p class="testimonial-role">Developer</p>
+    </div>
+    <div class="testimonial-slide">
+      <img src="https://i.imgur.com/qj7i4GR.png" alt="Narayan Giri" class="testimonial-img">
+      <p class="testimonial-text">“Works like magic! My speaker was muffled but now it sounds brand new.”</p>
+      <h4 class="testimonial-name">Narayan Giri</h4>
+      <p class="testimonial-role">Customer</p>
+    </div>
+    <div class="testimonial-slide">
+      <img src="https://i.imgur.com/I80W1Q0.png" alt="Neha Jaiswal" class="testimonial-img">
+      <p class="testimonial-text">“Simple and effective. Great user interface and fast results.”</p>
+      <h4 class="testimonial-name">Neha Jaiswal</h4>
+      <p class="testimonial-role">Customer</p>
+    </div>
+
+    <div class="testimonial-nav">
+      <span class="testimonial-dot active" onclick="changeSlide(0)"></span>
+      <span class="testimonial-dot" onclick="changeSlide(1)"></span>
+      <span class="testimonial-dot" onclick="changeSlide(2)"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ✍️ Testimonial Submission Form -->
+<section id="testimonial-form" style="padding: 40px 20px; background: #fff;">
+  <h3 style="text-align: center; font-size: 24px;">📝 Share Your Experience</h3>
+  <form id="submitTestimonialForm" style="max-width: 600px; margin: 20px auto; display: flex; flex-direction: column; gap: 15px;">
+    <input type="text" name="name" placeholder="Your Name" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+    <input type="text" name="location" placeholder="Your Location" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+    <textarea name="message" placeholder="Your Testimonial" rows="4" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
+    <input type="url" name="photo" placeholder="Optional Profile Photo URL" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+    <button type="submit" style="padding: 12px; background: #00bcd4; border: none; color: white; font-size: 16px; border-radius: 6px; cursor: pointer;">Submit Testimonial</button>
+    <p id="testimonialMsg" style="text-align:center; color: green; display: none;">✅ Thank you for your feedback!</p>
+  </form>
+</section>
+
+<!-- 💅 Styles -->
+<style>
+  .testimonial-carousel {
+    position: relative;
+    max-width: 800px;
+    margin: 30px auto;
+    overflow: hidden;
+  }
+  .testimonial-slide {
+    display: none;
+    text-align: center;
+    padding: 30px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    animation: fadeSlide 0.5s ease-in-out;
+  }
+  .testimonial-slide.active {
+    display: block;
+  }
+  .testimonial-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  .testimonial-text {
+    font-size: 18px;
+    font-style: italic;
+    color: #333;
+  }
+  .testimonial-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #00796b;
+  }
+  .testimonial-role {
+    color: #888;
+    font-size: 14px;
+  }
+  .testimonial-nav {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .testimonial-dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .testimonial-dot.active {
+    background-color: #00bcd4;
+  }
+
+  @keyframes fadeSlide {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+
+<!-- ⚙️ Script -->
+<script>
+  let currentSlide = 0;
+  const slides = Array.from(document.querySelectorAll('.testimonial-slide'));
+  const dots = Array.from(document.querySelectorAll('.testimonial-dot'));
+
+  function changeSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
+
+  document.getElementById('submitTestimonialForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this.name.value.trim();
+    const location = this.location.value.trim();
+    const message = this.message.value.trim();
+    const photo = this.photo.value.trim() || "https://i.imgur.com/1X1KjFc.png";
+
+    const newSlide = document.createElement('div');
+    newSlide.className = 'testimonial-slide';
+    newSlide.innerHTML = `
+      <img src="${photo}" alt="${name}" class="testimonial-img">
+      <p class="testimonial-text">“${message}”</p>
+      <h4 class="testimonial-name">${name}</h4>
+      <p class="testimonial-role">📍 ${location}</p>
+    `;
+    const carousel = document.querySelector('.testimonial-carousel');
+    carousel.insertBefore(newSlide, carousel.querySelector('.testimonial-nav'));
+
+    const newDot = document.createElement('span');
+    newDot.className = 'testimonial-dot';
+    newDot.onclick = () => changeSlide(slides.length);
+    carousel.querySelector('.testimonial-nav').appendChild(newDot);
+
+    slides.push(newSlide);
+    dots.push(newDot);
+
+    this.reset();
+    document.getElementById('testimonialMsg').style.display = 'block';
+    setTimeout(() => { document.getElementById('testimonialMsg').style.display = 'none'; }, 4000);
+  });
+</script>
+
+
+
+
+
   <footer>&copy; Bishal Mishra 2025  | All rights reserved.</footer>
 <script>
     let audioCtx, oscillator, gainNode, countdownInterval;
