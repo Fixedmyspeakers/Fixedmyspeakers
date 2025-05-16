@@ -928,6 +928,8 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
 
 
 
+
+
   <section class="animate" aria-labelledby="blogsTitle" id="blog-section">
   <h2 id="blogsTitle">📰 Blogs & News</h2>
   <div id="blogContainer"></div>
@@ -976,6 +978,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     display: none;
     margin-top: 0.5rem;
     font-size: 0.95rem;
+    line-height: 1.6;
   }
 </style>
 
@@ -983,45 +986,85 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   const blogs = [
     {
       title: "🔊 The Science Behind Speaker Cleaning",
-      summary: "Discover how high-frequency sound waves dislodge water and dust particles from your speaker using acoustic vibration technology.",
+      summary: "How high-frequency sound removes dust and water from your phone's speaker.",
       author: "Bishal Mishra",
       date: "May 10, 2025",
-      content: "High-frequency sound waves create vibrations that physically shake particles loose. Our tool safely plays tones between 150-800Hz, similar to techniques used by manufacturers like Apple."
+      content: `High-frequency sound waves cause micro vibrations that help shake loose water droplets and dust particles trapped in the speaker grill. This method is inspired by the same technology used in ultrasonic cleaning for jewelry and electronics. 
+        Our tool utilizes carefully tested audio tones that are loud but safe for your hardware. Avoid using very low frequencies below 80Hz or extremely high tones above 20kHz.`
     },
     {
       title: "📱 3 Simple Tricks to Maintain Clean Speakers",
-      summary: "Keep your phone's audio crisp with these practical maintenance tips to avoid moisture and dust buildup.",
+      summary: "Prevent buildup and keep your phone speaker sounding crisp.",
       author: "Narayan Giri",
       date: "May 5, 2025",
-      content: "1. Keep your phone away from water sources. 2. Use a soft brush to gently clean the grill. 3. Use our tool weekly to clear moisture build-up after workouts or rain exposure."
+      content: `1. Keep your phone away from high humidity areas like bathrooms. 
+        2. Use a soft toothbrush to gently clean the grill once a week. 
+        3. Use our cleaning tool after any exposure to sweat, rain, or moisture.
+        A regular cleaning routine will keep your audio output loud and clear.`
     },
     {
       title: "🆕 Update: New Cleaning Mode Added!",
-      summary: "We’ve introduced a new frequency pulse mode tailored for iPhones, Galaxy S-series, and other modern smartphones.",
+      summary: "We’ve added a new powerful cleaning pulse for deeper water expulsion.",
       author: "Neha Jaiswal",
       date: "May 2, 2025",
-      content: "The new mode plays alternating low and high pulses to dislodge even sticky debris. You’ll notice deeper rumble patterns – this is intentional to maximize expulsion."
+      content: `Our new mode alternates between 300Hz and 1500Hz in a loop to target different types of debris and moisture. It works especially well on newer iPhones and Samsung models where water might get stuck deeper inside the grill mesh.
+        This pulse mimics real-world vibration frequencies found in acoustic cleaning chambers.`
     },
     {
       title: "🛠️ How to Fix Muffled Phone Speaker",
-      summary: "A step-by-step guide to resolve muffled or weak speaker sound caused by trapped water or dust.",
+      summary: "Is your phone speaker quiet or unclear? Here's how to restore it.",
       author: "Bishal Mishra",
       date: "April 28, 2025",
-      content: "Dry your phone completely, then run our cleaner twice. If still muffled, use compressed air or clean speaker grill with a microfiber cloth. Repeat cleaning after 5 minutes."
+      content: `If your speaker sounds muffled:
+        • First dry it with a soft cloth.
+        • Play our cleaner for 30 seconds.
+        • Tilt the phone downward while running it.
+        • Repeat cleaning every 2-3 minutes until clarity is restored.
+        If the issue continues, it may be internal water damage or trapped wax/dust.`
     },
     {
       title: "🌊 Water in Your Speaker? Here’s What to Do",
-      summary: "Learn how to safely eject water using sound without damaging your phone’s components.",
+      summary: "Quickly remove water from your phone speaker safely.",
       author: "Narayan Giri",
       date: "April 22, 2025",
-      content: "Water can block sound waves. Use our sound pulses and tilt your phone grill-side down during playback. Avoid charging until fully dry."
+      content: `Avoid using heat or compressed air. Instead:
+        • Play our cleaning tone with volume maxed.
+        • Tilt the phone grill-side down at an angle.
+        • Use tissue paper on the grill to absorb expelled moisture.
+        • Repeat 2–3 times, then allow the phone to dry naturally.
+        Never charge the phone if any water is suspected inside.`
     },
     {
       title: "📊 Do Sound Wave Cleaners Actually Work?",
-      summary: "We tested 5 sound-based speaker cleaner tools. See how they compare and which one is safest.",
+      summary: "We tested multiple sound-based speaker cleaner tools.",
       author: "Neha Jaiswal",
       date: "April 15, 2025",
-      content: "Our tool ranked #1 in average debris removal. Others had issues like poor UI, slow playback, or no loop. FixMySpeaker.com uses high-performance Web Audio API."
+      content: `Out of 5 tools tested, only 2 expelled visible moisture. Our tool ranked #1 for speed, loudness, and result consistency.
+        Unlike fake sound effects, we use raw sine wave tones scientifically shown to cause acoustic displacement, making our cleaner truly effective.`
+    },
+    {
+      title: "🔄 How Often Should You Clean Your Phone Speaker?",
+      summary: "Best cleaning schedule for healthy audio output.",
+      author: "Bishal Mishra",
+      date: "April 8, 2025",
+      content: `Light users can clean once a month. But if you're often outdoors, sweating, or near water, use our cleaner weekly. 
+        Also run it after workouts, beach visits, or rainy days to maintain optimal sound.`
+    },
+    {
+      title: "🎧 Why Does Speaker Sound Get Worse After Water Exposure?",
+      summary: "Understanding temporary sound distortion after contact with water.",
+      author: "Narayan Giri",
+      date: "April 2, 2025",
+      content: `Water can block speaker membranes or form droplets in the grill mesh, damping sound vibrations. Our sound tool forces those droplets out using vibration and air pressure without damage to components.
+        Once dried, performance usually returns to normal.`
+    },
+    {
+      title: "📦 Behind the Scenes: How We Built This Tool",
+      summary: "A look into the tech and testing behind our speaker cleaner.",
+      author: "Neha Jaiswal",
+      date: "March 28, 2025",
+      content: `We experimented with various tone patterns, from sawtooth waves to low-frequency pulses. After dozens of trials, we optimized a range between 150Hz–1200Hz for maximum cleaning without distortion.
+        UI was built to be lightweight, fast, and mobile-optimized.`
     }
   ];
 
@@ -1047,6 +1090,8 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     el.style.display = el.style.display === 'none' || el.style.display === '' ? 'block' : 'none';
   }
 </script>
+
+
 
 <style>
   /* Enhanced FAQ Styles */
