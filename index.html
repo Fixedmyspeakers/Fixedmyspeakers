@@ -211,32 +211,6 @@
     }
 
  
-    /* Scroll to Top Button */
-#scrollTopBtn {
-  position: fixed;
-  bottom: 40px;
-  right: 25px;
-  z-index: 999;
-  display: none;
-  background: linear-gradient(145deg, #0066ff, #3399ff);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 24px;
-  padding: 14px 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
-  transition: all 0.3s ease-in-out;
-}
-
-/* Hover Effects */
-#scrollTopBtn:hover {
-  background: linear-gradient(145deg, #0052cc, #3385ff);
-  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
-  transform: scale(1.1)
-    }
-    
-    
   </style>
 </head>
 
@@ -1112,12 +1086,66 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   }
 </script>
 
+<!-- 🔼 Scroll-to-Top Button -->
+<button id="scrollTopBtn" aria-label="Scroll to Top">
+  <svg width="50" height="60" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" stroke="#ccc" stroke-width="10" fill="none" />
+    <circle id="progressCircle" cx="50" cy="50" r="45" stroke="#000000" stroke-width="10" fill="none"
+      stroke-linecap="round" transform="rotate(-90 50 50)" stroke-dasharray="282.6" stroke-dashoffset="282.6" />
+    <text x="50" y="58" text-anchor="middle" font-size="40" fill="#000000">↑</text>
+  </svg>
+</button>
 
+<!-- Styles -->
+<style>
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 0;
+    display: none;
+  }
 
+  #scrollTopBtn:hover text {
+    fill: #00796b;
+  }
+</style>
 
+<!-- Script -->
+<script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  const progressCircle = document.getElementById("progressCircle");
+  const circumference = 2 * Math.PI * 45;
 
+  function updateProgress() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const percentScrolled = scrollTop / scrollHeight;
+    const offset = circumference * (1 - percentScrolled);
 
+    progressCircle.style.strokeDashoffset = offset;
 
+    if (scrollTop > 100) {
+      scrollBtn.style.display = "block";
+    } else {
+      scrollBtn.style.display = "none";
+    }
+  }
+
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", updateProgress);
+  document.addEventListener("DOMContentLoaded", updateProgress);
+</script>
 
 <!-- FAQ SECTION WITH SCHEMA, VOICE, TOGGLE, SEARCH -->
 <style>
@@ -1674,7 +1702,7 @@ function launchConfetti() {
     }
   </script>
 
-   <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">↑</button>
+ 
 
   <audio id="click-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
                                                                                           
