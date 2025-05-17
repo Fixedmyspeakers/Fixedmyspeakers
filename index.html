@@ -251,10 +251,117 @@
   }
 </style>
 
-<a href="https://wa.me/+979827801575" target="_blank" class="whatsapp-btn">
-  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
-  <span id="contactBtn">Contact</span>
+
+
+
+<!-- WhatsApp Button HTML -->
+<a href="https://wa.me/+979827801575" target="_blank" class="fancy-whatsapp-btn" onclick="playClickSound()">
+  <div class="pulse-ring"></div>
+  <img src="https://img.icons8.com/color/32/000000/whatsapp--v1.png" alt="WhatsApp" />
+  <span>Chat with Us</span>
+  <span class="notif-badge">1</span>
 </a>
+
+<!-- Sound Effect -->
+<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c6b9eb70f5.mp3?filename=button-124476.mp3" preload="auto"></audio>
+
+<!-- CSS Styling -->
+<style>
+  .fancy-whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Changed to left side */
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    z-index: 999;
+    overflow: visible;
+  }
+
+  .fancy-whatsapp-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .fancy-whatsapp-btn img {
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+  }
+
+  .pulse-ring {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(37, 211, 102, 0.3);
+    border-radius: 50%;
+    z-index: 0;
+    animation: pulse 2s infinite;
+    bottom: -4px;
+    left: -4px;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .notif-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    animation: badgeBounce 1.5s infinite;
+  }
+
+  @keyframes badgeBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  @media screen and (max-width: 500px) {
+    .fancy-whatsapp-btn span {
+      display: none;
+    }
+    .fancy-whatsapp-btn {
+      padding: 10px;
+      border-radius: 50%;
+    }
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  function playClickSound() {
+    document.getElementById("clickSound").play();
+  }
+</script>
+
+
+
+
 
   </header>
 
