@@ -1474,27 +1474,27 @@ function launchConfetti() {
 </script>
 
 
-<!-- 🌟 Testimonial Section with Slider + Submission Form -->
+<!-- 🌟 Testimonial Section with Auto-Slider -->
 <section id="testimonial-section" style="padding: 40px 20px; background: #f5f5f5;">
   <h2 style="text-align: center; font-size: 28px;">💬 What Users Are Saying</h2>
-  <div class="testimonial-carousel">
+  <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
     <div class="testimonial-slide active">
-      <img src="https://i.imgur.com/1X1KjFc.png" alt="Bishal Mishra" class="testimonial-img">
-      <p class="testimonial-text">“This tool saved my phone after it fell in water. Highly recommend it!”</p>
+     <img src="https://i.imgur.com/I80W1Q0.png" alt="Neha Jaiswal" class="testimonial-img">
+      <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
       <h4 class="testimonial-name">Bishal Mishra</h4>
-      <p class="testimonial-role">Developer</p>
+      <p class="testimonial-role">📱 App Developer</p>
     </div>
     <div class="testimonial-slide">
-      <img src="https://i.imgur.com/qj7i4GR.png" alt="Narayan Giri" class="testimonial-img">
-      <p class="testimonial-text">“Works like magic! My speaker was muffled but now it sounds brand new.”</p>
+     <img src="https://i.imgur.com/I80W1Q0.png" alt="Neha Jaiswal" class="testimonial-img">
+      <p class="testimonial-text">“Was skeptical at first, but after running the cleaner twice, my speaker volume improved drastically. I didn’t have to go to a repair shop. Highly recommended for anyone facing muffled audio.”</p>
       <h4 class="testimonial-name">Narayan Giri</h4>
-      <p class="testimonial-role">Customer</p>
+      <p class="testimonial-role">🎧 Gadget Enthusiast</p>
     </div>
     <div class="testimonial-slide">
-      <img src="https://i.imgur.com/I80W1Q0.png" alt="Neha Jaiswal" class="testimonial-img">
-      <p class="testimonial-text">“Simple and effective. Great user interface and fast results.”</p>
-      <h4 class="testimonial-name">Neha Jaiswal</h4>
-      <p class="testimonial-role">Customer</p>
+     <img src="https://i.imgur.com/I80W1Q0.png" alt="Neha Jaiswal" class="testimonial-img">
+      <p class="testimonial-text">“This website is a lifesaver! Clean interface, easy to use, and it really does the job. My friends didn’t believe it until they tried it themselves. Super handy after water exposure.”</p>
+      <h4 class="testimonial-name">Prashant Mishra</h4>
+      <p class="testimonial-role">🌟 Verified User</p>
     </div>
 
     <div class="testimonial-nav">
@@ -1503,19 +1503,6 @@ function launchConfetti() {
       <span class="testimonial-dot" onclick="changeSlide(2)"></span>
     </div>
   </div>
-</section>
-
-<!-- ✍️ Testimonial Submission Form -->
-<section id="testimonial-form" style="padding: 40px 20px; background: #fff;">
-  <h3 style="text-align: center; font-size: 24px;">📝 Share Your Experience</h3>
-  <form id="submitTestimonialForm" style="max-width: 600px; margin: 20px auto; display: flex; flex-direction: column; gap: 15px;">
-    <input type="text" name="name" placeholder="Your Name" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-    <input type="text" name="location" placeholder="Your Location" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-    <textarea name="message" placeholder="Your Testimonial" rows="4" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
-    <input type="url" name="photo" placeholder="Optional Profile Photo URL" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-    <button type="submit" style="padding: 12px; background: #00bcd4; border: none; color: white; font-size: 16px; border-radius: 6px; cursor: pointer;">Submit Testimonial</button>
-    <p id="testimonialMsg" style="text-align:center; color: green; display: none;">✅ Thank you for your feedback!</p>
-  </form>
 </section>
 
 <!-- 💅 Styles -->
@@ -1577,18 +1564,18 @@ function launchConfetti() {
   .testimonial-dot.active {
     background-color: #00bcd4;
   }
-
   @keyframes fadeSlide {
     from {opacity: 0; transform: translateY(10px);}
     to {opacity: 1; transform: translateY(0);}
   }
 </style>
 
-<!-- ⚙️ Script -->
+<!-- ⚙ Script -->
 <script>
   let currentSlide = 0;
-  const slides = Array.from(document.querySelectorAll('.testimonial-slide'));
-  const dots = Array.from(document.querySelectorAll('.testimonial-dot'));
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.testimonial-dot');
+  let slideInterval;
 
   function changeSlide(index) {
     slides[currentSlide].classList.remove('active');
@@ -1598,40 +1585,37 @@ function launchConfetti() {
     dots[currentSlide].classList.add('active');
   }
 
-  document.getElementById('submitTestimonialForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = this.name.value.trim();
-    const location = this.location.value.trim();
-    const message = this.message.value.trim();
-    const photo = this.photo.value.trim() || "https://i.imgur.com/1X1KjFc.png";
+  function nextSlide() {
+    let next = (currentSlide + 1) % slides.length;
+    changeSlide(next);
+  }
 
-    const newSlide = document.createElement('div');
-    newSlide.className = 'testimonial-slide';
-    newSlide.innerHTML = `
-      <img src="${photo}" alt="${name}" class="testimonial-img">
-      <p class="testimonial-text">“${message}”</p>
-      <h4 class="testimonial-name">${name}</h4>
-      <p class="testimonial-role">📍 ${location}</p>
-    `;
-    const carousel = document.querySelector('.testimonial-carousel');
-    carousel.insertBefore(newSlide, carousel.querySelector('.testimonial-nav'));
+  function startSlider() {
+    slideInterval = setInterval(nextSlide, 5000); // Auto-slide every 5s
+  }
 
-    const newDot = document.createElement('span');
-    newDot.className = 'testimonial-dot';
-    newDot.onclick = () => changeSlide(slides.length);
-    carousel.querySelector('.testimonial-nav').appendChild(newDot);
+  function pauseSlider() {
+    clearInterval(slideInterval);
+  }
 
-    slides.push(newSlide);
-    dots.push(newDot);
-
-    this.reset();
-    document.getElementById('testimonialMsg').style.display = 'block';
-    setTimeout(() => { document.getElementById('testimonialMsg').style.display = 'none'; }, 4000);
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  document.querySelector('.testimonial-carousel').addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
   });
+
+  document.querySelector('.testimonial-carousel').addEventListener('touchend', e => {
+    let touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 50) nextSlide(); // Swipe left
+    if (touchEndX > touchStartX + 50) {
+      let prev = (currentSlide - 1 + slides.length) % slides.length;
+      changeSlide(prev);
+    }
+  });
+
+  // Start on load
+  startSlider();
 </script>
-
-
-
 
 
   <footer>&copy; Bishal Mishra 2025  | All rights reserved.</footer>
