@@ -1635,7 +1635,7 @@ function launchConfetti() {
 </script>
 
 
-<!-- 🌟 Testimonial Section with Auto-Slider and Round Profile Images -->
+<!-- 🌟 Testimonial Section with Auto-Slider and Accessible Dots -->
 <section id="testimonial-section" style="padding: 40px 20px; background: #f5f5f5;">
   <h2 style="text-align: center; font-size: 28px;">💬 What Users Are Saying</h2>
   <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
@@ -1668,9 +1668,9 @@ function launchConfetti() {
     </div>
 
     <div class="testimonial-nav">
-      <span class="testimonial-dot active" onclick="changeSlide(0)" aria-label="Show testimonial 1"></span>
-      <span class="testimonial-dot" onclick="changeSlide(1)" aria-label="Show testimonial 2"></span>
-      <span class="testimonial-dot" onclick="changeSlide(2)" aria-label="Show testimonial 3"></span>
+      <button class="testimonial-dot active" onclick="changeSlide(0)" aria-label="Show testimonial 1"></button>
+      <button class="testimonial-dot" onclick="changeSlide(1)" aria-label="Show testimonial 2"></button>
+      <button class="testimonial-dot" onclick="changeSlide(2)" aria-label="Show testimonial 3"></button>
     </div>
   </div>
 </section>
@@ -1731,9 +1731,14 @@ function launchConfetti() {
     display: inline-block;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: none;
+    padding: 0;
   }
   .testimonial-dot.active {
     background-color: #00bcd4;
+  }
+  .testimonial-dot:focus {
+    outline: 2px solid #00bcd4;
   }
   @keyframes fadeSlide {
     from {opacity: 0; transform: translateY(10px);}
@@ -1762,7 +1767,7 @@ function launchConfetti() {
   }
 
   function startSlider() {
-    slideInterval = setInterval(nextSlide, 5000); // Auto-slide every 5s
+    slideInterval = setInterval(nextSlide, 5000);
   }
 
   function pauseSlider() {
@@ -1777,14 +1782,14 @@ function launchConfetti() {
 
   document.querySelector('.testimonial-carousel').addEventListener('touchend', e => {
     let touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 50) nextSlide(); // Swipe left
+    if (touchEndX < touchStartX - 50) nextSlide();
     if (touchEndX > touchStartX + 50) {
       let prev = (currentSlide - 1 + slides.length) % slides.length;
       changeSlide(prev);
     }
   });
 
-  // Keyboard navigation support
+  // Keyboard navigation
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') nextSlide();
     if (e.key === 'ArrowLeft') {
@@ -1793,11 +1798,9 @@ function launchConfetti() {
     }
   });
 
-  // Start on load
+  // Start slider on page load
   startSlider();
 </script>
-
-
 
 
 
