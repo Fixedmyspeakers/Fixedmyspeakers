@@ -309,8 +309,19 @@
 }
 </style>
 
+
+
+
 <!-- Sound Effect -->
-<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c6b9eb70f5.mp3?filename=button-124476.mp3" preload="auto"></audio>
+<audio id="clickSound" src="your-sound-url.mp3" preload="auto"></audio>
+<script>
+  function playClickSound() {
+    const click = document.getElementById("clickSound");
+    if (click) click.play();
+  }
+</script>
+
+
 
 <!-- CSS Styling -->
 <style>
