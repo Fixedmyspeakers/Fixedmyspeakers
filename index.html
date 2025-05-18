@@ -254,13 +254,34 @@
 
 
 
-<!-- WhatsApp Button HTML -->
-<a href="https://wa.me/+979827801575" target="_blank" class="fancy-whatsapp-btn" onclick="playClickSound()">
-  <div class="pulse-ring"></div>
-  <img src="https://img.icons8.com/color/32/000000/whatsapp--v1.png" alt="WhatsApp" />
+<!-- ✅ WhatsApp Button with High-Resolution Icon -->
+<a href="https://wa.me/+979827801575" target="_blank" class="fancy-whatsapp-btn" onclick="playClickSound()" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; background-color: #25D366; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; position: relative;">
+  <div class="pulse-ring" style="position: absolute; left: -10px; top: -10px; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #25D366; animation: pulse 1.5s infinite;"></div>
+  
+  <!-- ✅ High-resolution icon served and scaled for sharp display -->
+  <img src="https://img.icons8.com/color/64/000000/whatsapp--v1.png" width="32" height="32" alt="WhatsApp" loading="lazy" />
+
   <span>Chat with Us</span>
-  <span class="notif-badge">1</span>
+  <span class="notif-badge" style="background: red; color: white; padding: 2px 6px; border-radius: 50%; font-size: 12px; position: absolute; top: -6px; right: -6px;">1</span>
 </a>
+
+<!-- 🔁 Pulse animation -->
+<style>
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+</style>
 
 <!-- Sound Effect -->
 <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c6b9eb70f5.mp3?filename=button-124476.mp3" preload="auto"></audio>
