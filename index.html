@@ -253,27 +253,53 @@
 
 
 
-
-<!-- ✅ WhatsApp Button with High-Resolution Icon -->
-<a href="https://wa.me/+979827801575" target="_blank" class="fancy-whatsapp-btn" onclick="playClickSound()" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 15px; background-color: #25D366; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; position: relative;">
-  <div class="pulse-ring" style="position: absolute; left: -10px; top: -10px; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #25D366; animation: pulse 1.5s infinite;"></div>
-  
-  <!-- ✅ High-resolution icon served and scaled for sharp display -->
-  <img src="https://img.icons8.com/color/64/000000/whatsapp--v1.png" width="32" height="32" alt="WhatsApp" loading="lazy" />
-
-  <span>Chat with Us</span>
-  <span class="notif-badge" style="background: red; color: white; padding: 2px 6px; border-radius: 50%; font-size: 12px; position: absolute; top: -6px; right: -6px;">1</span>
+<!-- ✅ WhatsApp Button at Bottom-Left -->
+<a href="https://wa.me/+979827801575" target="_blank" class="fancy-whatsapp-btn" onclick="playClickSound()" aria-label="Chat with us on WhatsApp">
+  <div class="pulse-ring"></div>
+  <img src="https://img.icons8.com/color/64/000000/whatsapp--v1.png" alt="WhatsApp icon" />
 </a>
 
-<!-- 🔁 Pulse animation -->
+<!-- ✅ Styles -->
 <style>
+.fancy-whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #25D366;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease-in-out;
+}
+.fancy-whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+.fancy-whatsapp-btn img {
+  width: 32px;
+  height: 32px;
+}
+.pulse-ring {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: rgba(37, 211, 102, 0.3);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  z-index: -1;
+}
 @keyframes pulse {
   0% {
     transform: scale(0.9);
     opacity: 0.7;
   }
   70% {
-    transform: scale(1.1);
+    transform: scale(1.4);
     opacity: 0;
   }
   100% {
