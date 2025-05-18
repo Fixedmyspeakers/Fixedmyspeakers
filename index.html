@@ -1204,15 +1204,16 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
       <h3>${blog.title}</h3>
       <p>${blog.summary}</p>
       <p><small>By <strong>${blog.author}</strong> • ${blog.date}</small></p>
-      <a class="read-more" onclick="toggleBlogDetails(${index})">Read more →</a>
-      <div class="blog-full" id="blog-full-${index}">
+      <a class="read-more" href="#blog-full-${index}" onclick="toggleBlogDetails(event, ${index})">Read more →</a>
+      <div class="blog-full" id="blog-full-${index}" style="display:none;">
         <p>${blog.content}</p>
       </div>
     `;
     blogContainer.appendChild(blogItem);
   });
 
-  function toggleBlogDetails(index) {
+  function toggleBlogDetails(event, index) {
+    event.preventDefault(); // Prevent page jump
     const el = document.getElementById('blog-full-' + index);
     el.style.display = el.style.display === 'none' || el.style.display === '' ? 'block' : 'none';
   }
@@ -1795,6 +1796,10 @@ function launchConfetti() {
   // Start on load
   startSlider();
 </script>
+
+
+
+
 
   <footer>&copy; Bishal Mishra 2025  | All rights reserved.</footer>
 <script>
