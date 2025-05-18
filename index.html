@@ -367,13 +367,25 @@
 
   <main>
     <section>
-      <h2 id="cleaningPanelTitle">Cleaning Panel</h2>
-      <button class="btn mode" onclick="startCleaning(165)" id="waterEjectBtn">Water Eject</button>
-      <button class="btn mode" onclick="startCleaning(300)" id="dustCleanBtn">Dust Clean</button>
-      <button class="btn mode" onclick="startCleaning(parseInt(freqSlider.value))" id="customBtn">Custom</button>
-      <p id="frequencyLabel">🎚️ Frequency: <span id="freqLabel">440</span> Hz</p>
-      <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()">
-      <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
+      <fieldset aria-labelledby="cleaningPanelTitle" style="border: none; padding: 20px 0;">
+  <legend id="cleaningPanelTitle" style="font-size: 24px; font-weight: bold;">🧼 Cleaning Panel</legend>
+
+  <div style="margin: 10px 0;">
+    <button class="btn mode" onclick="startCleaning(165)" id="waterEjectBtn" aria-label="Start water eject mode">Water Eject</button>
+    <button class="btn mode" onclick="startCleaning(300)" id="dustCleanBtn" aria-label="Start dust clean mode">Dust Clean</button>
+    <button class="btn mode" onclick="startCleaning(parseInt(freqSlider.value))" id="customBtn" aria-label="Start custom cleaning">Custom</button>
+  </div>
+
+  <div style="margin: 15px 0;">
+    <label for="freqSlider" id="freqLabelText">🎚️ Frequency Control:</label><br>
+    <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()" aria-labelledby="freqLabelText">
+    <p id="frequencyLabel">Current Frequency: <span id="freqLabel">440</span> Hz</p>
+  </div>
+
+  <div>
+    <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
+  </div>
+</fieldset>
 
 <div class="voice-assistant">
   <label for="langSelect">Assistant Language:</label>
@@ -1641,13 +1653,13 @@ function launchConfetti() {
   <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
     
     <div class="testimonial-slide active">
-      <a href="https://Fixedmyspeaker.com" target="_blank">
-        <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo"/>
-      </a><br/><br/>
-      <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
-      <h4 class="testimonial-name">Bishal Mishra</h4>
-      <p class="testimonial-role">📱 App Developer</p>
-    </div>
+  <a href="https://Fixedmyspeaker.com" target="_blank">
+    <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo"/>
+  </a><br/><br/>
+  <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
+  <h3 class="testimonial-name">Bishal Mishra</h3>
+  <p class="testimonial-role">📱 App Developer</p>
+</div>
 
     <div class="testimonial-slide">
       <a href="https://fixedmyspeaker.com" target="_blank">
