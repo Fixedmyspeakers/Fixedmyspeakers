@@ -262,8 +262,9 @@
   <span class="notif-badge">1</span>
 </a>
 
-<!-- ✅ Sound Effect (Fixed - No 403 Error) -->
-<audio id="clickSound" src="https://cdn.jsdelivr.net/gh/itsron717/button-sound/button-click.mp3" preload="auto"></audio>
+<!-- Sound Effect -->
+<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c6b9eb70f5.mp3?filename=button-124476.mp3" preload="auto"></audio>
+
 <!-- CSS Styling -->
 <style>
   .fancy-whatsapp-btn {
@@ -1509,6 +1510,15 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     utter.lang = 'en-US';
     window.speechSynthesis.speak(utter);
   }
+</script>
+
+<script>
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const clickSound = document.getElementById('clickSound');
+      if (clickSound) clickSound.play();
+    });
+  });
 </script>
 
 
