@@ -220,12 +220,13 @@
     <h1 id="headerTitle">🔊 Phone Speaker Cleaner Tool</h1>
     <p id="headerDescription">Clean and eject water/dust from your phone speaker using sound frequency!</p>
     
-    <select id="languageSelect" onchange="changeLanguage(event)">
-      <option value="en">Language</option>
-      <option value="en">English</option>
-      <option value="ne">Nepali</option>
-      <option value="hi">Hindi</option>
-    </select>
+   <label for="languageSelect" style="font-weight: 600; color: #000;">🌐 Choose Language:</label>
+<select id="languageSelect" onchange="changeLanguage(event)" aria-label="Select Language">
+  <option value="en">Language</option>
+  <option value="en">English</option>
+  <option value="ne">Nepali</option>
+  <option value="hi">Hindi</option>
+</select>
 
     <style>
   .whatsapp-btn {
