@@ -1875,6 +1875,108 @@ function launchConfetti() {
 </script>
 
 
+<!-- 📬 Compact Gmail Subscribe Section with Admin Panel -->
+<section id="subscribe-section" style="padding: 40px 20px; background: linear-gradient(145deg, #00bcd4, #3f51b5); color: #fff; text-align: center; border-radius: 15px; margin: 40px auto; max-width: 700px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+  <h2 style="font-size: 24px; margin-bottom: 10px;">📢 Subscribe for Updates</h2>
+  <p style="font-size: 16px; margin-bottom: 20px; opacity: 0.9;">Stay in the loop with our latest tools, features, and offers.</p>
+  <form id="gmailSubscribeForm" style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+    <input type="email" id="gmailInput" placeholder="Your Gmail address" required pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+      style="padding: 10px 18px; width: 100%; max-width: 360px; border-radius: 25px; border: none; outline: none; font-size: 15px;">
+    <button type="submit"
+      style="padding: 10px 24px; background: #fff; color: #3f51b5; border: none; border-radius: 25px; font-weight: bold; font-size: 15px; cursor: pointer; transition: background 0.3s;">🔔 Subscribe</button>
+    <p id="subscribeMsg" style="margin-top: 5px; display: none; font-size: 15px; color: #d4f5d4;">✅ Subscribed!</p>
+  </form>
+  <button onclick="promptAdminAccess()" style="margin-top: 16px; font-size: 13px; padding: 6px 14px; border-radius: 18px; background: rgba(255,255,255,0.15); border: 1px solid #fff; color: #fff; cursor: pointer;">🔐 Admin: View Emails</button>
+</section>
+
+<!-- 🔒 Admin Modal -->
+<div id="emailAdminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999;">
+  <div style="background:#fff; color:#000; width:90%; max-width:500px; margin:60px auto; padding:25px; border-radius:10px; position:relative; box-shadow: 0 6px 20px rgba(0,0,0,0.3);">
+    <h3 style="margin-top:0;">📄 Subscribed Gmail List</h3>
+    <ul id="emailList" style="max-height:240px; overflow:auto; padding-left: 20px; margin: 10px 0;"></ul>
+    <div style="margin-top:15px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <button onclick="downloadEmails()" style="padding:7px 14px; background:#4caf50; color:#fff; border:none; border-radius:6px; cursor:pointer;">⬇️ Download</button>
+      <button onclick="clearEmails()" style="padding:7px 14px; background:#f44336; color:#fff; border:none; border-radius:6px; cursor:pointer;">🗑️ Clear All</button>
+      <button onclick="closeEmailAdmin()" style="padding:7px 14px; background:#607d8b; color:#fff; border:none; border-radius:6px; cursor:pointer;">❌ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🔐 Script (Same logic, reusing previous) -->
+<script>
+  const ADMIN_PASSWORD = "bishal";
+
+  function promptAdminAccess() {
+    const userInput = prompt("Enter admin password to access email list:");
+    if (userInput === ADMIN_PASSWORD) {
+      openEmailAdmin();
+    } else if (userInput !== null) {
+      alert("❌ Incorrect password!");
+    }
+  }
+
+  function openEmailAdmin() {
+    const list = document.getElementById("emailList");
+    const emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
+    list.innerHTML = emails.length ? emails.map(email => `<li>${email}</li>`).join('') : "<li>No emails found.</li>";
+    document.getElementById("emailAdminModal").style.display = "block";
+  }
+
+  function closeEmailAdmin() {
+    document.getElementById("emailAdminModal").style.display = "none";
+  }
+
+  function clearEmails() {
+    if (confirm("Are you sure you want to delete all stored emails?")) {
+      localStorage.removeItem("subscribedGmails");
+      openEmailAdmin();
+    }
+  }
+
+  function downloadEmails() {
+    const emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
+    const content = emails.join("\n");
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "subscribed_gmails.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById("gmailSubscribeForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = document.getElementById("gmailInput");
+    const email = input.value.trim();
+    const message = document.getElementById("subscribeMsg");
+
+    if (/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+      let emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
+      if (!emails.includes(email)) {
+        emails.push(email);
+        localStorage.setItem("subscribedGmails", JSON.stringify(emails));
+        message.style.color = "#d4f5d4";
+        message.textContent = "✅ Thank you for subscribing!";
+      } else {
+        message.style.color = "#ffc107";
+        message.textContent = "⚠️ You've already subscribed!";
+      }
+      input.value = "";
+    } else {
+      message.style.color = "orange";
+      message.textContent = "⚠️ Please enter a valid Gmail address.";
+    }
+
+    message.style.display = "block";
+    setTimeout(() => { message.style.display = "none"; }, 4000);
+  });
+</script>
+
+
+
 
   <footer>&copy; Bishal Mishra 2025  | All rights reserved.</footer>
 <script>
@@ -2307,7 +2409,11 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+
 </script>
+
+
 
 </body>
 </html>
+
