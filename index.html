@@ -26,7 +26,7 @@
 <meta name="twitter:image" content="https://fixedmyspeaker.com/images/speaker-cleaner-preview.jpg">
 
 <style>
-    
+   
 
 <script type="application/ld+json">
 {
@@ -161,7 +161,7 @@
       color: #444;
     }
 
-  
+ 
     #loader {
       position: fixed;
       inset: 0;
@@ -235,7 +235,7 @@
   <header>
     <h1 id="headerTitle">🔊 Phone Speaker Cleaner Tool</h1>
     <p id="headerDescription">Clean and eject water/dust from your phone speaker using sound frequency!</p>
-    
+   
    <label for="languageSelect" style="font-weight: 600; color: #000;">🌐 Choose Language:</label>
 <select id="languageSelect" onchange="changeLanguage(event)" aria-label="Select Language">
   <option value="en">English</option>
@@ -445,9 +445,8 @@
     <legend id="cleaningPanelTitle" style="font-size: 24px; font-weight: bold;">🧼 Cleaning Panel</legend>
 
    
-
     <div style="margin: 15px 0;">
-      <label for="freqSlider" id="freqLabelText" style="font-weight: 600; color: #000;">🎚 Frequency Control:</label><br>
+      <label for="freqSlider" id="freqLabelText" style="font-weight: 600; color: #000;">🎚️ Frequency Control:</label><br>
       <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()" aria-labelledby="freqLabelText">
       <p id="frequencyLabel" style="color: #000;">Current Frequency: <span id="freqLabel">440</span> Hz</p>
     </div>
@@ -469,28 +468,16 @@
 
  
 
-  <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶ Start</button>
-  <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹ Stop</button>
+  <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
+  <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
   <button class="btn share" onclick="shareTool()" id="shareBtn">📤 Share Tool</button>
+      <div class="share-buttons">
+    <p style="color: #000;">Share your experience:</p>
+    <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
+    <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
+    <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
+  </div>
 </section>
-    
- <div class="share-buttons">
-  <p style="color: #000;">Share your experience:</p>
-  <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
-  <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
-  <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
-</div>
-
-<script>
-  // Get the current page URL
-  const pageUrl = encodeURIComponent(window.location.href);
-  const pageTitle = encodeURIComponent(document.title);
-
-  // Set the href attributes for sharing
-  document.getElementById('whatsappShare').href = `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
-  document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-  document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view=cm&to=&su=${pageTitle}&body=${pageUrl}&bcc=&cc=`;
-</script>
 
 <style>
 .voice-assistant {
@@ -559,9 +546,9 @@ voiceBtn.onclick = () => {
 
 const shareLink = encodeURIComponent(location.href);
 const shareMsg = encodeURIComponent("I just cleaned my phone speaker using this tool! Try it here:");
-document.getElementById('whatsappShare').href = https://wa.me/?text=${shareMsg}%20${shareLink};
-document.getElementById('facebookShare').href = https://www.facebook.com/sharer/sharer.php?u=${shareLink};
-document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=cm&to=&su=Check%20this%20out!&body=${shareMsg}%20${shareLink};
+document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareMsg}%20${shareLink}`;
+document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${shareLink}`;
+document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view=cm&to=&su=Check%20this%20out!&body=${shareMsg}%20${shareLink}`;
 </script>
    
 
@@ -991,101 +978,9 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
 }
 
   </style>
-<div id="history-wrapper" style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  padding: 20px;
-  box-sizing: border-box;
-">
-  <div style="
-    width: 100%;
-    max-width: 500px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  ">
-    <h2 style="
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 24px;
-      margin-bottom: 16px;
-      color: #2c3e50;
-      text-align: center;
-    ">
-      Cleaning History
-    </h2>
-
-    <ul id="cleaning-history" style="
-      list-style: none;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      max-height: 300px;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    "></ul>
-  </div>
-</div>
-
-<script>
-  // Create and format current date and time
-  const now = new Date();
-  const options = {
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: 'numeric', minute: '2-digit'
-  };
-  const formattedDate = now.toLocaleString(undefined, options);
-
-  // Create and insert new log item
-  const historyList = document.getElementById("cleaning-history");
-  const li = document.createElement("li");
-  li.textContent = formattedDate;
-  li.classList.add("fade-slide-in");
-  historyList.appendChild(li);
-
-  // Scroll to the new item
-  li.scrollIntoView({ behavior: 'smooth', block: 'end' });
-</script>
-
-<style>
-  #cleaning-history li {
-    background: #f1f7ff;
-    border-left: 4px solid #007bff;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    font-size: 16px;
-    color: #2c3e50;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeSlideIn 0.6s ease-out forwards;
-  }
-
-  @keyframes fadeSlideIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  #cleaning-history li:hover {
-    background: #e6f0fa;
-  }
-
-  /* Smooth scrolling and responsive enhancements */
-  @media (max-width: 600px) {
-    #history-wrapper {
-      padding: 10px;
-    }
-
-    #cleaning-history li {
-      font-size: 15px;
-    }
-  }
-</style>
+<h>Cleaning History</h2>
+ 
+<ul id="cleaning-history" style="font-family: sans-serif;"></ul>
 
 
 
@@ -1103,7 +998,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
 
       <li>📱 Works on all smartphones, tablets, and speakers</li>
 
-      <li>⚙ Simple and intuitive interface — no app download required</li>
+      <li>⚙️ Simple and intuitive interface — no app download required</li>
 
       <li>🌐 Fully browser-based, no data is sent anywhere</li>
 
@@ -1167,7 +1062,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
 
   <section class="animate" aria-labelledby="termsTitle">
 
-    <h2 id="termsTitle">Terms & Conditions ⚠</h2>
+    <h2 id="termsTitle">Terms & Conditions ⚠️</h2>
 
     <p id="termsDescription">
 
@@ -1296,7 +1191,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
       summary: "How high-frequency sound removes dust and water from your phone's speaker.",
       author: "Bishal Mishra",
       date: "May 10, 2025",
-      content: `High-frequency sound waves cause micro vibrations that help shake loose water droplets and dust particles trapped in the speaker grill. This method is inspired by the same technology used in ultrasonic cleaning for jewelry and electronics. 
+      content: `High-frequency sound waves cause micro vibrations that help shake loose water droplets and dust particles trapped in the speaker grill. This method is inspired by the same technology used in ultrasonic cleaning for jewelry and electronics.
         Our tool utilizes carefully tested audio tones that are loud but safe for your hardware. Avoid using very low frequencies below 80Hz or extremely high tones above 20kHz.`
     },
     {
@@ -1304,8 +1199,8 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
       summary: "Prevent buildup and keep your phone speaker sounding crisp.",
       author: "Narayan Giri",
       date: "May 5, 2025",
-      content: `1. Keep your phone away from high humidity areas like bathrooms. 
-        2. Use a soft toothbrush to gently clean the grill once a week. 
+      content: `1. Keep your phone away from high humidity areas like bathrooms.
+        2. Use a soft toothbrush to gently clean the grill once a week.
         3. Use our cleaning tool after any exposure to sweat, rain, or moisture.
         A regular cleaning routine will keep your audio output loud and clear.`
     },
@@ -1318,7 +1213,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
         This pulse mimics real-world vibration frequencies found in acoustic cleaning chambers.`
     },
     {
-      title: "🛠 How to Fix Muffled Phone Speaker",
+      title: "🛠️ How to Fix Muffled Phone Speaker",
       summary: "Is your phone speaker quiet or unclear? Here's how to restore it.",
       author: "Bishal Mishra",
       date: "April 28, 2025",
@@ -1354,7 +1249,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
       summary: "Best cleaning schedule for healthy audio output.",
       author: "Bishal Mishra",
       date: "April 8, 2025",
-      content: `Light users can clean once a month. But if you're often outdoors, sweating, or near water, use our cleaner weekly. 
+      content: `Light users can clean once a month. But if you're often outdoors, sweating, or near water, use our cleaner weekly.
         Also run it after workouts, beach visits, or rainy days to maintain optimal sound.`
     },
     {
@@ -1591,7 +1486,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question">
         <span itemprop="name">How does this speaker cleaner tool work?</span>
-        <span class="faq-arrow">▶</span>
+        <span class="faq-arrow">▶️</span>
       </div>
       <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <div itemprop="text">It plays sound waves that vibrate your speaker, helping eject water and dust stuck inside.</div>
@@ -1602,7 +1497,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question">
         <span itemprop="name">Is it compatible with all smartphones?</span>
-        <span class="faq-arrow">▶</span>
+        <span class="faq-arrow">▶️</span>
       </div>
       <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <div itemprop="text">Yes, the tool works with iPhones, Android phones, and most modern smartphones with built-in speakers.</div>
@@ -1613,7 +1508,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question">
         <span itemprop="name">How many times should I run the cleaning?</span>
-        <span class="faq-arrow">▶</span>
+        <span class="faq-arrow">▶️</span>
       </div>
       <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <div itemprop="text">Running it 2–3 times is usually enough, especially after water exposure.</div>
@@ -1624,7 +1519,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question">
         <span itemprop="name">Is this tool free and safe?</span>
-        <span class="faq-arrow">▶</span>
+        <span class="faq-arrow">▶️</span>
       </div>
       <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <div itemprop="text">Yes, it is 100% free and runs directly in your browser without collecting data.</div>
@@ -1635,7 +1530,7 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question">
         <span itemprop="name">Can it repair physical speaker damage?</span>
-        <span class="faq-arrow">▶</span>
+        <span class="faq-arrow">▶️</span>
       </div>
       <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <div itemprop="text">No, it only helps with water or dust. For hardware issues, consult a technician.</div>
@@ -1740,7 +1635,7 @@ const stars = document.querySelectorAll('.star'),
 
 let selected = localStorage.getItem('userRating') || 0;
 let ratings = JSON.parse(localStorage.getItem('ratings') || '[]');
-const emojiMap = {1:'😠',2:'☹',3:'😐',4:'🙂',5:'😍'};
+const emojiMap = {1:'😠',2:'☹️',3:'😐',4:'🙂',5:'😍'};
 commentBox.value = localStorage.getItem('userComment') || '';
 commentBox.oninput = () => localStorage.setItem('userComment', commentBox.value);
 
@@ -1753,7 +1648,7 @@ function updateStars(val, isSel) {
 function showAverage() {
   if (ratings.length) {
     let avg = (ratings.reduce((a, b) => +a + +b, 0) / ratings.length).toFixed(1);
-    avgRating.textContent = Average: ${avg} stars from ${ratings.length} votes;
+    avgRating.textContent = `Average: ${avg} stars from ${ratings.length} votes`;
   }
 }
 showAverage();
@@ -1761,7 +1656,7 @@ showAverage();
 if (selected > 0) {
   updateStars(selected, 1);
   emoji.textContent = emojiMap[selected];
-  ratingResult.textContent = You rated: ${selected} star${selected > 1 ? 's' : ''};
+  ratingResult.textContent = `You rated: ${selected} star${selected > 1 ? 's' : ''}`;
 }
 stars.forEach(s => {
   s.onmouseover = () => { updateStars(s.dataset.value, 0); emoji.textContent = emojiMap[s.dataset.value]; };
@@ -1771,7 +1666,7 @@ stars.forEach(s => {
     localStorage.setItem('userRating', selected);
     updateStars(selected, 1);
     emoji.textContent = emojiMap[selected];
-    ratingResult.textContent = You rated: ${selected} star${selected > 1 ? 's' : ''};
+    ratingResult.textContent = `You rated: ${selected} star${selected > 1 ? 's' : ''}`;
   };
 });
 submitBtn.onclick = () => {
@@ -1807,7 +1702,7 @@ function launchConfetti() {
         x: Math.random() * w, y: Math.random() * h,
         vx: Math.random() * 4 - 2, vy: Math.random() * -5 - 2,
         size: Math.random() * 5 + 3,
-        color: hsl(${Math.random()*360}, 100%, 60%)
+        color: `hsl(${Math.random()*360}, 100%, 60%)`
       }));
   let frame = 0;
   (function animate(){
@@ -1828,7 +1723,7 @@ function launchConfetti() {
 <section id="testimonial-section" style="padding: 40px 20px; background: #f5f5f5;">
   <h2 style="text-align: center; font-size: 28px;">💬 What Users Are Saying</h2>
   <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
-    
+   
     <div class="testimonial-slide active">
   <a href="https://Fixedmyspeaker.com" target="_blank">
     <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo"/>
@@ -2012,8 +1907,8 @@ function launchConfetti() {
     <h3 style="margin-top:0;">📄 Subscribed Gmail List</h3>
     <ul id="emailList" style="max-height:240px; overflow:auto; padding-left: 20px; margin: 10px 0;"></ul>
     <div style="margin-top:15px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-      <button onclick="downloadEmails()" style="padding:7px 14px; background:#4caf50; color:#fff; border:none; border-radius:6px; cursor:pointer;">⬇ Download</button>
-      <button onclick="clearEmails()" style="padding:7px 14px; background:#f44336; color:#fff; border:none; border-radius:6px; cursor:pointer;">🗑 Clear All</button>
+      <button onclick="downloadEmails()" style="padding:7px 14px; background:#4caf50; color:#fff; border:none; border-radius:6px; cursor:pointer;">⬇️ Download</button>
+      <button onclick="clearEmails()" style="padding:7px 14px; background:#f44336; color:#fff; border:none; border-radius:6px; cursor:pointer;">🗑️ Clear All</button>
       <button onclick="closeEmailAdmin()" style="padding:7px 14px; background:#607d8b; color:#fff; border:none; border-radius:6px; cursor:pointer;">❌ Close</button>
     </div>
   </div>
@@ -2035,7 +1930,7 @@ function launchConfetti() {
   function openEmailAdmin() {
     const list = document.getElementById("emailList");
     const emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
-    list.innerHTML = emails.length ? emails.map(email => <li>${email}</li>).join('') : "<li>No emails found.</li>";
+    list.innerHTML = emails.length ? emails.map(email => `<li>${email}</li>`).join('') : "<li>No emails found.</li>";
     document.getElementById("emailAdminModal").style.display = "block";
   }
 
@@ -2079,12 +1974,12 @@ function launchConfetti() {
         message.textContent = "✅ Thank you for subscribing!";
       } else {
         message.style.color = "#ffc107";
-        message.textContent = "⚠ You've already subscribed!";
+        message.textContent = "⚠️ You've already subscribed!";
       }
       input.value = "";
     } else {
       message.style.color = "orange";
-      message.textContent = "⚠ Please enter a valid Gmail address.";
+      message.textContent = "⚠️ Please enter a valid Gmail address.";
     }
 
     message.style.display = "block";
@@ -2154,7 +2049,7 @@ function launchConfetti() {
  
 
   <audio id="click-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
-                                                                                          
+                                                                                         
   <script>
     const translations = {
       en: {                                                                                                                                  
@@ -2164,10 +2059,10 @@ function launchConfetti() {
         waterEjectBtn: "Water Eject",
         dustCleanBtn: "Dust Clean",
         customBtn: "Custom",
-        frequencyLabel: "🎚 Frequency: ",
+        frequencyLabel: "🎚️ Frequency: ",
         timerLabel: "🕒 Timer: ",
-        startBtn: "▶ Start",
-        stopBtn: "⏹ Stop",
+        startBtn: "▶️ Start",
+        stopBtn: "⏹️ Stop",
         shareBtn: "📤 Share Tool",
         featuresTitle: "Features",
         feature1: "Removes water & dust using vibration",
@@ -2196,10 +2091,10 @@ function launchConfetti() {
         waterEjectBtn: "पानी बाहिर निकाल्नुहोस्",
         dustCleanBtn: "धूलो सफा गर्नुहोस्",
         customBtn: "कस्टम",
-        frequencyLabel: "🎚 आवृत्ति: ",
+        frequencyLabel: "🎚️ आवृत्ति: ",
         timerLabel: "🕒 समय: ",
-        startBtn: "▶ सुरु गर्नुहोस्",
-        stopBtn: "⏹ रोक्नुहोस्",
+        startBtn: "▶️ सुरु गर्नुहोस्",
+        stopBtn: "⏹️ रोक्नुहोस्",
         shareBtn: "📤 उपकरण साझा गर्नुहोस्",
         featuresTitle: "विशेषताहरू",
         feature1: "कम्पनको मद्दतले पानी र धूलो हटाउँछ",
@@ -2229,10 +2124,10 @@ function launchConfetti() {
         waterEjectBtn: "पानी निकालें",
         dustCleanBtn: "धूल साफ़ करें",
         customBtn: "कस्टम",
-        frequencyLabel: "🎚 आवृत्ति: ",
+        frequencyLabel: "🎚️ आवृत्ति: ",
         timerLabel: "🕒 समय: ",
-        startBtn: "▶ शुरू करें",
-        stopBtn: "⏹ बंद करें",
+        startBtn: "▶️ शुरू करें",
+        stopBtn: "⏹️ बंद करें",
         shareBtn: "📤 टूल शेयर करें",
         featuresTitle: "विशेषताएँ",
         feature1: "कंपन के माध्यम से पानी और धूल हटाता है",
@@ -2267,7 +2162,7 @@ function launchConfetti() {
         }
       });
     }
- function shareTool() {
+     function shareTool() {
   if (navigator.share) {
     navigator.share({
       title: 'Phone Speaker Cleaner Tool',
@@ -2304,7 +2199,7 @@ function updateHistoryUI() {
   list.innerHTML = history.map(item => `<li>${item}</li>`).join('');
 }
 saveCleaningHistory();
-    
+   
 
 
 
@@ -2323,10 +2218,10 @@ saveCleaningHistory();
 
 <!-- Profile Icon -->
 <div id="profileToggle" style="position:fixed;top:10px;right:10px;cursor:pointer;z-index:9999;">
-  <img 
-    src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" 
-    id="profileIcon" 
-    alt="Profile Icon" 
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+    id="profileIcon"
+    alt="Profile Icon"
     style="width:40px;height:40px;border-radius:50%;">
 </div>
 
