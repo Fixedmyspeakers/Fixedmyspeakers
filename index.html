@@ -475,11 +475,23 @@
 </section>
     
  <div class="share-buttons">
-    <p style="color: #000;">Share your experience:</p>
-    <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
-    <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
-    <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
-  </div>
+  <p style="color: #000;">Share your experience:</p>
+  <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
+  <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
+  <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
+</div>
+
+<script>
+  // Get the current page URL
+  const pageUrl = encodeURIComponent(window.location.href);
+  const pageTitle = encodeURIComponent(document.title);
+
+  // Set the href attributes for sharing
+  document.getElementById('whatsappShare').href = `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
+  document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+  document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view=cm&to=&su=${pageTitle}&body=${pageUrl}&bcc=&cc=`;
+</script>
+
 <style>
 .voice-assistant {
   text-align: center;
