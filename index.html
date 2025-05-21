@@ -991,9 +991,101 @@ document.getElementById('gmailShare').href = https://mail.google.com/mail/?view=
 }
 
   </style>
-<h>Cleaning History</h2>
-  
-<ul id="cleaning-history" style="font-family: sans-serif;"></ul>
+<div id="history-wrapper" style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+">
+  <div style="
+    width: 100%;
+    max-width: 500px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  ">
+    <h2 style="
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: #2c3e50;
+      text-align: center;
+    ">
+      Cleaning History
+    </h2>
+
+    <ul id="cleaning-history" style="
+      list-style: none;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      max-height: 300px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    "></ul>
+  </div>
+</div>
+
+<script>
+  // Create and format current date and time
+  const now = new Date();
+  const options = {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: 'numeric', minute: '2-digit'
+  };
+  const formattedDate = now.toLocaleString(undefined, options);
+
+  // Create and insert new log item
+  const historyList = document.getElementById("cleaning-history");
+  const li = document.createElement("li");
+  li.textContent = formattedDate;
+  li.classList.add("fade-slide-in");
+  historyList.appendChild(li);
+
+  // Scroll to the new item
+  li.scrollIntoView({ behavior: 'smooth', block: 'end' });
+</script>
+
+<style>
+  #cleaning-history li {
+    background: #f1f7ff;
+    border-left: 4px solid #007bff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    color: #2c3e50;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeSlideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #cleaning-history li:hover {
+    background: #e6f0fa;
+  }
+
+  /* Smooth scrolling and responsive enhancements */
+  @media (max-width: 600px) {
+    #history-wrapper {
+      padding: 10px;
+    }
+
+    #cleaning-history li {
+      font-size: 15px;
+    }
+  }
+</style>
 
 
 
