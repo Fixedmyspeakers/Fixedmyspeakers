@@ -2166,3 +2166,268 @@ function launchConfetti() {
         }
       });
     }
+     function shareTool() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Phone Speaker Cleaner Tool',
+      text: 'Clean your phone speakers with this simple tool!',
+      url: window.location.href
+    }).catch(console.error);
+  } else {
+    alert('Sharing not supported on this browser. Please copy the URL manually.');
+  }
+}
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').style.display =
+    window.scrollY > 100 ? 'block' : 'none';
+});
+window.addEventListener('load', () => {
+  document.getElementById('loader').style.display = 'none';
+});
+
+    function saveCleaningHistory() {
+  const history = JSON.parse(localStorage.getItem("cleaningHistory")) || [];
+  const timestamp = new Date().toLocaleString();
+  history.unshift(timestamp); // Add to start
+  if (history.length > 5) history.pop(); // Limit to 5 entries
+  localStorage.setItem("cleaningHistory", JSON.stringify(history));
+  updateHistoryUI();
+}
+
+function updateHistoryUI() {
+  const history = JSON.parse(localStorage.getItem("cleaningHistory")) || [];
+  const list = document.getElementById("cleaning-history");
+  list.innerHTML = history.map(item => `<li>${item}</li>`).join('');
+}
+saveCleaningHistory();
+    
+
+
+
+    window.onload = () => {
+      document.getElementById("loader").style.display = "none";
+      document.querySelectorAll('.animate').forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('visible');
+        }, index * 300);
+      });
+    };
+  </script>
+
+
+
+
+<!-- Profile Icon -->
+<div id="profileToggle" style="position:fixed;top:10px;right:10px;cursor:pointer;z-index:9999;">
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" 
+    id="profileIcon" 
+    alt="Profile Icon" 
+    style="width:40px;height:40px;border-radius:50%;">
+</div>
+
+<!-- Profile Dropdown Menu -->
+<div id="profileMenu" style="display:none;position:absolute;top:60px;right:10px;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:240px;font-family:sans-serif;z-index:9999;">
+  <div style="padding:12px;border-bottom:1px solid #eee;display:flex;align-items:center;">
+    <img id="menuPhoto" src="" style="width:40px;height:40px;border-radius:50%;margin-right:10px;">
+    <div>
+      <div id="menuName" style="font-weight:bold;font-size:14px;"></div>
+      <div id="menuEmail" style="font-size:12px;color:#555;"></div>
+      <div id="emailVerified" style="font-size:11px;color:#f44336;"></div>
+    </div>
+  </div>
+  <div onclick="triggerProfileUpload()" style="padding:10px;cursor:pointer;">✏️ Edit Profile Photo</div>
+  <div onclick="sendVerificationEmail()" style="padding:10px;cursor:pointer;">✅ Verify Email</div>
+  <div onclick="sendResetPassword()" style="padding:10px;cursor:pointer;">🔐 Reset Password</div>
+  <div onclick="logout()" style="padding:10px;cursor:pointer;">🚪 Logout</div>
+</div>
+<input type="file" id="uploadProfileInput" accept="image/*" style="display:none;">
+
+<!-- Auth Popup -->
+<div id="authPopup" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:2rem;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.2);z-index:9999;width:90%;max-width:400px;">
+  <h3 id="formTitle">Sign In</h3>
+  <input id="email" type="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:8px;">
+  <input id="password" type="password" placeholder="Password" style="width:100%;padding:10px;margin-bottom:8px;">
+  <button id="authAction" style="width:100%;padding:10px;margin-bottom:10px;">Sign In</button>
+  <button id="googleSignIn" style="width:100%;padding:10px;background:#db4437;color:white;border:none;margin-bottom:10px;">Sign in with Google</button>
+  <p style="text-align:center;font-size:14px;"><span id="toggleAuth" style="color:#007bff;cursor:pointer;">Don't have an account? Sign Up</span></p>
+</div>
+
+<!-- Firebase Auth Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,
+    sendPasswordResetEmail, sendEmailVerification, updateProfile
+  } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDpIY1tJ9hJQ_Dmnz6HEBu1-gkyhMbl7D8",
+    authDomain: "speakercleanerapp.firebaseapp.com",
+    projectId: "speakercleanerapp",
+    storageBucket: "speakercleanerapp.appspot.com",
+    messagingSenderId: "757487409389",
+    appId: "1:757487409389:web:15a6b21a17a973dace14e4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+  const storage = getStorage();
+
+  const profileToggle = document.getElementById('profileToggle');
+  const profileMenu = document.getElementById('profileMenu');
+  const authPopup = document.getElementById('authPopup');
+  const authAction = document.getElementById('authAction');
+  const toggleAuth = document.getElementById('toggleAuth');
+  const googleSignIn = document.getElementById('googleSignIn');
+  const uploadInput = document.getElementById('uploadProfileInput');
+
+  let isSignUp = false;
+
+  profileToggle.addEventListener('click', () => {
+    if (auth.currentUser) {
+      profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+    } else {
+      authPopup.style.display = 'block';
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!profileToggle.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.style.display = 'none';
+    }
+  });
+
+  toggleAuth.addEventListener('click', () => {
+    isSignUp = !isSignUp;
+    document.getElementById('formTitle').innerText = isSignUp ? 'Sign Up' : 'Sign In';
+    authAction.innerText = isSignUp ? 'Sign Up' : 'Sign In';
+    toggleAuth.innerText = isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up";
+  });
+
+  authAction.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!email || !password) return alert("Please fill in both fields.");
+    try {
+      isSignUp
+        ? await createUserWithEmailAndPassword(auth, email, password)
+        : await signInWithEmailAndPassword(auth, email, password);
+      authPopup.style.display = 'none';
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  googleSignIn.addEventListener('click', async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      authPopup.style.display = 'none';
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  window.logout = async () => {
+    try {
+      await signOut(auth);
+      location.reload();
+    } catch (e) {
+      alert("Logout failed.");
+    }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
+      const name = user.displayName || user.email.split('@')[0];
+      const verified = user.emailVerified ? "Verified" : "Not Verified";
+
+      document.getElementById('profileIcon').src = photo;
+      document.getElementById('menuPhoto').src = photo;
+      document.getElementById('menuName').innerText = name;
+      document.getElementById('menuEmail').innerText = user.email;
+      document.getElementById('emailVerified').innerText = verified;
+      authPopup.style.display = 'none';
+    }
+  });
+
+  window.triggerProfileUpload = () => uploadInput.click();
+
+  uploadInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file || !auth.currentUser) return;
+    const user = auth.currentUser;
+    const fileRef = ref(storage, `profiles/${user.uid}.jpg`);
+    try {
+      await uploadBytes(fileRef, file);
+      const photoURL = await getDownloadURL(fileRef);
+      await updateProfile(user, { photoURL });
+      document.getElementById('profileIcon').src = photoURL;
+      document.getElementById('menuPhoto').src = photoURL;
+      alert("Profile picture updated.");
+    } catch (err) {
+      alert("Upload failed.");
+    }
+  });
+
+  window.sendVerificationEmail = async () => {
+    if (auth.currentUser && !auth.currentUser.emailVerified) {
+      await sendEmailVerification(auth.currentUser);
+      alert("Verification email sent.");
+    }
+  };
+
+  window.sendResetPassword = async () => {
+    if (auth.currentUser?.email) {
+      await sendPasswordResetEmail(auth, auth.currentUser.email);
+      alert("Password reset email sent.");
+    }
+  };
+
+// Initialize Firebase Cloud Messaging
+const messaging = firebase.messaging();
+
+// Register service worker and request notification permission
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(function (registration) {
+      console.log('✅ Service Worker registered:', registration);
+
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          messaging.getToken({
+            vapidKey: "BPKg-ZUxoKIoLaWU_SAAAFNfuF99elQc-AXoeNIV8z2qoGjJGGj7SemR1Plbr4nXxeP82PrbwjcWefQuMQF7xWw",
+            serviceWorkerRegistration: registration
+          }).then((currentToken) => {
+            if (currentToken) {
+              console.log('🔔 FCM Token:', currentToken);
+              // Optional: Send token to your server here
+            } else {
+              console.warn('No FCM token received. User may have denied permission.');
+            }
+          }).catch((err) => {
+            console.error('❌ Error getting FCM token:', err);
+          });
+        } else {
+          console.warn('Notification permission not granted');
+        }
+      });
+    }).catch(function (err) {
+      console.error('❌ Service Worker registration failed:', err);
+    });
+}
+
+
+</script>
+
+
+
+</body>
+</html>
