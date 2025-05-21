@@ -444,11 +444,7 @@
   <fieldset aria-labelledby="cleaningPanelTitle" style="border: none; padding: 20px 0;">
     <legend id="cleaningPanelTitle" style="font-size: 24px; font-weight: bold;">🧼 Cleaning Panel</legend>
 
-    <div style="margin: 10px 0;">
-      <button class="btn mode" onclick="startCleaning(165)" id="waterEjectBtn" aria-label="Start water eject mode">Water Eject</button>
-      <button class="btn mode" onclick="startCleaning(300)" id="dustCleanBtn" aria-label="Start dust clean mode">Dust Clean</button>
-      <button class="btn mode" onclick="startCleaning(parseInt(freqSlider.value))" id="customBtn" aria-label="Start custom cleaning">Custom</button>
-    </div>
+   
 
     <div style="margin: 15px 0;">
       <label for="freqSlider" id="freqLabelText" style="font-weight: 600; color: #000;">🎚️ Frequency Control:</label><br>
@@ -471,12 +467,7 @@
     <button id="voiceGuideBtn" aria-label="Play voice guide">Guide Me</button>
   </div>
 
-  <div class="share-buttons">
-    <p style="color: #000;">Share your experience:</p>
-    <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
-    <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
-    <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share via Gmail">Gmail</a>
-  </div>
+  
 
   <button class="btn start" onclick="startCleaning(parseInt(freqSlider.value))" id="startBtn">▶️ Start</button>
   <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
@@ -522,12 +513,7 @@
   font-weight: 600;
   color: white;
   transition: background 0.3s;
-}
-.whatsapp { background: #0a7c38; }
-.facebook { background: #2d4c91; }
-.gmail { background: #b23121; }
-.share-btn:hover { opacity: 0.9; }
-</style>
+
 
 <script>
 const langSelect = document.getElementById('langSelect');
@@ -2432,4 +2418,3 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
-
