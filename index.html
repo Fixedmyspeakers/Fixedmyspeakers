@@ -441,15 +441,47 @@
 
   <main>
    <section>
-  <fieldset aria-labelledby="cleaningPanelTitle" style="border: none; padding: 20px 0;">
+  <fieldset aria-labelledby="cleaningPanelTitle" style="border: none; padding: 5px 0;">
     <legend id="cleaningPanelTitle" style="font-size: 24px; font-weight: bold;">🧼 Cleaning Panel</legend>
 
    
-    <div style="margin: 15px 0;">
-      <label for="freqSlider" id="freqLabelText" style="font-weight: 600; color: #000;">🎚️ Frequency Control:</label><br>
-      <input id="freqSlider" type="range" min="100" max="1000" value="440" oninput="updateFrequencyLabel()" aria-labelledby="freqLabelText">
-      <p id="frequencyLabel" style="color: #000;">Current Frequency: <span id="freqLabel">440</span> Hz</p>
-    </div>
+   <div style="margin: 30px auto; padding: 20px; max-width: 500px; background: #fff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); font-family: Arial, sans-serif;">
+  <label for="freqSlider" id="freqLabelText" style="font-weight: bold; font-size: 18px; color: #333; display: block; margin-bottom: 12px;">
+    🎚️ Frequency Control
+  </label>
+  <input
+    id="freqSlider"
+    type="range"
+    min="100"
+    max="1000"
+    value="440"
+    step="1"
+    oninput="updateFrequencyLabel()"
+    aria-labelledby="freqLabelText"
+    style="
+      -webkit-appearance: none;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      border-radius: 5px;
+      outline: none;
+      transition: background 0.3s;
+      margin-bottom: 12px;
+    "
+  >
+  <p id="frequencyLabel" style="font-size: 16px; color: #444; margin: 0;">
+    Current Frequency: <strong><span id="freqLabel">440</span></strong> Hz
+  </p>
+</div>
+
+<script>
+  function updateFrequencyLabel() {
+    const slider = document.getElementById('freqSlider');
+    const label = document.getElementById('freqLabel');
+    label.textContent = slider.value;
+  }
+</script>
+
 
     <div>
       <p id="timerLabel" style="color: #000;">🕒 Timer: <span id="countdown">30</span> sec</p>
