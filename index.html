@@ -1083,19 +1083,19 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
 
 
 
-  <section class="animate" aria-labelledby="blogsTitle" id="blog-section">
-  <h2 id="blogsTitle">📰 Blogs & News</h2>
+  <section class="animate" aria-labelledby="blogsTitle" id="blog-section"> 
+  <h2 id="blogsTitle" style="text-align: center; font-size: 32px;">📰 Blogs & News</h2>
   <div id="blogContainer"></div>
 </section>
 
 <style>
-  #blog-section {
-    padding: 2rem 1rem;
-    background: #f9f9f9;
-    border-radius: 10px;
-    margin-top: 2rem;
+   #blog-section {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background: none;
+    border-radius: 0;
   }
-
   .blog-item {
     background: #fff;
     margin-bottom: 1.5rem;
@@ -1104,16 +1104,13 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     border-radius: 5px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
-
   .blog-item h3 {
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
   }
-
   .blog-item p {
     margin: 0.5rem 0;
   }
-
   .read-more {
     display: inline-block;
     margin-top: 0.5rem;
@@ -1122,11 +1119,9 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     font-weight: bold;
     cursor: pointer;
   }
-
   .read-more:hover {
     text-decoration: underline;
   }
-
   .blog-full {
     display: none;
     margin-top: 0.5rem;
@@ -1166,7 +1161,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "🛠️ How to Fix Muffled Phone Speaker",
       summary: "Is your phone speaker quiet or unclear? Here's how to restore it.",
-      author: "Bishal Mishra",
+      author: "Prashant Mishra",
       date: "April 28, 2025",
       content: `If your speaker sounds muffled:
         • First dry it with a soft cloth.
@@ -1178,7 +1173,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "🌊 Water in Your Speaker? Here’s What to Do",
       summary: "Quickly remove water from your phone speaker safely.",
-      author: "Narayan Giri",
+      author: "Nikhil Mishra",
       date: "April 22, 2025",
       content: `Avoid using heat or compressed air. Instead:
         • Play our cleaning tone with volume maxed.
@@ -1190,7 +1185,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "📊 Do Sound Wave Cleaners Actually Work?",
       summary: "We tested multiple sound-based speaker cleaner tools.",
-      author: "Neha Jaiswal",
+      author: "Anam Mishra",
       date: "April 15, 2025",
       content: `Out of 5 tools tested, only 2 expelled visible moisture. Our tool ranked #1 for speed, loudness, and result consistency.
         Unlike fake sound effects, we use raw sine wave tones scientifically shown to cause acoustic displacement, making our cleaner truly effective.`
@@ -1198,7 +1193,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "🔄 How Often Should You Clean Your Phone Speaker?",
       summary: "Best cleaning schedule for healthy audio output.",
-      author: "Bishal Mishra",
+      author: "Summit Maharjan",
       date: "April 8, 2025",
       content: `Light users can clean once a month. But if you're often outdoors, sweating, or near water, use our cleaner weekly.
         Also run it after workouts, beach visits, or rainy days to maintain optimal sound.`
@@ -1206,7 +1201,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "🎧 Why Does Speaker Sound Get Worse After Water Exposure?",
       summary: "Understanding temporary sound distortion after contact with water.",
-      author: "Narayan Giri",
+      author: "Sandeep Pandey",
       date: "April 2, 2025",
       content: `Water can block speaker membranes or form droplets in the grill mesh, damping sound vibrations. Our sound tool forces those droplets out using vibration and air pressure without damage to components.
         Once dried, performance usually returns to normal.`
@@ -1214,15 +1209,14 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     {
       title: "📦 Behind the Scenes: How We Built This Tool",
       summary: "A look into the tech and testing behind our speaker cleaner.",
-      author: "Neha Jaiswal",
+      author: "Barun Jha",
       date: "March 28, 2025",
       content: `We experimented with various tone patterns, from sawtooth waves to low-frequency pulses. After dozens of trials, we optimized a range between 150Hz–1200Hz for maximum cleaning without distortion.
         UI was built to be lightweight, fast, and mobile-optimized.`
     }
   ];
 
-  const blogContainer = document.getElementById('blogContainer');
-
+    const blogContainer = document.getElementById('blogContainer');
   blogs.forEach((blog, index) => {
     const blogItem = document.createElement('article');
     blogItem.className = 'blog-item';
@@ -1239,7 +1233,7 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   });
 
   function toggleBlogDetails(event, index) {
-    event.preventDefault(); // Prevent page jump
+    event.preventDefault();
     const el = document.getElementById('blog-full-' + index);
     el.style.display = el.style.display === 'none' || el.style.display === '' ? 'block' : 'none';
   }
