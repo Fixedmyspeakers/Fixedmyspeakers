@@ -1761,35 +1761,35 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
 </script>
 
 
-<!-- 🌟 Testimonial Section with Auto-Slider and Accessible Dots -->
-<section id="testimonial-section" style="padding: 40px 20px; background: #f5f5f5;">
-  <h2 style="text-align: center; font-size: 28px;">💬 What Users Are Saying</h2>
+<!-- 🌟 Testimonial Section with Full Width, Dark Mode Support, and Enhanced Style -->
+<section id="testimonial-section" style="padding: 40px 20px; background: none; width: 100%;">
+  <h2 class="testimonial-title">💬 What Users Are Saying</h2>
   <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
-   
+
     <div class="testimonial-slide active">
-  <a href="https://Fixedmyspeaker.com" target="_blank">
-    <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo"/>
-  </a><br/><br/>
-  <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
-  <h3 class="testimonial-name">Bishal Mishra</h3>
-  <p class="testimonial-role">📱 App Developer</p>
-</div>
+      <a href="https://Fixedmyspeaker.com" target="_blank">
+        <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo" />
+      </a>
+      <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
+      <h3 class="testimonial-name">Bishal Mishra</h3>
+      <p class="testimonial-role">📱 App Developer</p>
+    </div>
 
     <div class="testimonial-slide">
       <a href="https://fixedmyspeaker.com" target="_blank">
-        <img class="testimonial-img" src="https://i.postimg.cc/65fNMGPQ/Untitled-design.png" alt="User photo"/>
-      </a><br/><br/>
+        <img class="testimonial-img" src="https://i.postimg.cc/65fNMGPQ/Untitled-design.png" alt="User photo" />
+      </a>
       <p class="testimonial-text">“Was skeptical at first, but after running the cleaner twice, my speaker volume improved drastically. I didn’t have to go to a repair shop. Highly recommended for anyone facing muffled audio.”</p>
-      <h4 class="testimonial-name">Prashant Mishra</h4>
+      <h3 class="testimonial-name">Prashant Mishra</h3>
       <p class="testimonial-role">🎧 Gadget Enthusiast</p>
     </div>
 
     <div class="testimonial-slide">
       <a href="https://Fixedmyspeaker.com" target="_blank">
-        <img class="testimonial-img" src="https://i.postimg.cc/GhCCPjqN/Untitled-design.png" alt="User photo"/>
-      </a><br/><br/>
+        <img class="testimonial-img" src="https://i.postimg.cc/GhCCPjqN/Untitled-design.png" alt="User photo" />
+      </a>
       <p class="testimonial-text">“This website is a lifesaver! Clean interface, easy to use, and it really does the job. My friends didn’t believe it until they tried it themselves. Super handy after water exposure.”</p>
-      <h4 class="testimonial-name">Anam Mishra</h4>
+      <h3 class="testimonial-name">Anam Mishra</h3>
       <p class="testimonial-role">🌟 Verified User</p>
     </div>
 
@@ -1801,22 +1801,46 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   </div>
 </section>
 
-<!-- 💅 Styles -->
 <style>
+  :root {
+    --text-light: #f4f4f4;
+    --text-dark: #111;
+    --highlight: #00bcd4;
+    --card-bg: transparent;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-light: #f4f4f4;
+      --text-dark: #e0e0e0;
+      --card-bg: rgba(255,255,255,0.05);
+    }
+  }
+
+  #testimonial-section {
+    width: 100%;
+    background: none;
+    text-align: center;
+  }
+  .testimonial-title {
+    font-size: 28px;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
   .testimonial-carousel {
     position: relative;
-    max-width: 800px;
-    margin: 30px auto;
+    max-width: 100%;
+    margin: auto;
     overflow: hidden;
   }
   .testimonial-slide {
     display: none;
     text-align: center;
     padding: 30px 20px;
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     animation: fadeSlide 0.5s ease-in-out;
+    max-width: 800px;
+    margin: auto;
   }
   .testimonial-slide.active {
     display: block;
@@ -1832,17 +1856,18 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
   .testimonial-text {
     font-size: 18px;
     font-style: italic;
-    color: #333;
+    color: var(--text-dark);
+    margin: 10px 0 20px;
   }
   .testimonial-name {
     font-size: 20px;
     font-weight: bold;
-    margin-top: 10px;
-    color: #00796b;
+    color: var(--highlight);
+    margin-bottom: 4px;
   }
   .testimonial-role {
-    color: #888;
     font-size: 14px;
+    color: #888;
   }
   .testimonial-nav {
     text-align: center;
@@ -1861,18 +1886,28 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     padding: 0;
   }
   .testimonial-dot.active {
-    background-color: #00bcd4;
+    background-color: var(--highlight);
   }
   .testimonial-dot:focus {
-    outline: 2px solid #00bcd4;
+    outline: 2px solid var(--highlight);
   }
   @keyframes fadeSlide {
     from {opacity: 0; transform: translateY(10px);}
     to {opacity: 1; transform: translateY(0);}
   }
+  @media (max-width: 600px) {
+    .testimonial-text {
+      font-size: 16px;
+    }
+    .testimonial-name {
+      font-size: 18px;
+    }
+    .testimonial-role {
+      font-size: 13px;
+    }
+  }
 </style>
 
-<!-- ⚙ Script -->
 <script>
   let currentSlide = 0;
   const slides = document.querySelectorAll('.testimonial-slide');
@@ -1900,12 +1935,9 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     clearInterval(slideInterval);
   }
 
-  // Touch swipe support for mobile
-  let touchStartX = 0;
   document.querySelector('.testimonial-carousel').addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
   });
-
   document.querySelector('.testimonial-carousel').addEventListener('touchend', e => {
     let touchEndX = e.changedTouches[0].screenX;
     if (touchEndX < touchStartX - 50) nextSlide();
@@ -1915,7 +1947,6 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     }
   });
 
-  // Keyboard navigation
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') nextSlide();
     if (e.key === 'ArrowLeft') {
@@ -1924,9 +1955,9 @@ document.getElementById('gmailShare').href = `https://mail.google.com/mail/?view
     }
   });
 
-  // Start slider on page load
   startSlider();
 </script>
+
 
 
 <!-- 📬 Compact Gmail Subscribe Section with Admin Panel -->
