@@ -66,7 +66,7 @@
      --light-loader-bg: #FFFFFF;
      --light-loader-text: #000000;
      --light-loader-spinner: #000000;
-     --light-viz-bg: #e9e9e9; /* Was #222 which is too dark for light */
+     --light-viz-bg: #e9e9e9;
      --light-link-color: #007bff;
      --light-faq-question-bg: #f9f9f9;
      --light-faq-question-hover-bg: #e0f7fa;
@@ -171,7 +171,7 @@
       color: var(--current-header-text);
       text-align: center;
       padding: 40px 20px;
-      position: relative; 
+      position: relative;
     }
     /* Ensure label for language select in header has correct color */
     header label[for="languageSelect"] {
@@ -184,7 +184,7 @@
         color: var(--current-header-text);
     }
     header #languageSelect option {
-        background-color: var(--current-input-bg); 
+        background-color: var(--current-input-bg);
         color: var(--current-text);
     }
 
@@ -214,9 +214,10 @@
         color: var(--current-input-text);
     }
 
+    /* FULL WIDTH CHANGE */
     main {
-      padding: 30px 20px;
-      max-width: 960px; /* Original had 900px in a later style, using 960px from first */
+      padding: 30px 20px; /* Keep padding for edges */
+      max-width: none; /* Remove max-width for full page width */
       margin: auto;
     }
     /* General Section styling */
@@ -224,11 +225,14 @@
       background: var(--current-card-bg); /* Default to card background */
       border-radius: 12px;
       padding: 1.5rem;
-      margin-bottom: 2rem; /* was 40px, then 2rem */
+      margin-bottom: 2rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       opacity: 0; /* For animation */
       transform: translateY(30px); /* For animation */
       animation: fadeInUp 1s forwards;
+      max-width: 960px; /* Add max-width to sections for readability */
+      margin-left: auto;
+      margin-right: auto; /* Center sections within full width main */
     }
     section:nth-child(even) { animation-delay: 0.2s; }
     section:nth-child(odd) { animation-delay: 0.4s; }
@@ -241,32 +245,33 @@
         background: transparent;
         box-shadow: none;
         padding: 0; /* If it's just a wrapper */
+        max-width: none; /* These wrappers can stretch further */
     }
 
 
     h1, h2, h3, h4, h5, h6 {
         color: var(--current-text);
-        margin-top: 0; /* From a later style block */
+        margin-top: 0;
     }
     p, li {
-        font-size: 1rem; /* Default from later style block */
+        font-size: 1rem;
         color: var(--current-text);
     }
     ul {
-        padding-left: 1.2rem; /* From a later style block */
+        padding-left: 1.2rem;
     }
     li {
-        margin-bottom: 0.5rem; /* From a later style block */
+        margin-bottom: 0.5rem;
     }
     strong {
-        color: var(--current-text); /* Ensure contrast */
+        color: var(--current-text);
     }
     a {
         color: var(--current-link-color);
-        text-decoration: none; /* Common practice */
+        text-decoration: none;
     }
     a:hover {
-        text-decoration: underline; /* Common practice */
+        text-decoration: underline;
         filter: brightness(85%);
     }
 
@@ -285,7 +290,7 @@
     .stop { background-color: var(--danger); color: var(--primary-text); }
     .mode, .share { background-color: var(--primary); color: var(--primary-text); }
 
-    input[type="range"]#freqSlider { /* Specific to freqSlider */
+    input[type="range"]#freqSlider {
       width: 100%;
       margin-top: 10px;
       -webkit-appearance: none;
@@ -296,13 +301,12 @@
       transition: background 0.3s;
       margin-bottom: 12px;
     }
-    /* For other range inputs, consider accent-color or simpler styling */
     input[type="range"]:not(#freqSlider) {
         accent-color: var(--primary);
     }
 
 
-    canvas#audioVisualizer { /* Renamed for clarity if there are multiple canvases */
+    canvas#audioVisualizer {
       display: block;
       width: 100%;
       height: 100px;
@@ -320,7 +324,7 @@
       color: var(--current-footer-text);
     }
 
- 
+
     #loader {
       position: fixed;
       inset: 0;
@@ -367,16 +371,31 @@
       p, li { font-size: 0.95rem; }
       .blog-item h3 { font-size: 1rem; }
       .blog-item p { font-size: 0.9rem; }
+      /* Adjust fixed elements for small screens */
+      .theme-switch-wrapper {
+        top: 15px; /* Smaller top margin for mobile */
+        left: 15px; /* Smaller left margin for mobile */
+      }
+      #whatsapp-fixed-btn {
+        bottom: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+      #whatsapp-fixed-btn img {
+        width: 24px;
+        height: 24px;
+      }
     }
 
 
-    /* Dark Mode Toggle Switch Styles */
+    /* Dark Mode Toggle Switch Styles - MOVED TO LEFT */
    .theme-switch-wrapper {
        display: flex;
        align-items: center;
        position: absolute;
-       top: 20px; /* Adjusted for better alignment */
-       right: 20px; 
+       top: 25px; /* Adjusted for better alignment */
+       left: 20px; /* Moved to left */
        z-index: 100;
    }
    .theme-switch {
@@ -389,7 +408,7 @@
        display:none;
    }
    .slider {
-       background-color: #777; 
+       background-color: #777;
        bottom: 0;
        cursor: pointer;
        left: 0;
@@ -422,7 +441,7 @@
    }
    .theme-switch-wrapper span.icon {
        margin: 0 8px;
-       color: var(--current-header-text); 
+       color: var(--current-header-text);
        font-size: 1.2rem;
        line-height: 1;
        user-select: none;
@@ -439,30 +458,55 @@
    body:not(.dark-mode) .theme-switch-wrapper span.icon#theme-icon-dark {
        color: var(--light-header-text);
    }
-  
+
     /* Cleaning Panel Specific Text Colors (overriding inline styles if any) */
-    main label[for="freqSlider"], 
-    main #timerLabel, 
+    main label[for="freqSlider"],
+    main #timerLabel,
     main .voice-assistant label,
-    section p#frequencyLabel { /* More specific */
+    section p#frequencyLabel {
         color: var(--current-text) !important;
     }
-    section p#frequencyLabel { /* Target for "Current Frequency: ..." text */
+    section p#frequencyLabel {
         color: var(--current-text-muted) !important;
     }
-    main #timerLabel > span#countdown { /* Ensure countdown number is also themed */
+    main #timerLabel > span#countdown {
         color: var(--current-text) !important;
     }
     .share-buttons p {
         color: var(--current-text) !important;
     }
 
-    /* Informational text styling (How it works, about, features, terms, privacy) */
-    /* Applied through general p, h2, strong, a rules. Inline styles were removed/updated. */
-    /* For example: */
-    /* <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">How It Works 🛠</h2>
-       <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 10px;"> */
-    /* The color will come from general h2, p rules. */
+    /* Floating WhatsApp Button */
+    #whatsapp-fixed-btn {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 9999;
+        background-color: #25d366; /* WhatsApp Green */
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out, background-color 0.2s;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    #whatsapp-fixed-btn:hover {
+        background-color: #1da851;
+        transform: translateY(-3px);
+        text-decoration: none;
+    }
+    #whatsapp-fixed-btn img {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+    }
 
   </style>
 </head>
@@ -471,44 +515,33 @@
   <div id="loader">Loading Tool...</div>
 
   <header>
+    <!-- Dark Mode Toggle Switch MOVED HERE -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="darkModeToggleCheckbox">
+            <input type="checkbox" id="darkModeToggleCheckbox" aria-label="Toggle dark mode">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
     <h1 id="headerTitle">Fix My Speakers 🔊</h1>
-    <p id="headerDescription">Eject 💦 water from your phone's speakers after getting it wet.</p>
-   
-   <label for="languageSelect">🌐 Choose Language:</label> <!-- Removed inline style, handled by CSS -->
+    <p id="headerDescription">Eject 💦 water and clear dust from your phone's speakers using advanced sound wave technology. Restore crystal-clear audio quality in minutes, safely and effectively.</p>
+
+   <label for="languageSelect">🌐 Choose Language:</label>
     <select id="languageSelect" onchange="changeLanguage(event)" aria-label="Select Language">
       <option value="en">English</option>
       <option value="ne">Nepali</option>
       <option value="hi">Hindi</option>
     </select>
-
-    <div class="theme-switch-wrapper">
-     
-        <label class="theme-switch" for="darkModeToggleCheckbox">
-            <input type="checkbox" id="darkModeToggleCheckbox" aria-label="Toggle dark mode">
-            <span class="slider round"></span>
-        </label>
-       
-    </div>
-
-    <!-- Original WhatsApp Button from header (this was one of several) -->
-    <!-- Consider consolidating WhatsApp buttons if they serve same purpose -->
-    <a href="https://wa.me/+9779827801575" target="_blank" class="whatsapp-btn" onclick="playClickSound()" aria-label="Share on WhatsApp (header)">
-      <img src="https://www.freepnglogos.com/uploads/whatsapp-logo-png-transparent-20.png" alt="WhatsApp icon" />
-      Share Tool on WhatsApp
-    </a>
-    <!-- This is a different styled WhatsApp button. If needed, keep, otherwise remove if redundant. -->
-    <!-- The one at bottom-left is more prominent. -->
-
+    <!-- Original WhatsApp Button from header REMOVED -->
   </header>
 
   <main>
    <section> <!-- This is the Cleaning Panel Section -->
     <fieldset aria-labelledby="cleaningPanelTitle" style="border: none; padding: 5px 0;">
         <legend id="cleaningPanelTitle" style="font-size: 24px; font-weight: bold;">🧼 Cleaning Panel</legend>
-        <!-- The style for color is now handled by main CSS h2 rule -->
-    
+
        <div style="margin: 30px auto; padding: 20px; max-width: 500px; background: var(--current-card-bg); border: 1px solid var(--current-border); border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); font-family: Arial, sans-serif;">
-            <label for="freqSlider" id="freqLabelText"> <!-- Removed inline style -->
+            <label for="freqSlider" id="freqLabelText">
                 🎚️ Frequency Control
             </label>
             <input
@@ -520,35 +553,34 @@
                 step="1"
                 oninput="updateFrequencyLabel()"
                 aria-labelledby="freqLabelText"
-            > <!-- Style for freqSlider is in CSS -->
-            <p id="frequencyLabel"> <!-- Removed inline style -->
+            >
+            <p id="frequencyLabel">
                 Current Frequency: <strong><span id="freqLabel">440</span></strong> Hz
             </p>
         </div>
-    
+
         <div>
-          <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p> <!-- Removed inline style -->
+          <p id="timerLabel">🕒 Timer: <span id="countdown">30</span> sec</p>
         </div>
     </fieldset>
-    
+
     <div class="voice-assistant">
-        <label for="langSelect">Assistant Language:</label> <!-- Removed inline style -->
-        <select id="langSelectVoice" aria-label="Select assistant language"> <!-- Changed ID to avoid conflict -->
+        <label for="langSelect">Assistant Language:</label>
+        <select id="langSelectVoice" aria-label="Select assistant language">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
           <option value="ne">नेपाली</option>
         </select>
         <button id="voiceGuideBtn" aria-label="Play voice guide">Guide Me</button>
     </div>
-    
-    <button class="btn start" onclick="startCleaning()" id="startBtn">▶️ Start</button> <!-- Removed parseInt from onclick, handle in JS -->
-    <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop</button>
+
+    <button class="btn start" onclick="startCleaning()" id="startBtn">▶️ Start Cleaning</button>
+    <button class="btn stop" onclick="stopSound()" id="stopBtn">⏹️ Stop Cleaning</button>
 
     <div class="share-buttons">
-        <p>Share your experience:</p> <!-- Removed inline style -->
-        <a id="whatsappShare" class="share-btn whatsapp" target="_blank" title="Share on WhatsApp">WhatsApp</a>
+        <p>Share your experience:</p>
+        <!-- WhatsApp share button removed from here, replaced by floating button -->
         <a id="facebookShare" class="share-btn facebook" target="_blank" title="Share on Facebook">Facebook</a>
-        <!-- <a id="gmailShare" class="share-btn gmail" target="_blank" title="Share on Gmail">Gmail</a> --> <!-- Uncomment if needed -->
     </div>
 </section>
 
@@ -593,7 +625,7 @@
 <section id="how-it-works">
     <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">How It Works 🛠</h2>
     <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 10px;">
-      <strong>FixMySpeaker.com</strong> is a free online tool designed to remove water, dust, and debris from your phone’s speaker using sound waves.
+      <strong>FixMySpeaker.com</strong> is a cutting-edge, free online tool specifically engineered to rejuvenate your phone’s speaker by effectively removing trapped water, accumulated dust, and microscopic debris using precisely generated sound waves. This innovative method leverages the principles of acoustic vibration to dislodge foreign particles without physical intervention, ensuring a safe and non-invasive cleaning process.
     </p>
     <div style="position: relative; width: 100%; padding-bottom: 56.25%; margin: 20px 0;">
       <iframe src="https://streamable.com/e/5r71jy?autoplay=1&muted=1&nocontrols=1"
@@ -602,9 +634,7 @@
       </iframe>
     </div>
     <p style="font-size: 18px; line-height: 1.8; text-align: justify;">
-      By playing specific high-frequency audio, it helps vibrate and clear blockages from the speaker grill...
-      <br><br>
-      Trusted by thousands, <strong><a href="https://fixedmyspeaker.com" target="_blank">FixedMySpeaker.com</a></strong> offers an easy, effective way...
+      When you play specific high-frequency audio tones through our tool, your phone's speaker vibrates intensely. These rapid vibrations create a powerful outward force that literally "shakes out" water droplets and pushes away dust particles that have settled within the speaker grill and internal components. This process is particularly effective for accidental spills, rain exposure, or even just long-term dust buildup that can significantly muffle sound quality. With no app download or installation required, <strong><a href="https://fixedmyspeaker.com" target="_blank">FixedMySpeaker.com</a></strong> offers an unparalleled, easy, and effective solution for immediate speaker restoration, trusted by thousands globally.
     </p>
 </section>
 
@@ -612,33 +642,42 @@
 <section id="about-us">
     <h2 style="text-align: center; font-size: 32px; margin: 60px 0 30px;">About Us 👨‍💻</h2>
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; margin-bottom: 30px;">
-      <img src="https://i.postimg.cc/PJ1dPKrG/IMG-6348-Original.jpg" alt="Bishal Mishra" style="width: 300px; border-radius: 12px;">
-      <p style="font-size: 18px; line-height: 1.8; text-align: justify; flex: 1;">
-        <strong>FixedMySpeaker.com</strong> was founded by Bishal Mishra...
+      <img src="https://i.postimg.cc/PJ1dPKrG/IMG-6348-Original.jpg" alt="Bishal Mishra" style="width: 300px; border-radius: 12px; max-width: 100%; height: auto;">
+      <p style="font-size: 18px; line-height: 1.8; text-align: justify; flex: 1; min-width: 280px;">
+        <strong>FixedMySpeaker.com</strong> was founded by Bishal Mishra, a passionate technology enthusiast and developer dedicated to creating simple yet powerful solutions for everyday tech problems. Driven by the common frustration of muffled phone speakers after accidental water exposure, Bishal envisioned a free, accessible, and highly effective online tool that could provide immediate relief without the need for expensive repairs or cumbersome software installations.
         <br><br>
-        For support or inquiries, you can reach out to Bishal directly at <a href="tel:+9779827801575">+977 9827801575</a>. Visit the official website at <a href="https://www.fixedmyspeaker.com" target="_blank">www.fixedmyspeaker.com</a>.
+        Since its inception, FixedMySpeaker.com has grown into a widely recognized platform, helping countless users worldwide restore their device's audio clarity. Our mission is to empower users with easy-to-use tools that make technology maintenance straightforward and affordable. We are committed to continuous improvement, regularly updating our algorithms and user interface to ensure the best possible experience. For support, collaboration inquiries, or feedback, you can connect directly with Bishal at <a href="tel:+9779827801575">+977 9827801575</a> or visit the official website at <a href="https://www.fixedmyspeaker.com" target="_blank">www.fixedmyspeaker.com</a>. Your audio experience is our priority.
       </p>
     </div>
 </section>
 
 <!-- Features Section -->
 <section id="features">
-    <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">Features</h2>
+    <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">Key Features & Benefits</h2>
+    <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 10px;">
+        FixedMySpeaker.com offers a robust set of features designed to provide a comprehensive and user-friendly experience for restoring your speaker's performance. Our tool is built on advanced acoustic principles, ensuring effective cleaning for a wide range of devices and scenarios.
+    </p>
     <ul style="list-style: none; padding: 0; font-size: 18px; line-height: 1.8;">
-      <li>High-frequency sound cleaning for dust and water removal</li>
-      <li>Works on all smartphones, tablets, and speakers</li>
-      <li>Simple and intuitive interface — no app download required</li>
-      <li>Fully browser-based, no data is sent anywhere</li>
-      <li>Smart cleaning tips and usage guide included</li>
-      <li>100% free to use with no hidden costs</li>
+      <li><strong>High-Frequency Sound Cleaning:</strong> Utilizes precisely engineered sound waves to effectively dislodge and eject water droplets and fine dust particles from your speaker grill and internal components.</li>
+      <li><strong>Universal Compatibility:</strong> Works seamlessly across all modern smartphones, including iPhones and Android devices, as well as tablets, smartwatches, and other portable speakers. No specific app or software required.</li>
+      <li><strong>Simple & Intuitive Interface:</strong> Designed for ease of use, our browser-based tool requires no technical expertise. Simply adjust the frequency and click 'Start' to begin the cleaning process.</li>
+      <li><strong>Fully Browser-Based & Secure:</strong> Operate directly from your web browser, ensuring your privacy and security. No personal data is collected or transmitted, and no files are stored on your device.</li>
+      <li><strong>Smart Cleaning Tips & Guide:</strong> Integrated guidance provides optimal usage instructions and helpful tips to maximize the effectiveness of the cleaning process and maintain long-term speaker health.</li>
+      <li><strong>100% Free to Use:</strong> Enjoy full access to all features without any hidden costs, subscriptions, or advertisements disrupting your experience.</li>
+      <li><strong>Quick & Efficient:</strong> Experience noticeable improvements in sound clarity and volume within minutes, making it an ideal solution for urgent water damage or routine maintenance.</li>
     </ul>
+    <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-top: 20px;">
+        With these features, FixedMySpeaker.com stands out as your go-to solution for maintaining optimal audio performance and addressing common speaker issues caused by environmental factors.
+    </p>
 </section>
 
 <!-- Terms & Conditions Section -->
 <section id="terms">
     <h2 style="text-align: center; font-size: 32px; margin: 60px 0 30px;">Terms & Conditions ⚠️</h2>
     <p style="font-size: 18px; line-height: 1.8; text-align: justify;">
-      By using <strong>FixedMySpeaker.com</strong>, you agree to use the tool at your own risk...
+      By accessing and using <strong>FixedMySpeaker.com</strong>, you explicitly agree to use the tool at your own risk. While our speaker cleaning solution has been rigorously tested and is designed to be safe and effective for ejecting water and dust using sound waves, we cannot guarantee results for all types of speaker damage or situations. The effectiveness may vary based on the severity and nature of the liquid exposure, the device model, and the integrity of your speaker hardware.
+      <br><br>
+      FixedMySpeaker.com is provided "as is" without any warranties, express or implied, including but not limited to, implied warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not assume responsibility for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses, resulting from your use or inability to use the service. Users are strongly advised to exercise caution and consult with a professional technician for severe water damage or hardware malfunctions. Continued use implies acceptance of these terms.
     </p>
 </section>
 
@@ -646,24 +685,32 @@
 <section id="privacy">
     <h2 style="text-align: center; font-size: 32px; margin: 60px 0 30px;">Privacy Policy 🔒</h2>
     <p style="font-size: 18px; line-height: 1.8; text-align: justify;">
-      <strong>FixedMySpeaker.com</strong> respects your privacy...
+      <strong>FixedMySpeaker.com</strong> is deeply committed to protecting your privacy. We believe in providing powerful utilities without compromising your personal data. Our tool operates entirely within your web browser, meaning that we do not collect, store, or transmit any personal information, device data, or usage statistics. Your cleaning sessions are completely private and remain on your device.
+      <br><br>
+      We do not use cookies for tracking purposes, nor do we employ any third-party analytics scripts that would gather identifiable information. Any user interactions, such as frequency adjustments or button clicks, are processed locally to deliver the cleaning function. The only information we might indirectly interact with is through standard web server logs (like IP addresses and browser types), which are anonymized and used solely for operational security and debugging. We do not sell, trade, or otherwise transfer your personal information to outside parties. Our commitment to privacy is unwavering; your trust is our priority.
     </p>
 </section>
 
 
-  <section class="animate" aria-labelledby="blogsTitle" id="blog-section"> 
+  <section class="animate" aria-labelledby="blogsTitle" id="blog-section">
     <h2 id="blogsTitle" style="text-align: center; font-size: 32px;">📰 Blogs & News</h2>
+    <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 20px;">
+        Dive into our latest articles, tips, and updates related to speaker maintenance, audio technology, and device care. Our blog covers a wide range of topics, from the scientific principles behind sound wave cleaning to practical advice on preventing speaker damage and extending your phone's lifespan. Stay informed and get the most out of your audio experience with expert insights from our team.
+    </p>
     <div id="blogContainer"></div>
   </section>
 
 <style>
-   #blog-section { /* This is a wrapper, should be transparent */
+   #blog-section {
     background: transparent !important;
     box-shadow: none !important;
-    padding: 20px 0 !important; /* Add some padding if needed */
+    padding: 20px 0 !important;
     margin-bottom: 2rem;
+    max-width: 960px; /* Blog container should also have max-width for readability */
+    margin-left: auto;
+    margin-right: auto;
   }
-  .blog-item { /* Actual blog items have background */
+  .blog-item {
     background: var(--current-card-bg);
     margin-bottom: 1.5rem;
     padding: 1rem;
@@ -681,7 +728,7 @@
   }
   .blog-item p {
     margin: 0.5rem 0;
-    color: var(--current-text-muted); /* Summary text */
+    color: var(--current-text-muted);
   }
   .read-more {
     display: inline-block;
@@ -698,7 +745,7 @@
     font-size: 0.95rem;
     line-height: 1.6;
   }
-  .blog-full p { /* Full blog content text */
+  .blog-full p {
       color: var(--current-text);
   }
 </style>
@@ -729,10 +776,10 @@
   ];
 
     const blogContainer = document.getElementById('blogContainer');
-    if (blogContainer) { // Check if element exists
+    if (blogContainer) {
         blogs.forEach((blog, index) => {
             const blogItem = document.createElement('article');
-            blogItem.className = 'blog-item animate'; // Added animate class
+            blogItem.className = 'blog-item animate';
             blogItem.innerHTML = `
             <h3>${blog.title}</h3>
             <p>${blog.summary}</p>
@@ -757,7 +804,7 @@
 </script>
 
 <!-- 🔼 Scroll-to-Top Button -->
-<button id="scrollTopBtn" aria-label="Scroll to Top" style="display: none;"> <!-- Initially hidden -->
+<button id="scrollTopBtn" aria-label="Scroll to Top" style="display: none;">
   <svg width="50" height="60" viewBox="0 0 100 100">
     <circle cx="50" cy="50" r="45" stroke="var(--current-border)" stroke-width="10" fill="none" />
     <circle id="progressCircle" cx="50" cy="50" r="45" stroke="var(--current-text)" stroke-width="10" fill="none"
@@ -770,21 +817,20 @@
     position: fixed; bottom: 25px; right: 25px; z-index: 9999;
     background: transparent; border: none; cursor: pointer;
     width: 60px; height: 60px; border-radius: 50%; padding: 0;
-    /* display: none; /* Handled by JS */
   }
   #scrollTopBtn:hover text { fill: var(--primary); }
 </style>
 <script>
   const scrollBtn = document.getElementById("scrollTopBtn");
   const progressCircle = document.getElementById("progressCircle");
-  
-  if (scrollBtn && progressCircle) { // Check if elements exist
+
+  if (scrollBtn && progressCircle) {
       const circumference = 2 * Math.PI * 45;
 
       function updateScrollProgress() {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const percentScrolled = scrollHeight > 0 ? scrollTop / scrollHeight : 0; // Avoid division by zero
+        const percentScrolled = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
         const offset = circumference * (1 - percentScrolled);
 
         progressCircle.style.strokeDashoffset = offset;
@@ -796,13 +842,16 @@
       });
 
       window.addEventListener("scroll", updateScrollProgress);
-      document.addEventListener("DOMContentLoaded", updateScrollProgress); // Initial check
+      document.addEventListener("DOMContentLoaded", updateScrollProgress);
   }
 </script>
 
 <!-- FAQ SECTION -->
 <section class="animate" itemscope itemtype="https://schema.org/FAQPage" id="faq-section-wrapper">
   <h2 id="faqTitle">Frequently Asked Questions (FAQ)</h2>
+  <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 20px;">
+    Have questions about how FixedMySpeaker.com works, its compatibility, or best practices? We've compiled a list of the most frequently asked questions to provide you with quick and clear answers. If you can't find what you're looking for, feel free to use the search bar or contact us directly.
+  </p>
   <div class="faq-search">
     <input type="text" id="faqSearch" placeholder="Search your question... 🔍">
   </div>
@@ -813,53 +862,69 @@
   <div class="faq-container" id="faqContainer">
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question"><span itemprop="name">How does this speaker cleaner tool work?</span><span class="faq-arrow">▶️</span></div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">It plays sound waves that vibrate your speaker, helping eject water and dust stuck inside.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">It plays sound waves that vibrate your speaker, helping eject water and dust stuck inside. The high-frequency vibrations effectively dislodge trapped moisture and particles, clearing your speaker's pathways for improved sound quality. This method is safe and non-invasive.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
     </div>
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question"><span itemprop="name">Is it compatible with all smartphones?</span><span class="faq-arrow">▶️</span></div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes, the tool works with iPhones, Android phones, and most modern smartphones with built-in speakers.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes, the tool is designed to work universally across all modern smartphones, including iPhones, Android phones (Samsung, Google Pixel, OnePlus, Xiaomi, etc.), tablets, and even smartwatches that have a built-in speaker. It's a web-based tool, so no specific app installation is needed.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
     </div>
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question"><span itemprop="name">How many times should I run the cleaning?</span><span class="faq-arrow">▶️</span></div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Running it 2–3 times is usually enough, especially after water exposure.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">For optimal results, especially after significant water exposure, running the cleaning cycle 2–3 times consecutively is usually sufficient. You can also try adjusting the frequency slightly between runs to ensure thorough cleaning. For routine maintenance, once a month might be enough.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
     </div>
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question"><span itemprop="name">Is this tool free and safe?</span><span class="faq-arrow">▶️</span></div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes, it is 100% free and runs directly in your browser without collecting data.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Absolutely, FixedMySpeaker.com is 100% free to use, with no hidden charges, subscriptions, or intrusive ads. It operates directly in your browser, ensuring no data is collected, stored, or transmitted from your device, making it completely safe and private.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
     </div>
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-question"><span itemprop="name">Can it repair physical speaker damage?</span><span class="faq-arrow">▶️</span></div>
-      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">No, it only helps with water or dust. For hardware issues, consult a technician.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">No, this tool is designed to clear blockages from water or dust. It cannot repair physical hardware damage, such as a torn speaker membrane, a faulty coil, or disconnected wires. If your speaker issues persist after cleaning, we recommend consulting a professional phone repair technician.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+    </div>
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question"><span itemprop="name">How to prepare my phone before cleaning?</span><span class="faq-arrow">▶️</span></div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Before starting the cleaning process, make sure your phone's volume is set to maximum. Point the speaker downwards to allow water to drip out naturally. You can also gently tap the phone on a soft surface or shake it lightly to aid the water expulsion.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
+    </div>
+     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question"><span itemprop="name">Is there a specific frequency I should use?</span><span class="faq-arrow">▶️</span></div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">The default frequency of 440 Hz is a good starting point and often effective. However, you can experiment with the frequency slider between 100 Hz and 1000 Hz. Different frequencies might work better for different types of blockages or speaker designs. Listen for changes in the sound as you adjust.</div><div class="faq-voice" onclick="speakFaqText(this)">🔊 Speak</div></div>
     </div>
   </div>
 </section>
 <style>
-  #faq-section-wrapper { /* Styles for FAQ elements */
-    background: var(--current-card-bg); /* It's a section, so give it card bg */
+  #faq-section-wrapper {
+    background: var(--current-card-bg);
   }
   #faqTitle {
-    margin-top: 0; /* Reset from general section h2 */
+    margin-top: 0;
     font-size: 28px; color: var(--current-text); text-align: center;
     border-bottom: 2px solid var(--current-border);
     padding-bottom: 10px; margin-bottom: 20px;
   }
+  .faq-search { margin-bottom: 20px; }
   .faq-search input {
     width: 100%; padding: 12px 16px; border-radius: 25px;
     border: 1px solid var(--current-input-border); font-size: 16px; outline: none;
     background-color: var(--current-input-bg); color: var(--current-input-text);
   }
+  .faq-toggle {
+    text-align: center; margin-bottom: 20px;
+  }
   .faq-toggle button {
     background-color: var(--primary); color: var(--primary-text);
     border: none; padding: 10px 16px; margin: 0 5px;
     border-radius: 20px; cursor: pointer; font-weight: bold;
+    transition: background-color 0.2s;
+  }
+  .faq-toggle button:hover {
+      filter: brightness(90%);
   }
   .faq-item {
     margin-bottom: 15px; border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07); overflow: hidden;
-    background: var(--current-card-bg); /* Inner items on card background */
+    background: var(--current-card-bg);
     border-left: 5px solid var(--primary);
   }
-  body.dark-mode .faq-item { box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  body.dark-mode .faq-item { box-shadow: 0 4p x 12px rgba(0,0,0,0.2); }
   .faq-question {
     background: var(--current-faq-question-bg); padding: 18px 20px;
     font-size: 17px; font-weight: 600; cursor: pointer; position: relative;
@@ -912,17 +977,17 @@
     if (textElement) {
         const text = textElement.innerText;
         const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'en-US'; // Consider making this dynamic with page language
+        utter.lang = 'en-US';
         window.speechSynthesis.speak(utter);
     }
   }
 </script>
 
 <!-- RATING WIDGET -->
-<section id="ratingWidgetContainer" class="animate"> <!-- Added animate -->
+<section id="ratingWidgetContainer" class="animate">
     <div class="rating-box" id="ratingWidget">
       <h2>Rate This Tool</h2>
-      <p>How helpful was the Phone Speaker Cleaner?</p>
+      <p>Your feedback helps us improve! How helpful was the Phone Speaker Cleaner for you?</p>
       <div class="stars" id="stars">
         <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span><span class="star" data-value="4">★</span>
@@ -930,7 +995,7 @@
       </div>
       <div class="emoji" id="emoji"></div>
       <div id="ratingResult">Select a rating</div>
-      <textarea id="comment" placeholder="Write a comment..."></textarea>
+      <textarea id="comment" placeholder="Share your experience or suggestions here..."></textarea>
       <button id="submitBtn">Submit Feedback</button>
       <div id="thankYou"></div>
       <div id="avgRating"></div>
@@ -938,10 +1003,8 @@
     </div>
 </section>
 <style>
-#ratingWidgetContainer { background: var(--current-card-bg) !important; } /* Override transparent section */
+#ratingWidgetContainer { background: var(--current-card-bg) !important; max-width: 960px; } /* Override transparent section and set max-width */
 #ratingWidget {
-  /* width: 100%; */ /* Handled by section */
-  /* background: transparent; */ /* Inherits from section */
   color: var(--current-text);
   padding: 20px; text-align: center; box-sizing: border-box;
   font-family: sans-serif; position: relative; overflow: hidden;
@@ -960,7 +1023,7 @@ body.dark-mode #ratingWidget .star { color: #555; }
   border-radius:8px; border:1px solid var(--current-input-border); display:block;
   background:var(--current-input-bg); color:var(--current-input-text);
 }
-#ratingWidget button#submitBtn { /* More specific */
+#ratingWidget button#submitBtn {
   display:block; margin:12px auto; padding:10px 22px; font-size:15px;
   border:none; border-radius:6px; background:var(--primary); color:var(--primary-text);
   cursor:pointer; transition:background 0.3s ease;
@@ -972,7 +1035,7 @@ body.dark-mode #ratingWidget .star { color: #555; }
 <script>
 (() => {
   const ratingWidget = document.getElementById('ratingWidget');
-  if (!ratingWidget) return; // Guard if section is missing
+  if (!ratingWidget) return;
 
   const stars = ratingWidget.querySelectorAll('.star'),
     ratingResult = ratingWidget.querySelector('#ratingResult'),
@@ -982,8 +1045,8 @@ body.dark-mode #ratingWidget .star { color: #555; }
     commentBox = ratingWidget.querySelector('#comment'),
     avgRating = ratingWidget.querySelector('#avgRating'),
     confettiCanvas = ratingWidget.querySelector('#confettiCanvas');
-    
-  if (!stars.length || !ratingResult || !emoji || !thankYou || !submitBtn || !commentBox || !avgRating || !confettiCanvas) return; // Guard elements
+
+  if (!stars.length || !ratingResult || !emoji || !thankYou || !submitBtn || !commentBox || !avgRating || !confettiCanvas) return;
 
   const ctx = confettiCanvas.getContext('2d');
 
@@ -1010,18 +1073,18 @@ body.dark-mode #ratingWidget .star { color: #555; }
   showAverageRating();
 
   if (selected > 0) {
-    updateStarsUI(selected, true); // Use 'true' for selected
+    updateStarsUI(selected, true);
     emoji.textContent = emojiMap[selected];
     ratingResult.textContent = `You rated: ${selected} star${selected > 1 ? 's' : ''}`;
   }
   stars.forEach(s => {
     s.onmouseover = () => {
-      updateStarsUI(s.dataset.value, false); // Use 'false' for hovered
+      updateStarsUI(s.dataset.value, false);
       emoji.textContent = emojiMap[s.dataset.value];
       emoji.style.transform = 'scale(1.2)';
     };
     s.onmouseout = () => {
-      updateStarsUI(selected, true); // Revert to selected state
+      updateStarsUI(selected, true);
       emoji.textContent = emojiMap[selected] || '';
       emoji.style.transform = 'scale(1)';
     };
@@ -1036,25 +1099,24 @@ body.dark-mode #ratingWidget .star { color: #555; }
   submitBtn.onclick = () => {
     if (!selected || selected === "0") return alert("Select a rating first.");
     const comment = commentBox.value.trim();
-    // if (comment && comment.length < 5) return alert("Comment is too short."); // Optional validation
     submitBtn.disabled = true; submitBtn.textContent = "Submitting...";
-    fetch("https://getform.io/f/bwnqxvea", { // Replace with your endpoint if changed
+    fetch("https://getform.io/f/bwnqxvea", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({rating: selected, emoji: emojiMap[selected], comment})
     }).then(res => {
       if (res.ok) {
         thankYou.textContent = "Thanks for your feedback!";
-        thankYou.style.color = "var(--success)"; // Use CSS var
-        if (!ratings.find(r => r.ts === selected.ts)) { // Prevent duplicate if resubmitted quickly
-            ratings.push(selected); // Storing just the rating value
+        thankYou.style.color = "var(--success)";
+        if (!ratings.find(r => r.ts === selected.ts)) {
+            ratings.push(selected);
             localStorage.setItem('ratings', JSON.stringify(ratings));
         }
         localStorage.removeItem('userComment'); showAverageRating(); launchConfettiAnimation();
       } else throw new Error("Submission failed");
     }).catch(() => {
       thankYou.textContent = "Submission failed.";
-      thankYou.style.color = "var(--danger)"; // Use CSS var
+      thankYou.style.color = "var(--danger)";
     }).finally(() => {
       setTimeout(() => {
         submitBtn.disabled = false; submitBtn.textContent = "Submit Feedback";
@@ -1067,8 +1129,8 @@ body.dark-mode #ratingWidget .star { color: #555; }
     let w = confettiCanvas.width = confettiCanvas.offsetWidth,
         h = confettiCanvas.height = confettiCanvas.offsetHeight,
         particles = Array.from({length: 100}, () => ({
-          x: Math.random() * w, y: Math.random() * h - h, // Start above canvas
-          vx: Math.random() * 4 - 2, vy: Math.random() * 2 + 1, // Slower fall
+          x: Math.random() * w, y: Math.random() * h - h,
+          vx: Math.random() * 4 - 2, vy: Math.random() * 2 + 1,
           size: Math.random() * 5 + 3,
           color: `hsl(${Math.random()*360}, 100%, 60%)`,
           alpha: 1
@@ -1077,9 +1139,8 @@ body.dark-mode #ratingWidget .star { color: #555; }
     (function animateConfetti(){
       ctx.clearRect(0, 0, w, h);
       particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy; p.alpha -= 0.005; // Fade out
-        // p.vy += 0.05; // Gravity
-        if (p.y > h || p.x < 0 || p.x > w || p.alpha <= 0) { // Reset particle
+        p.x += p.vx; p.y += p.vy; p.alpha -= 0.005;
+        if (p.y > h || p.x < 0 || p.x > w || p.alpha <= 0) {
             p.y = Math.random() * -20; p.x = Math.random() * w; p.alpha = 1;
             p.vx = Math.random() * 4 - 2; p.vy = Math.random() * 2 + 1;
         }
@@ -1087,31 +1148,34 @@ body.dark-mode #ratingWidget .star { color: #555; }
         ctx.fillStyle = p.color;
         ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI); ctx.fill();
       });
-      ctx.globalAlpha = 1; // Reset alpha
-      if (++frame < 200) requestAnimationFrame(animateConfetti); // Run for ~3 seconds
-      else ctx.clearRect(0,0,w,h); // Clear at the end
+      ctx.globalAlpha = 1;
+      if (++frame < 200) requestAnimationFrame(animateConfetti);
+      else ctx.clearRect(0,0,w,h);
     })();
   }
 })();
 </script>
 
 <!-- TESTIMONIAL SECTION -->
-<section id="testimonial-section" class="animate"> <!-- Added animate -->
+<section id="testimonial-section" class="animate">
   <h2 class="testimonial-title">💬 What Users Are Saying</h2>
+  <p style="font-size: 18px; line-height: 1.7; text-align: justify; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+      Hear directly from our satisfied users who have successfully restored their phone's audio quality using FixedMySpeaker.com. Their experiences highlight the effectiveness, ease of use, and convenience of our online speaker cleaning tool. We are proud to have helped so many people avoid costly repairs and enjoy clear sound once again.
+  </p>
   <div class="testimonial-carousel" onmouseover="pauseSlider()" onmouseout="startSlider()">
     <div class="testimonial-slide active">
       <a href="https://Fixedmyspeaker.com" target="_blank"><img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo Bishal Mishra" /></a>
-      <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! Big thanks to the team for creating something so helpful.”</p>
+      <p class="testimonial-text">“My phone speaker was barely audible after I dropped it in the sink. This tool worked wonders within minutes! I was amazed at how quickly it cleared the water and brought my sound back to life. Big thanks to the team for creating something so helpful and accessible.”</p>
       <h3 class="testimonial-name">Bishal Mishra</h3><p class="testimonial-role">📱 App Developer</p>
     </div>
     <div class="testimonial-slide">
       <a href="https://fixedmyspeaker.com" target="_blank"><img class="testimonial-img" src="https://i.postimg.cc/65fNMGPQ/Untitled-design.png" alt="User photo Prashant Mishra" /></a>
-      <p class="testimonial-text">“Was skeptical at first, but after running the cleaner twice, my speaker volume improved drastically. I didn’t have to go to a repair shop. Highly recommended for anyone facing muffled audio.”</p>
+      <p class="testimonial-text">“Was skeptical at first, thinking an online tool couldn't possibly fix a hardware issue. But after running the cleaner twice, my speaker volume improved drastically, and the muffled sound disappeared completely. I didn’t have to go to a repair shop, saving me time and money. Highly recommended for anyone facing muffled audio or water damage.”</p>
       <h3 class="testimonial-name">Prashant Mishra</h3><p class="testimonial-role">🎧 Gadget Enthusiast</p>
     </div>
     <div class="testimonial-slide">
       <a href="https://Fixedmyspeaker.com" target="_blank"><img class="testimonial-img" src="https://i.postimg.cc/GhCCPjqN/Untitled-design.png" alt="User photo Anam Mishra" /></a>
-      <p class="testimonial-text">“This website is a lifesaver! Clean interface, easy to use, and it really does the job. My friends didn’t believe it until they tried it themselves. Super handy after water exposure.”</p>
+      <p class="testimonial-text">“This website is a lifesaver! I accidentally splashed water on my phone, and the speaker went completely silent. Found FixedMySpeaker.com, tried it, and within a few seconds, water literally started ejecting! The interface is clean, easy to use, and it really does the job. My friends didn’t believe it until they tried it themselves. Super handy after water exposure.”</p>
       <h3 class="testimonial-name">Anam Mishra</h3><p class="testimonial-role">🌟 Verified User</p>
     </div>
     <div class="testimonial-nav">
@@ -1122,19 +1186,18 @@ body.dark-mode #ratingWidget .star { color: #555; }
   </div>
 </section>
 <style>
-  #testimonial-section { /* Wrapper style */
+  #testimonial-section {
     background: transparent !important;
     box-shadow: none !important;
     padding: 40px 20px !important;
     text-align: center;
   }
   .testimonial-title { font-size: 28px; color: var(--current-text); margin-bottom: 20px; }
-  .testimonial-carousel { position:relative; max-width:800px; margin:auto; overflow:hidden; } /* Max width was 100% */
+  .testimonial-carousel { position:relative; max-width:800px; margin:auto; overflow:hidden; }
   .testimonial-slide {
     display:none; text-align:center; padding:30px 20px;
     background:var(--current-card-bg); border-radius:10px;
-    animation:fadeSlideIn 0.5s ease-in-out; /* Renamed animation */
-    /* max-width: 800px; margin: auto; */ /* Handled by carousel now */
+    animation:fadeSlideIn 0.5s ease-in-out;
   }
   .testimonial-slide.active { display:block; }
   .testimonial-img {
@@ -1158,7 +1221,7 @@ body.dark-mode #ratingWidget .star { color: #555; }
   }
 </style>
 <script>
-  let currentSlideIdx = 0; // Renamed from currentSlide to avoid conflict if any
+  let currentSlideIdx = 0;
   const testimonialSlides = document.querySelectorAll('#testimonial-section .testimonial-slide');
   const testimonialDots = document.querySelectorAll('#testimonial-section .testimonial-dot');
   let testimonialSlideInterval;
@@ -1180,14 +1243,14 @@ body.dark-mode #ratingWidget .star { color: #555; }
 
   function startSlider() {
     if (testimonialSlides.length === 0) return;
-    clearInterval(testimonialSlideInterval); // Clear existing before starting new
+    clearInterval(testimonialSlideInterval);
     testimonialSlideInterval = setInterval(nextTestimonialSlide, 5000);
   }
 
   function pauseSlider() {
     clearInterval(testimonialSlideInterval);
   }
-  
+
   document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.querySelector('#testimonial-section .testimonial-carousel');
     if (carousel) {
@@ -1201,19 +1264,17 @@ body.dark-mode #ratingWidget .star { color: #555; }
             }
         });
     }
-    if (testimonialSlides.length > 0) { // Start slider only if slides exist
+    if (testimonialSlides.length > 0) {
         startSlider();
     }
   });
 
-  // Keyboard navigation (optional, ensure no conflicts)
-  // document.addEventListener('keydown', e => { /* ... */ });
 </script>
 
 <!-- SUBSCRIBE SECTION -->
-<section id="subscribe-section" class="animate"> <!-- Added animate -->
-  <h2>📢 Subscribe for Updates</h2>
-  <p>Stay in the loop with our latest tools, features, and offers.</p>
+<section id="subscribe-section" class="animate">
+  <h2>📢 Subscribe for Latest Updates & Tips!</h2>
+  <p>Stay in the loop with our latest tools, features, special offers, and essential tips for maintaining your phone's speaker health. Join our community and never miss an update that could enhance your audio experience.</p>
   <form id="gmailSubscribeForm">
     <input type="email" id="gmailInput" placeholder="Your Gmail address" required pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"/>
     <button type="submit">🔔 Subscribe</button>
@@ -1222,7 +1283,7 @@ body.dark-mode #ratingWidget .star { color: #555; }
   <button onclick="promptAdminAccess()" id="adminViewEmailsBtn">🔐 Admin: View Emails</button>
 </section>
 <style>
-#subscribe-section { /* This section uses its own gradient */
+#subscribe-section {
   padding:40px 20px; text-align:center; border-radius:15px;
   margin:40px auto; max-width:700px; box-shadow:0 8px 24px rgba(0,0,0,0.2);
   background:linear-gradient(145deg, #00bcd4, #3f51b5); color:#fff;
@@ -1236,7 +1297,7 @@ body.dark-mode #subscribe-section {
 #subscribe-section input[type="email"] {
   padding:10px 18px; width:100%; max-width:360px; border-radius:25px;
   border:none; outline:none; font-size:15px;
-  background-color:#fff; color:#333; /* Always light input on this gradient */
+  background-color:#fff; color:#333;
 }
 body.dark-mode #subscribe-section input[type="email"] {
   background-color:rgba(255,255,255,0.9); color:#333;
@@ -1249,7 +1310,7 @@ body.dark-mode #subscribe-section input[type="email"] {
 body.dark-mode #subscribe-section button[type="submit"] {
   background:rgba(255,255,255,0.9); color:#2c3a85;
 }
-#subscribe-section #adminViewEmailsBtn { /* Admin button on gradient */
+#subscribe-section #adminViewEmailsBtn {
   margin-top:16px; font-size:13px; padding:6px 14px; border-radius:18px;
   background:rgba(255,255,255,0.15); border:1px solid #fff; color:#fff; cursor:pointer;
 }
@@ -1258,12 +1319,46 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
 }
 </style>
 <script>
-  const ADMIN_PASSWORD_SUB = "bishal"; // Use a different const name
-  function promptAdminAccess() { /* ... same as before ... */ }
-  function openEmailAdmin() { /* ... same as before ... */ }
-  function closeEmailAdmin() { /* ... same as before ... */ }
-  function clearEmails() { /* ... same as before ... */ }
-  function downloadEmails() { /* ... same as before ... */ }
+  const ADMIN_PASSWORD_SUB = "bishal";
+  function promptAdminAccess() {
+    const password = prompt("Enter admin password:");
+    if (password === ADMIN_PASSWORD_SUB) {
+      openEmailAdmin();
+    } else if (password !== null) {
+      alert("Incorrect password.");
+    }
+  }
+  function openEmailAdmin() {
+    const modal = document.getElementById("emailAdminModal");
+    const emailList = document.getElementById("emailList");
+    if (modal && emailList) {
+        modal.style.display = "block";
+        const emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
+        emailList.innerHTML = emails.map(email => `<li>${email}</li>`).join("");
+    }
+  }
+  function closeEmailAdmin() {
+    const modal = document.getElementById("emailAdminModal");
+    if (modal) modal.style.display = "none";
+  }
+  function clearEmails() {
+    if (confirm("Are you sure you want to clear all subscribed emails? This action cannot be undone.")) {
+      localStorage.removeItem("subscribedGmails");
+      openEmailAdmin(); // Refresh the list
+      alert("All subscribed emails have been cleared.");
+    }
+  }
+  function downloadEmails() {
+    const emails = JSON.parse(localStorage.getItem("subscribedGmails") || "[]");
+    const csvContent = "data:text/csv;charset=utf-8," + emails.join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "subscribed_emails.csv");
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link); // Clean up
+  }
   document.addEventListener('DOMContentLoaded', () => {
     const gmailSubForm = document.getElementById("gmailSubscribeForm");
     if (gmailSubForm) {
@@ -1278,10 +1373,10 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
             if (!emails.includes(email)) {
                 emails.push(email);
                 localStorage.setItem("subscribedGmails", JSON.stringify(emails));
-                message.style.color = "#d4f5d4"; // Success green
+                message.style.color = "#d4f5d4";
                 message.textContent = "✅ Thank you for subscribing!";
             } else {
-                message.style.color = "#ffc107"; // Warning yellow
+                message.style.color = "#ffc107";
                 message.textContent = "⚠️ You've already subscribed!";
             }
             input.value = "";
@@ -1295,7 +1390,7 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
     }
   });
 </script>
-<!-- Admin Modal HTML (same as before) -->
+<!-- Admin Modal HTML -->
 <div id="emailAdminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999;">
   <div style="background:var(--current-card-bg); color:var(--current-text); width:90%; max-width:500px; margin:60px auto; padding:25px; border-radius:10px; position:relative; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
     <h3 style="margin-top:0;">📄 Subscribed Gmail List</h3>
@@ -1311,13 +1406,19 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
 
   <footer>© Bishal Mishra 2025  | All rights reserved.</footer>
 
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/+9779827801575" target="_blank" id="whatsapp-fixed-btn" aria-label="Chat with us on WhatsApp">
+    <img src="https://www.freepnglogos.com/uploads/whatsapp-logo-png-transparent-20.png" alt="WhatsApp icon" />
+    Chat on WhatsApp
+</a>
+
 <!-- Main App Logic & Translations -->
 <script>
-    let audioCtx, oscillator, gainNode, countdownIntervalGlobal; // Renamed countdownInterval
-    let currentCountdown = 30; // Renamed countdown
+    let audioCtx, oscillator, gainNode, countdownIntervalGlobal;
+    let currentCountdown = 30;
 
     function startCleaning() {
-      stopSound(); 
+      stopSound();
       const freqSlider = document.getElementById('freqSlider');
       if (!freqSlider) { console.error("Frequency slider not found!"); return; }
       const freq = parseInt(freqSlider.value);
@@ -1328,17 +1429,17 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
 
       oscillator.type = 'square';
       oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime); // Set initial gain
+      gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
       oscillator.connect(gainNode);
       gainNode.connect(audioCtx.destination);
       oscillator.start();
-      playClickSound(); // Play click sound on start
+      playClickSound();
 
       currentCountdown = 30;
       const countdownDisplay = document.getElementById('countdown');
       if (countdownDisplay) countdownDisplay.textContent = currentCountdown;
-      
-      clearInterval(countdownIntervalGlobal); // Clear previous interval
+
+      clearInterval(countdownIntervalGlobal);
       countdownIntervalGlobal = setInterval(() => {
         currentCountdown--;
         if (countdownDisplay) countdownDisplay.textContent = currentCountdown;
@@ -1362,16 +1463,344 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
       }
       clearInterval(countdownIntervalGlobal);
       const countdownDisplay = document.getElementById('countdown');
-      if (countdownDisplay) countdownDisplay.textContent = 0; // Reset to 0 or initial value
+      if (countdownDisplay) countdownDisplay.textContent = 0;
     }
 
-    // updateFrequencyLabel is already defined near its slider HTML
+    function updateFrequencyLabel() {
+        const freqSlider = document.getElementById('freqSlider');
+        const freqLabel = document.getElementById('freqLabel');
+        if (freqSlider && freqLabel) {
+            freqLabel.textContent = freqSlider.value;
+        }
+    }
 
-    const translations = { /* ... Same translations object ... */ };
-    function changeLanguage(event) { /* ... Same changeLanguage function ... */ }
+
+    const translations = {
+      en: {
+        headerTitle: "Fix My Speakers 🔊",
+        headerDescription: "Eject 💦 water and clear dust from your phone's speakers using advanced sound wave technology. Restore crystal-clear audio quality in minutes, safely and effectively.",
+        chooseLanguage: "🌐 Choose Language:",
+        cleaningPanelTitle: "🧼 Cleaning Panel",
+        freqLabelText: "🎚️ Frequency Control",
+        frequencyLabel: "Current Frequency:",
+        timerLabel: "🕒 Timer:",
+        assistantLanguage: "Assistant Language:",
+        guideMe: "Guide Me",
+        startBtn: "▶️ Start Cleaning",
+        stopBtn: "⏹️ Stop Cleaning",
+        shareExperience: "Share your experience:",
+        howItWorksTitle: "How It Works 🛠",
+        howItWorksPara1: "<strong>FixMySpeaker.com</strong> is a cutting-edge, free online tool specifically engineered to rejuvenate your phone’s speaker by effectively removing trapped water, accumulated dust, and microscopic debris using precisely generated sound waves. This innovative method leverages the principles of acoustic vibration to dislodge foreign particles without physical intervention, ensuring a safe and non-invasive cleaning process.",
+        howItWorksPara2: "When you play specific high-frequency audio tones through our tool, your phone's speaker vibrates intensely. These rapid vibrations create a powerful outward force that literally \"shakes out\" water droplets and pushes away dust particles that have settled within the speaker grill and internal components. This process is particularly effective for accidental spills, rain exposure, or even just long-term dust buildup that can significantly muffle sound quality. With no app download or installation required, <strong><a href=\"https://fixedmyspeaker.com\" target=\"_blank\">FixedMySpeaker.com</a></strong> offers an unparalleled, easy, and effective solution for immediate speaker restoration, trusted by thousands globally.",
+        aboutUsTitle: "About Us 👨‍💻",
+        aboutUsPara: "<strong>FixedMySpeaker.com</strong> was founded by Bishal Mishra, a passionate technology enthusiast and developer dedicated to creating simple yet powerful solutions for everyday tech problems. Driven by the common frustration of muffled phone speakers after accidental water exposure, Bishal envisioned a free, accessible, and highly effective online tool that could provide immediate relief without the need for expensive repairs or cumbersome software installations.<br><br>Since its inception, FixedMySpeaker.com has grown into a widely recognized platform, helping countless users worldwide restore their device's audio clarity. Our mission is to empower users with easy-to-use tools that make technology maintenance straightforward and affordable. We are committed to continuous improvement, regularly updating our algorithms and user interface to ensure the best possible experience. For support, collaboration inquiries, or feedback, you can connect directly with Bishal at <a href=\"tel:+9779827801575\">+977 9827801575</a> or visit the official website at <a href=\"https://www.fixedmyspeaker.com\" target=\"_blank\">www.fixedmyspeaker.com</a>. Your audio experience is our priority.",
+        featuresTitle: "Key Features & Benefits",
+        featuresPara1: "FixedMySpeaker.com offers a robust set of features designed to provide a comprehensive and user-friendly experience for restoring your speaker's performance. Our tool is built on advanced acoustic principles, ensuring effective cleaning for a wide range of devices and scenarios.",
+        feature1: "<strong>High-Frequency Sound Cleaning:</strong> Utilizes precisely engineered sound waves to effectively dislodge and eject water droplets and fine dust particles from your speaker grill and internal components.",
+        feature2: "<strong>Universal Compatibility:</strong> Works seamlessly across all modern smartphones, including iPhones and Android devices, as well as tablets, smartwatches, and other portable speakers. No specific app or software required.",
+        feature3: "<strong>Simple & Intuitive Interface:</strong> Designed for ease of use, our browser-based tool requires no technical expertise. Simply adjust the frequency and click 'Start' to begin the cleaning process.",
+        feature4: "<strong>Fully Browser-Based & Secure:</strong> Operate directly from your web browser, ensuring your privacy and security. No personal data is collected or transmitted, and no files are stored on your device.",
+        feature5: "<strong>Smart Cleaning Tips & Guide:</strong> Integrated guidance provides optimal usage instructions and helpful tips to maximize the effectiveness of the cleaning process and maintain long-term speaker health.",
+        feature6: "<strong>100% Free to Use:</strong> Enjoy full access to all features without any hidden costs, subscriptions, or advertisements disrupting your experience.",
+        feature7: "<strong>Quick & Efficient:</strong> Experience noticeable improvements in sound clarity and volume within minutes, making it an ideal solution for urgent water damage or routine maintenance.",
+        featuresPara2: "With these features, FixedMySpeaker.com stands out as your go-to solution for maintaining optimal audio performance and addressing common speaker issues caused by environmental factors.",
+        termsTitle: "Terms & Conditions ⚠️",
+        termsPara: "By accessing and using <strong>FixedMySpeaker.com</strong>, you explicitly agree to use the tool at your own risk. While our speaker cleaning solution has been rigorously tested and is designed to be safe and effective for ejecting water and dust using sound waves, we cannot guarantee results for all types of speaker damage or situations. The effectiveness may vary based on the severity and nature of the liquid exposure, the device model, and the integrity of your speaker hardware.<br><br>FixedMySpeaker.com is provided \"as is\" without any warranties, express or implied, including but not limited to, implied warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not assume responsibility for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses, resulting from your use or inability to use the service. Users are strongly advised to exercise caution and consult with a professional technician for severe water damage or hardware malfunctions. Continued use implies acceptance of these terms.",
+        privacyTitle: "Privacy Policy 🔒",
+        privacyPara: "<strong>FixedMySpeaker.com</strong> is deeply committed to protecting your privacy. We believe in providing powerful utilities without compromising your personal data. Our tool operates entirely within your web browser, meaning that we do not collect, store, or transmit any personal information, device data, or usage statistics. Your cleaning sessions are completely private and remain on your device.<br><br>We do not use cookies for tracking purposes, nor do we employ any third-party analytics scripts that would gather identifiable information. Any user interactions, such as frequency adjustments or button clicks, are processed locally to deliver the cleaning function. The only information we might indirectly interact with is through standard web server logs (like IP addresses and browser types), which are anonymized and used solely for operational security and debugging. We do not sell, trade, or otherwise transfer your personal information to outside parties. Our commitment to privacy is unwavering; your trust is our priority.",
+        blogsTitle: "📰 Blogs & News",
+        blogsPara: "Dive into our latest articles, tips, and updates related to speaker maintenance, audio technology, and device care. Our blog covers a wide range of topics, from the scientific principles behind sound wave cleaning to practical advice on preventing speaker damage and extending your phone's lifespan. Stay informed and get the most out of your audio experience with expert insights from our team.",
+        faqTitle: "Frequently Asked Questions (FAQ)",
+        faqPara: "Have questions about how FixedMySpeaker.com works, its compatibility, or best practices? We've compiled a list of the most frequently asked questions to provide you with quick and clear answers. If you can't find what you're looking for, feel free to use the search bar or contact us directly.",
+        faqSearchPlaceholder: "Search your question... 🔍",
+        expandAll: "Expand All",
+        collapseAll: "Collapse All",
+        faqQ1: "How does this speaker cleaner tool work?",
+        faqA1: "It plays sound waves that vibrate your speaker, helping eject water and dust stuck inside. The high-frequency vibrations effectively dislodge trapped moisture and particles, clearing your speaker's pathways for improved sound quality. This method is safe and non-invasive.",
+        faqQ2: "Is it compatible with all smartphones?",
+        faqA2: "Yes, the tool is designed to work universally across all modern smartphones, including iPhones, Android phones (Samsung, Google Pixel, OnePlus, Xiaomi, etc.), tablets, and even smartwatches that have a built-in speaker. It's a web-based tool, so no specific app installation is needed.",
+        faqQ3: "How many times should I run the cleaning?",
+        faqA3: "For optimal results, especially after significant water exposure, running the cleaning cycle 2–3 times consecutively is usually sufficient. You can also try adjusting the frequency slightly between runs to ensure thorough cleaning. For routine maintenance, once a month might be enough.",
+        faqQ4: "Is this tool free and safe?",
+        faqA4: "Absolutely, FixedMySpeaker.com is 100% free to use, with no hidden charges, subscriptions, or intrusive ads. It operates directly in your browser, ensuring no data is collected, stored, or transmitted from your device, making it completely safe and private.",
+        faqQ5: "Can it repair physical speaker damage?",
+        faqA5: "No, this tool is designed to clear blockages from water or dust. It cannot repair physical hardware damage, such as a torn speaker membrane, a faulty coil, or disconnected wires. If your speaker issues persist after cleaning, we recommend consulting a professional phone repair technician.",
+        faqQ6: "How to prepare my phone before cleaning?",
+        faqA6: "Before starting the cleaning process, make sure your phone's volume is set to maximum. Point the speaker downwards to allow water to drip out naturally. You can also gently tap the phone on a soft surface or shake it lightly to aid the water expulsion.",
+        faqQ7: "Is there a specific frequency I should use?",
+        faqA7: "The default frequency of 440 Hz is a good starting point and often effective. However, you can experiment with the frequency slider between 100 Hz and 1000 Hz. Different frequencies might work better for different types of blockages or speaker designs. Listen for changes in the sound as you adjust.",
+        ratingTitle: "Rate This Tool",
+        ratingDescription: "Your feedback helps us improve! How helpful was the Phone Speaker Cleaner for you?",
+        ratingPlaceholder: "Share your experience or suggestions here...",
+        submitFeedback: "Submit Feedback",
+        testimonialTitle: "💬 What Users Are Saying",
+        testimonialPara: "Hear directly from our satisfied users who have successfully restored their phone's audio quality using FixedMySpeaker.com. Their experiences highlight the effectiveness, ease of use, and convenience of our online speaker cleaning tool. We are proud to have helped so many people avoid costly repairs and enjoy clear sound once again.",
+        subscribeTitle: "📢 Subscribe for Latest Updates & Tips!",
+        subscribeDescription: "Stay in the loop with our latest tools, features, special offers, and essential tips for maintaining your phone's speaker health. Join our community and never miss an update that could enhance your audio experience.",
+        subscribePlaceholder: "Your Gmail address",
+        subscribeBtn: "🔔 Subscribe",
+        adminViewEmails: "🔐 Admin: View Emails",
+        footerText: "© Bishal Mishra 2025 | All rights reserved.",
+        chatOnWhatsApp: "Chat on WhatsApp"
+      },
+      ne: {
+        headerTitle: "मेरो स्पिकर ठीक गर्नुहोस् 🔊",
+        headerDescription: "तपाईंको फोनको स्पिकरबाट पानी 💦 बाहिर निकाल्नुहोस् र उन्नत ध्वनि तरंग प्रविधि प्रयोग गरी धूलो सफा गर्नुहोस्। मिनेटहरूमा क्रिस्टल-क्लियर अडियो गुणस्तर सुरक्षित र प्रभावकारी रूपमा पुनर्स्थापित गर्नुहोस्।",
+        chooseLanguage: "🌐 भाषा छान्नुहोस्:",
+        cleaningPanelTitle: "🧼 सफा गर्ने प्यानल",
+        freqLabelText: "🎚️ फ्रिक्वेन्सी नियन्त्रण",
+        frequencyLabel: "हालको फ्रिक्वेन्सी:",
+        timerLabel: "🕒 टाइमर:",
+        assistantLanguage: "सहायक भाषा:",
+        guideMe: "मलाई मार्गदर्शन गर्नुहोस्",
+        startBtn: "▶️ सफा गर्न सुरु गर्नुहोस्",
+        stopBtn: "⏹️ सफा गर्न रोक्नुहोस्",
+        shareExperience: "तपाईंको अनुभव साझा गर्नुहोस्:",
+        howItWorksTitle: "यसले कसरी काम गर्छ 🛠",
+        howItWorksPara1: "<strong>FixMySpeaker.com</strong> एउटा अत्याधुनिक, नि:शुल्क अनलाइन उपकरण हो जुन तपाईंको फोनको स्पिकरलाई पानी, धूलो र सूक्ष्म कणहरूलाई ठिक ध्वनि तरंगहरू प्रयोग गरी प्रभावकारी रूपमा हटाएर पुनःजीवित गर्न विशेष रूपमा इन्जिनियर गरिएको छ। यो नवीन विधिले भौतिक हस्तक्षेप बिना नै विदेशी कणहरूलाई हटाउन ध्वनिक कम्पनका सिद्धान्तहरू प्रयोग गर्दछ, जसले सुरक्षित र गैर-आक्रामक सफाई प्रक्रिया सुनिश्चित गर्दछ।",
+        howItWorksPara2: "जब तपाईं हाम्रो उपकरण मार्फत विशेष उच्च-फ्रिक्वेन्सी अडियो टोनहरू बजाउनुहुन्छ, तपाईंको फोनको स्पिकर तीव्र रूपमा कम्पन हुन्छ। यी तीव्र कम्पनहरूले शक्तिशाली बाहिरतिरको बल सिर्जना गर्दछ जसले पानीका थोपाहरू र धूलोका कणहरूलाई स्पिकर ग्रिल र आन्तरिक कम्पोनेन्टहरूमा फसेको शाब्दिक रूपमा 'हल्लाएर बाहिर' निकाल्छ। यो प्रक्रिया आकस्मिक पानी, वर्षाको संपर्कमा, वा लामो समयसम्मको धूलो जम्मा भएको कारणले गर्दा ध्वनि गुणस्तरलाई ठूलो मात्रामा कम गर्न सक्ने अवस्थामा विशेष रूपमा प्रभावकारी हुन्छ। कुनै पनि एप डाउनलोड वा स्थापनाको आवश्यकता बिना, <strong><a href=\"https://fixedmyspeaker.com\" target=\"_blank\">FixedMySpeaker.com</a></strong> ले तत्काल स्पिकर पुनर्स्थापनाको लागि एक अद्वितीय, सजिलो, र प्रभावकारी समाधान प्रदान गर्दछ, जुन विश्वभरका हजारौं द्वारा विश्वसनीय छ।",
+        aboutUsTitle: "हाम्रो बारेमा 👨‍💻",
+        aboutUsPara: "<strong>FixedMySpeaker.com</strong> को स्थापना विशाल मिश्रद्वारा गरिएको थियो, जो दैनिक प्रविधि समस्याहरूको लागि सरल तर शक्तिशाली समाधानहरू सिर्जना गर्न समर्पित एक उत्साही प्रविधि प्रेमी र विकासकर्ता हुन्। आकस्मिक पानीको संपर्कमा आएपछि फोनको स्पिकरको आवाज कम हुने सामान्य निराशाबाट प्रेरित भएर, विशालले महँगो मर्मत वा झन्झटिलो सफ्टवेयर स्थापनाको आवश्यकता बिना तत्काल राहत प्रदान गर्न सक्ने एक नि:शुल्क, पहुँचयोग्य, र अत्यधिक प्रभावकारी अनलाइन उपकरणको परिकल्पना गरे।<br><br>यसको स्थापनादेखि नै, FixedMySpeaker.com विश्वव्यापी रूपमा हजारौं प्रयोगकर्ताहरूलाई उनीहरूको उपकरणको अडियो स्पष्टता पुनर्स्थापित गर्न मद्दत गर्दै एक व्यापक रूपमा मान्यता प्राप्त प्लेटफार्ममा विकसित भएको छ। हाम्रो मिशन प्रयोगकर्ताहरूलाई सजिलै प्रयोग गर्न सकिने उपकरणहरू प्रदान गर्नु हो जसले प्रविधि मर्मतलाई सीधा र किफायती बनाउँछ। हामी निरन्तर सुधारका लागि प्रतिबद्ध छौं, उत्कृष्ट सम्भव अनुभव सुनिश्चित गर्न नियमित रूपमा हाम्रो एल्गोरिदम र प्रयोगकर्ता इन्टरफेस अपडेट गर्दैछौं। समर्थन, सहयोग सोधपुछ, वा प्रतिक्रियाको लागि, तपाईं विशाललाई सीधा <a href=\"tel:+9779827801575\">+977 9827801575</a> मा सम्पर्क गर्न सक्नुहुन्छ वा आधिकारिक वेबसाइट <a href=\"https://www.fixedmyspeaker.com\" target=\"_blank\">www.fixedmyspeaker.com</a> मा जानुहोस्। तपाईंको अडियो अनुभव हाम्रो प्राथमिकता हो।",
+        featuresTitle: "मुख्य विशेषताहरु र फाइदाहरु",
+        featuresPara1: "FixedMySpeaker.com ले स्पिकरको कार्यसम्पादन पुनर्स्थापित गर्नका लागि व्यापक र प्रयोगकर्ता-मैत्री अनुभव प्रदान गर्न डिजाइन गरिएका सुविधाहरूको एक शक्तिशाली सेट प्रदान गर्दछ। हाम्रो उपकरण उन्नत ध्वनिक सिद्धान्तहरूमा आधारित छ, विभिन्न प्रकारका यन्त्रहरू र परिदृश्यहरूका लागि प्रभावकारी सफाई सुनिश्चित गर्दछ।",
+        feature1: "<strong>उच्च-फ्रिक्वेन्सी ध्वनि सफाई:</strong> स्पिकर ग्रिल र आन्तरिक कम्पोनेन्टहरूबाट पानीका थोपाहरू र धूलोका कणहरूलाई प्रभावकारी रूपमा हटाउन र बाहिर निकाल्नका लागि सटीक रूपमा इन्जिनियर गरिएको ध्वनि तरंगहरू प्रयोग गर्दछ।",
+        feature2: "<strong>विश्वव्यापी अनुकूलता:</strong> आईफोन र एन्ड्रोइड यन्त्रहरू, साथै ट्याब्लेटहरू, स्मार्टवाचहरू, र अन्य पोर्टेबल स्पिकरहरू सहित सबै आधुनिक स्मार्टफोनहरूमा सहज रूपमा काम गर्दछ। कुनै विशेष एप वा सफ्टवेयर आवश्यक छैन।",
+        feature3: "<strong>सरल र सहज इन्टरफेस:</strong> प्रयोग गर्न सजिलोका लागि डिजाइन गरिएको, हाम्रो ब्राउजर-आधारित उपकरणलाई कुनै प्राविधिक विशेषज्ञताको आवश्यकता पर्दैन। सफाई प्रक्रिया सुरु गर्नका लागि फ्रिक्वेन्सी मिलाउनुहोस् र 'सुरु गर्नुहोस्' मा क्लिक गर्नुहोस्।",
+        feature4: "<strong>पूर्ण रूपमा ब्राउजर-आधारित र सुरक्षित:</strong> तपाईंको वेब ब्राउजरबाट सीधा सञ्चालन गर्नुहोस्, तपाईंको गोपनीयता र सुरक्षा सुनिश्चित गर्दै। कुनै व्यक्तिगत डेटा संकलन वा प्रसारण गरिँदैन, र तपाईंको उपकरणमा कुनै फाइलहरू भण्डारण गरिँदैन।",
+        feature5: "<strong>स्मार्ट सफाई सुझावहरू र गाइड:</strong> एकीकृत मार्गदर्शनले सफाई प्रक्रियाको प्रभावकारितालाई अधिकतम बनाउन र दीर्घकालीन स्पिकर स्वास्थ्य कायम राख्नका लागि उत्तम उपयोग निर्देशनहरू र उपयोगी सुझावहरू प्रदान गर्दछ।",
+        feature6: "<strong>100% नि: शुल्क प्रयोग गर्नका लागि:</strong> कुनै पनि लुकेका शुल्क, सदस्यता, वा विज्ञापनहरू बिना सबै सुविधाहरूमा पूर्ण पहुँचको आनन्द लिनुहोस्।",
+        feature7: "<strong>छिटो र प्रभावकारी:</strong> मिनेटहरूमा ध्वनि स्पष्टता र भोल्युममा उल्लेखनीय सुधारहरू अनुभव गर्नुहोस्, जसले यसलाई तत्काल पानीको क्षति वा नियमित मर्मतका लागि एक आदर्श समाधान बनाउँछ।",
+        featuresPara2: "यी सुविधाहरूका साथ, FixedMySpeaker.com वातावरणीय कारकहरूका कारण हुने सामान्य स्पिकर समस्याहरूलाई सम्बोधन गर्न र इष्टतम अडियो कार्यसम्पादन कायम राख्नका लागि तपाईंको उत्तम समाधानको रूपमा उभिएको छ।",
+        termsTitle: "नियम र सर्तहरू ⚠️",
+        termsPara: "<strong>FixedMySpeaker.com</strong> प्रयोग गरेर, तपाईं आफ्नो जोखिममा उपकरण प्रयोग गर्न सहमत हुनुहुन्छ। यद्यपि हाम्रो स्पिकर सफाई समाधानलाई ध्वनि तरंगहरू प्रयोग गरी पानी र धूलो बाहिर निकाल्नका लागि सुरक्षित र प्रभावकारी बनाउनको लागि कडा रूपमा परीक्षण गरिएको छ, हामी सबै प्रकारका स्पिकर क्षति वा परिस्थितिहरूको लागि परिणामहरूको ग्यारेन्टी दिन सक्दैनौं। प्रभावकारिता तरल पदार्थको संपर्कको गम्भीरता र प्रकृति, उपकरण मोडेल, र तपाईंको स्पिकर हार्डवेयरको अखण्डताको आधारमा फरक हुन सक्छ।<br><br>FixedMySpeaker.com कुनै पनि वारेन्टीहरू, व्यक्त वा निहित, सहित तर सीमित छैन, व्यापारीकरण, विशेष उद्देश्यका लागि फिटनेस, वा गैर-उल्लंघनको निहित वारेन्टीहरू बिना 'जस्तो छ' प्रदान गरिन्छ। हामी तपाईंको सेवाको प्रयोग वा प्रयोग गर्न नसक्ने कारणले गर्दा हुने कुनै पनि प्रत्यक्ष, अप्रत्यक्ष, आकस्मिक, विशेष, परिणामी, वा अनुकरणीय क्षतिहरू, सहित तर सीमित छैन, नाफा, सद्भावना, उपयोग, डेटा, वा अन्य अमूर्त क्षतिहरूको लागि जिम्मेवारी लिँदैनौं। प्रयोगकर्ताहरूलाई गम्भीर पानीको क्षति वा हार्डवेयर खराबीहरूको लागि सावधानी अपनाउन र एक पेशेवर प्राविधिकसँग परामर्श गर्न कडा सल्लाह दिइन्छ। निरन्तर प्रयोगले यी सर्तहरूको स्वीकृतिलाई संकेत गर्दछ।",
+        privacyTitle: "गोपनीयता नीति 🔒",
+        privacyPara: "<strong>FixedMySpeaker.com</strong> तपाईंको गोपनीयताको रक्षा गर्न पूर्ण रूपमा प्रतिबद्ध छ। हामी तपाईंको व्यक्तिगत डेटामा सम्झौता नगरी शक्तिशाली उपयोगिताहरू प्रदान गर्नेमा विश्वास गर्छौं। हाम्रो उपकरण तपाईंको वेब ब्राउजर भित्र पूर्ण रूपमा सञ्चालन हुन्छ, यसको मतलब हामी कुनै पनि व्यक्तिगत जानकारी, उपकरण डेटा, वा उपयोग तथ्याङ्कहरू संकलन, भण्डारण, वा प्रसारण गर्दैनौं। तपाईंको सफाई सत्रहरू पूर्ण रूपमा निजी हुन्छन् र तपाईंको उपकरणमा रहन्छन्।<br><br>हामी ट्र्याकिङ उद्देश्यका लागि कुकीहरू प्रयोग गर्दैनौं, न त हामी कुनै तेस्रो-पक्ष एनालिटिक्स स्क्रिप्टहरू प्रयोग गर्छौं जसले पहिचान योग्य जानकारी सङ्कलन गर्दछ। फ्रिक्वेन्सी समायोजन वा बटन क्लिकहरू जस्ता कुनै पनि प्रयोगकर्ता अन्तर्क्रियाहरू, सफाई कार्य प्रदान गर्नका लागि स्थानीय रूपमा प्रशोधन गरिन्छ। हामीले अप्रत्यक्ष रूपमा अन्तरक्रिया गर्न सक्ने एक मात्र जानकारी मानक वेब सर्भर लगहरू (जस्तै IP ठेगानाहरू र ब्राउजर प्रकारहरू) मार्फत हो, जुन अज्ञात हुन्छन् र केवल परिचालन सुरक्षा र डिबगिङका लागि प्रयोग गरिन्छ। हामी तपाईंको व्यक्तिगत जानकारी बाह्य पक्षहरूलाई बेच्दैनौं, व्यापार गर्दैनौं, वा अन्यथा स्थानान्तरण गर्दैनौं। गोपनीयताप्रति हाम्रो प्रतिबद्धता अटल छ; तपाईंको विश्वास हाम्रो प्राथमिकता हो।",
+        blogsTitle: "📰 ब्लग र समाचार",
+        blogsPara: "स्पिकर मर्मत, अडियो प्रविधि, र उपकरण हेरचाहसँग सम्बन्धित हाम्रा नवीनतम लेखहरू, सुझावहरू, र अपडेटहरूमा डुब्नुहोस्। हाम्रो ब्लगले ध्वनि तरंग सफाईको वैज्ञानिक सिद्धान्तहरूदेखि स्पिकर क्षतिको रोकथाम र तपाईंको फोनको आयु बढाउने व्यावहारिक सल्लाहसम्मका विभिन्न विषयहरू समेट्छ। विशेषज्ञ अन्तर्दृष्टिहरूका साथ सूचित रहनुहोस् र तपाईंको अडियो अनुभवबाट अधिकतम फाइदा लिनुहोस्।",
+        faqTitle: "बारम्बार सोधिने प्रश्नहरू (FAQ)",
+        faqPara: "FixedMySpeaker.com ले कसरी काम गर्छ, यसको अनुकूलता, वा उत्कृष्ट अभ्यासहरू बारे प्रश्नहरू छन्? हामीले द्रुत र स्पष्ट जवाफहरू प्रदान गर्नका लागि सबैभन्दा बारम्बार सोधिने प्रश्नहरूको सूची संकलन गरेका छौं। यदि तपाईंले खोजिरहनुभएको कुरा फेला पार्नुभएन भने, खोजी पट्टी प्रयोग गर्न वा हामीलाई सीधा सम्पर्क गर्न नहिचकिचाउनुहोस्।",
+        faqSearchPlaceholder: "तपाईंको प्रश्न खोज्नुहोस्... 🔍",
+        expandAll: "सबै विस्तार गर्नुहोस्",
+        collapseAll: "सबै संकुचित गर्नुहोस्",
+        faqQ1: "यो स्पिकर क्लिनर उपकरणले कसरी काम गर्छ?",
+        faqA1: "यसले तपाईंको स्पिकरलाई कम्पन गराउने ध्वनि तरंगहरू बजाउँछ, जसले भित्र फसेको पानी र धूलो बाहिर निकाल्न मद्दत गर्दछ। उच्च-फ्रिक्वेन्सी कम्पनहरूले फसेको नमी र कणहरूलाई प्रभावकारी रूपमा हटाउँछ, तपाईंको स्पिकरको मार्गहरूलाई सुधारिएको ध्वनि गुणस्तरका लागि सफा गर्छ। यो विधि सुरक्षित र गैर-आक्रामक छ।",
+        faqQ2: "के यो सबै स्मार्टफोनहरूसँग उपयुक्त छ?",
+        faqA2: "हो, यो उपकरण आईफोन, एन्ड्रोइड फोनहरू (सामसुङ, गुगल पिक्सेल, वनप्लस, शाओमी, आदि), ट्याब्लेटहरू, र बिल्ट-इन स्पिकर भएका स्मार्टवाचहरू सहित सबै आधुनिक स्मार्टफोनहरूमा विश्वव्यापी रूपमा काम गर्न डिजाइन गरिएको छ। यो वेब-आधारित उपकरण हो, त्यसैले कुनै विशेष एप स्थापना आवश्यक पर्दैन।",
+        faqQ3: "मैले सफाई कति पटक चलाउनुपर्छ?",
+        faqA3: "उत्तम परिणामका लागि, विशेष गरी महत्त्वपूर्ण पानीको संपर्कपछि, सफाई चक्रलाई लगातार २-३ पटक चलाउनु प्राय: पर्याप्त हुन्छ। तपाईंले पूर्ण सफाई सुनिश्चित गर्न रनहरू बीच फ्रिक्वेन्सीलाई थोरै समायोजन गर्न पनि प्रयास गर्न सक्नुहुन्छ। नियमित मर्मतका लागि, महिनामा एक पटक पर्याप्त हुन सक्छ।",
+        faqQ4: "के यो उपकरण नि:शुल्क र सुरक्षित छ?",
+        faqA4: "निश्चित रूपमा, FixedMySpeaker.com कुनै लुकेका शुल्क, सदस्यता, वा हस्तक्षेपकारी विज्ञापनहरू बिना 100% नि:शुल्क प्रयोग गर्न सकिन्छ। यो तपाईंको ब्राउजरमा सीधा सञ्चालन हुन्छ, यसको मतलब तपाईंको उपकरणबाट कुनै डाटा संकलन, भण्डारण, वा प्रसारित गरिँदैन, जसले यसलाई पूर्ण रूपमा सुरक्षित र निजी बनाउँछ।",
+        faqQ5: "के यसले भौतिक स्पिकर क्षति मर्मत गर्न सक्छ?",
+        faqA5: "होइन, यो उपकरण पानी वा धूलोबाट अवरोधहरू हटाउन डिजाइन गरिएको हो। यसले भौतिक हार्डवेयर क्षति, जस्तै च्यातिएको स्पिकर मेम्ब्रेन, खराब कुण्डल, वा विच्छेदित तारहरू मर्मत गर्न सक्दैन। यदि सफाई पछि पनि तपाईंको स्पिकर समस्याहरू रहिरहन्छन् भने, हामी एक पेशेवर फोन मर्मत प्राविधिकसँग परामर्श गर्न सिफारिस गर्छौं।",
+        faqQ6: "सफाई गर्नु अघि मेरो फोन कसरी तयार गर्ने?",
+        faqA6: "सफाई प्रक्रिया सुरु गर्नु अघि, तपाईंको फोनको भोल्युम अधिकतममा सेट गरिएको छ भनी सुनिश्चित गर्नुहोस्। पानी स्वाभाविक रूपमा बाहिर निस्कन दिनको लागि स्पिकरलाई तलतिर फर्काउनुहोस्। तपाईं पानीको निष्कासनमा मद्दत गर्न फोनलाई नरम सतहमा बिस्तारै ट्याप गर्न वा हल्का रूपमा हल्लाउन पनि सक्नुहुन्छ।",
+        faqQ7: "के मैले प्रयोग गर्नुपर्ने कुनै विशेष फ्रिक्वेन्सी छ?",
+        faqA7: "440 Hz को पूर्वनिर्धारित फ्रिक्वेन्सी एक राम्रो सुरु बिन्दु हो र प्राय: प्रभावकारी हुन्छ। यद्यपि, तपाईं 100 Hz र 1000 Hz बीच फ्रिक्वेन्सी स्लाइडरको साथ प्रयोग गर्न सक्नुहुन्छ। विभिन्न फ्रिक्वेन्सीहरू विभिन्न प्रकारका अवरोधहरू वा स्पिकर डिजाइनहरूका लागि राम्रो काम गर्न सक्छन्। तपाईंले समायोजन गर्दा ध्वनिमा परिवर्तनहरू सुन्नुहोस्।",
+        ratingTitle: "यो उपकरणलाई मूल्याङ्कन गर्नुहोस्",
+        ratingDescription: "तपाईंको प्रतिक्रियाले हामीलाई सुधार गर्न मद्दत गर्दछ! फोन स्पिकर क्लिनर तपाईंको लागि कति उपयोगी थियो?",
+        ratingPlaceholder: "आफ्नो अनुभव वा सुझावहरू यहाँ साझा गर्नुहोस्...",
+        submitFeedback: "प्रतिक्रिया पेश गर्नुहोस्",
+        testimonialTitle: "💬 प्रयोगकर्ताहरू के भनिरहेका छन्",
+        testimonialPara: "FixedMySpeaker.com प्रयोग गरेर आफ्नो फोनको अडियो गुणस्तर सफलतापूर्वक पुनर्स्थापित गरेका हाम्रा सन्तुष्ट प्रयोगकर्ताहरूबाट सीधा सुन्नुहोस्। उनीहरूका अनुभवहरूले हाम्रो अनलाइन स्पिकर सफाई उपकरणको प्रभावकारिता, प्रयोगमा सजिलो, र सुविधालाई हाइलाइट गर्दछ। हामी धेरै मानिसहरूलाई महँगो मर्मतबाट बच्न र फेरि स्पष्ट ध्वनिको आनन्द लिन मद्दत गरेकोमा गर्व गर्दछौं।",
+        subscribeTitle: "📢 नवीनतम अपडेट र सुझावहरूका लागि सदस्यता लिनुहोस्!",
+        subscribeDescription: "हाम्रा नवीनतम उपकरणहरू, सुविधाहरू, विशेष प्रस्तावहरू, र तपाईंको फोनको स्पिकर स्वास्थ्य कायम राख्नका लागि आवश्यक सुझावहरूसँग अद्यावधिक रहनुहोस्। हाम्रो समुदायमा सामेल हुनुहोस् र तपाईंको अडियो अनुभवलाई बढाउन सक्ने कुनै पनि अपडेट कहिल्यै नछुटाउनुहोस्।",
+        subscribePlaceholder: "तपाईंको जीमेल ठेगाना",
+        subscribeBtn: "🔔 सदस्यता लिनुहोस्",
+        adminViewEmails: "🔐 प्रशासक: इमेलहरू हेर्नुहोस्",
+        footerText: "© विशाल मिश्र २०२५ | सबै अधिकार सुरक्षित।",
+        chatOnWhatsApp: "व्हाट्सएपमा च्याट गर्नुहोस्"
+      },
+      hi: {
+        headerTitle: "मेरे स्पीकर ठीक करें 🔊",
+        headerDescription: "अपने फोन के स्पीकर से 💦 पानी निकालें और उन्नत ध्वनि तरंग तकनीक का उपयोग करके धूल साफ करें। कुछ ही मिनटों में क्रिस्टल-क्लियर ऑडियो गुणवत्ता को सुरक्षित और प्रभावी ढंग से बहाल करें।",
+        chooseLanguage: "🌐 भाषा चुनें:",
+        cleaningPanelTitle: "🧼 सफाई पैनल",
+        freqLabelText: "🎚️ आवृत्ति नियंत्रण",
+        frequencyLabel: "वर्तमान आवृत्ति:",
+        timerLabel: "🕒 टाइमर:",
+        assistantLanguage: "सहायक भाषा:",
+        guideMe: "मुझे मार्गदर्शन करें",
+        startBtn: "▶️ सफाई शुरू करें",
+        stopBtn: "⏹️ सफाई रोकें",
+        shareExperience: "अपना अनुभव साझा करें:",
+        howItWorksTitle: "यह कैसे काम करता है 🛠",
+        howItWorksPara1: "<strong>FixMySpeaker.com</strong> एक अत्याधुनिक, मुफ्त ऑनलाइन उपकरण है जो विशेष रूप से आपके फोन के स्पीकर से फंसे पानी, जमा हुई धूल और सूक्ष्म मलबे को सटीक रूप से उत्पन्न ध्वनि तरंगों का उपयोग करके प्रभावी ढंग से हटाकर उसे पुनर्जीवित करने के लिए डिज़ाइन किया गया है। यह नवीन विधि ध्वनिक कंपन के सिद्धांतों का लाभ उठाती है ताकि भौतिक हस्तक्षेप के बिना विदेशी कणों को हटाया जा सके, जिससे एक सुरक्षित और गैर-आक्रामक सफाई प्रक्रिया सुनिश्चित होती है।",
+        howItWorksPara2: "जब आप हमारे उपकरण के माध्यम से विशिष्ट उच्च-आवृत्ति ऑडियो टोन बजाते हैं, तो आपके फ़ोन का स्पीकर तीव्रता से कंपन करता है। ये तीव्र कंपन एक शक्तिशाली बाहरी बल उत्पन्न करते हैं जो शाब्दिक रूप से पानी की बूंदों को 'हिलाकर बाहर' निकालता है और स्पीकर ग्रिल और आंतरिक घटकों के भीतर बसे धूल के कणों को दूर धकेलता है। यह प्रक्रिया आकस्मिक फैलाव, बारिश के संपर्क में आने, या यहां तक कि दीर्घकालिक धूल जमा होने के लिए विशेष रूप से प्रभावी है जो ध्वनि की गुणवत्ता को काफी हद तक कम कर सकती है। किसी ऐप डाउनलोड या इंस्टॉलेशन की आवश्यकता के बिना, <strong><a href=\"https://fixedmyspeaker.com\" target=\"_blank\">FixedMySpeaker.com</a></strong> तत्काल स्पीकर बहाली के लिए एक अद्वितीय, आसान और प्रभावी समाधान प्रदान करता है, जिस पर विश्व स्तर पर हजारों लोगों का भरोसा है।",
+        aboutUsTitle: "हमारे बारे में 👨‍💻",
+        aboutUsPara: "<strong>FixedMySpeaker.com</strong> की स्थापना विशाल मिश्रा द्वारा की गई थी, जो एक उत्साही प्रौद्योगिकी प्रेमी और डेवलपर हैं जो रोजमर्रा की तकनीकी समस्याओं के लिए सरल लेकिन शक्तिशाली समाधान बनाने के लिए समर्पित हैं। आकस्मिक पानी के संपर्क में आने के बाद फोन के स्पीकर की मंद आवाज की आम निराशा से प्रेरित होकर, विशाल ने एक मुफ्त, सुलभ और अत्यधिक प्रभावी ऑनलाइन उपकरण की कल्पना की जो महंगी मरम्मत या बोझिल सॉफ्टवेयर इंस्टॉलेशन की आवश्यकता के बिना तत्काल राहत प्रदान कर सके।<br><br>अपनी स्थापना के बाद से, FixedMySpeaker.com दुनिया भर में अनगिनत उपयोगकर्ताओं को उनके डिवाइस की ऑडियो स्पष्टता को बहाल करने में मदद करते हुए एक व्यापक रूप से मान्यता प्राप्त मंच बन गया है। हमारा मिशन उपयोगकर्ताओं को उपयोग में आसान उपकरण प्रदान करना है जो प्रौद्योगिकी रखरखाव को सीधा और किफायती बनाते हैं। हम निरंतर सुधार के लिए प्रतिबद्ध हैं, सर्वोत्तम संभव अनुभव सुनिश्चित करने के लिए नियमित रूप से हमारे एल्गोरिदम और उपयोगकर्ता इंटरफ़ेस को अपडेट करते रहते हैं। समर्थन, सहयोग पूछताछ, या प्रतिक्रिया के लिए, आप सीधे विशाल से <a href=\"tel:+9779827801575\">+977 9827801575</a> पर संपर्क कर सकते हैं या आधिकारिक वेबसाइट <a href=\"https://www.fixedmyspeaker.com\" target=\"_blank\">www.fixedmyspeaker.com</a> पर जा सकते हैं। आपका ऑडियो अनुभव हमारी प्राथमिकता है।",
+        featuresTitle: "मुख्य विशेषताएं और लाभ",
+        featuresPara1: "FixedMySpeaker.com आपके स्पीकर के प्रदर्शन को बहाल करने के लिए एक व्यापक और उपयोगकर्ता के अनुकूल अनुभव प्रदान करने के लिए डिज़ाइन की गई सुविधाओं का एक मजबूत सेट प्रदान करता है। हमारा उपकरण उन्नत ध्वनिक सिद्धांतों पर बनाया गया है, जो विभिन्न प्रकार के उपकरणों और परिदृश्यों के लिए प्रभावी सफाई सुनिश्चित करता है।",
+        feature1: "<strong>उच्च-आवृत्ति ध्वनि सफाई:</strong> आपके स्पीकर ग्रिल और आंतरिक घटकों से पानी की बूंदों और महीन धूल के कणों को प्रभावी ढंग से हटाने और बाहर निकालने के लिए सटीक रूप से इंजीनियर ध्वनि तरंगों का उपयोग करता है।",
+        feature2: "<strong>सार्वभौमिक संगतता:</strong> iPhones और Android उपकरणों सहित सभी आधुनिक स्मार्टफ़ोन, साथ ही टैबलेट, स्मार्टवॉच और अन्य पोर्टेबल स्पीकर पर निर्बाध रूप से काम करता है। किसी विशिष्ट ऐप या सॉफ़्टवेयर की आवश्यकता नहीं है।",
+        feature3: "<strong>सरल और सहज इंटरफ़ेस:</strong> उपयोग में आसानी के लिए डिज़ाइन किया गया, हमारे ब्राउज़र-आधारित उपकरण को किसी तकनीकी विशेषज्ञता की आवश्यकता नहीं है। सफाई प्रक्रिया शुरू करने के लिए बस आवृत्ति समायोजित करें और 'प्रारंभ करें' पर क्लिक करें।",
+        feature4: "<strong>पूरी तरह से ब्राउज़र-आधारित और सुरक्षित:</strong> सीधे अपने वेब ब्राउज़र से संचालित करें, अपनी गोपनीयता और सुरक्षा सुनिश्चित करें। कोई व्यक्तिगत डेटा एकत्र या प्रसारित नहीं किया जाता है, और आपके डिवाइस पर कोई फ़ाइल संग्रहीत नहीं होती है।",
+        feature5: "<strong>स्मार्ट सफाई युक्तियाँ और गाइड:</strong> एकीकृत मार्गदर्शन सफाई प्रक्रिया की प्रभावशीलता को अधिकतम करने और दीर्घकालिक स्पीकर स्वास्थ्य को बनाए रखने के लिए इष्टतम उपयोग निर्देश और उपयोगी सुझाव प्रदान करता है।",
+        feature6: "<strong>100% उपयोग करने के लिए नि: शुल्क:</strong> बिना किसी छिपी हुई लागत, सदस्यता, या आपके अनुभव को बाधित करने वाले विज्ञापनों के सभी सुविधाओं तक पूर्ण पहुंच का आनंद लें।",
+        feature7: "<strong>त्वरित और कुशल:</strong> कुछ ही मिनटों में ध्वनि स्पष्टता और वॉल्यूम में उल्लेखनीय सुधार का अनुभव करें, जो इसे तत्काल पानी की क्षति या नियमित रखरखाव के लिए एक आदर्श समाधान बनाता है।",
+        featuresPara2: "इन विशेषताओं के साथ, FixedMySpeaker.com पर्यावरणीय कारकों के कारण होने वाली सामान्य स्पीकर समस्याओं को दूर करने और इष्टतम ऑडियो प्रदर्शन बनाए रखने के लिए आपके पसंदीदा समाधान के रूप में खड़ा है।",
+        termsTitle: "नियम और शर्तें ⚠️",
+        termsPara: "<strong>FixedMySpeaker.com</strong> का उपयोग करके, आप स्पष्ट रूप से अपने जोखिम पर उपकरण का उपयोग करने के लिए सहमत होते हैं। यद्यपि हमारे स्पीकर सफाई समाधान का कड़ाई से परीक्षण किया गया है और ध्वनि तरंगों का उपयोग करके पानी और धूल को बाहर निकालने के लिए सुरक्षित और प्रभावी होने के लिए डिज़ाइन किया गया है, हम सभी प्रकार के स्पीकर क्षति या स्थितियों के लिए परिणामों की गारंटी नहीं दे सकते हैं। प्रभावशीलता तरल के संपर्क की गंभीरता और प्रकृति, डिवाइस मॉडल और आपके स्पीकर हार्डवेयर की अखंडता के आधार पर भिन्न हो सकती है।<br><br>FixedMySpeaker.com को किसी भी वारंटी के बिना 'जैसा है' प्रदान किया जाता है, व्यक्त या निहित, जिसमें व्यापारिकता, किसी विशेष उद्देश्य के लिए उपयुक्तता, या गैर-उल्लंघन की निहित वारंटी शामिल हैं, लेकिन इन्हीं तक सीमित नहीं हैं। हम आपकी सेवा के उपयोग या उपयोग करने में असमर्थता के परिणामस्वरूप होने वाले किसी भी प्रत्यक्ष, अप्रत्यक्ष, आकस्मिक, विशेष, परिणामी, या अनुकरणीय क्षति के लिए ज़िम्मेदारी नहीं लेते हैं, जिसमें लाभ, सद्भावना, उपयोग, डेटा, या अन्य अमूर्त हानियों की क्षति शामिल है, लेकिन इन्हीं तक सीमित नहीं है। उपयोगकर्ताओं को गंभीर पानी की क्षति या हार्डवेयर खराबियों के लिए सावधानी बरतने और एक पेशेवर तकनीशियन से परामर्श करने की दृढ़ता से सलाह दी जाती है। निरंतर उपयोग इन शर्तों की स्वीकृति को दर्शाता है।",
+        privacyTitle: "गोपनीयता नीति 🔒",
+        privacyPara: "<strong>FixedMySpeaker.com</strong> आपकी गोपनीयता की रक्षा के लिए गहराई से प्रतिबद्ध है। हम आपके व्यक्तिगत डेटा से समझौता किए बिना शक्तिशाली उपयोगिताएँ प्रदान करने में विश्वास करते हैं। हमारा उपकरण पूरी तरह से आपके वेब ब्राउज़र के भीतर संचालित होता है, जिसका अर्थ है कि हम कोई भी व्यक्तिगत जानकारी, डिवाइस डेटा या उपयोग के आँकड़े एकत्र, संग्रहीत या प्रसारित नहीं करते हैं। आपके सफाई सत्र पूरी तरह से निजी हैं और आपके डिवाइस पर बने रहते हैं।<br><br>हम ट्रैकिंग उद्देश्यों के लिए कुकीज़ का उपयोग नहीं करते हैं, न ही हम किसी तीसरे पक्ष के एनालिटिक्स स्क्रिप्ट का उपयोग करते हैं जो पहचान योग्य जानकारी एकत्र करेगा। आवृत्ति समायोजन या बटन क्लिक जैसे किसी भी उपयोगकर्ता इंटरैक्शन को सफाई फ़ंक्शन वितरित करने के लिए स्थानीय रूप से संसाधित किया जाता है। एकमात्र जानकारी जिसके साथ हम अप्रत्यक्ष रूप से बातचीत कर सकते हैं, वह मानक वेब सर्वर लॉग (जैसे आईपी पते और ब्राउज़र प्रकार) के माध्यम से है, जो अज्ञात हैं और केवल परिचालन सुरक्षा और डिबगिंग के लिए उपयोग किए जाते हैं। हम आपकी व्यक्तिगत जानकारी बाहरी पार्टियों को बेचते, व्यापार या अन्यथा स्थानांतरित नहीं करते हैं। गोपनीयता के प्रति हमारी प्रतिबद्धता अटूट है; आपका विश्वास हमारी प्राथमिकता है।",
+        blogsTitle: "📰 ब्लॉग और समाचार",
+        blogsPara: "स्पीकर रखरखाव, ऑडियो तकनीक और डिवाइस देखभाल से संबंधित हमारे नवीनतम लेखों, युक्तियों और अपडेट में गोता लगाएँ। हमारा ब्लॉग ध्वनि तरंग सफाई के पीछे के वैज्ञानिक सिद्धांतों से लेकर स्पीकर क्षति को रोकने और आपके फोन के जीवनकाल को बढ़ाने की व्यावहारिक सलाह तक कई विषयों को कवर करता है। विशेषज्ञ अंतर्दृष्टि के साथ सूचित रहें और अपने ऑडियो अनुभव का अधिकतम लाभ उठाएं।",
+        faqTitle: "अक्सर पूछे जाने वाले प्रश्न (FAQ)",
+        faqPara: "FixedMySpeaker.com कैसे काम करता है, इसकी संगतता, या सर्वोत्तम प्रथाओं के बारे में प्रश्न हैं? हमने आपको त्वरित और स्पष्ट उत्तर प्रदान करने के लिए सबसे अधिक बार पूछे जाने वाले प्रश्नों की एक सूची संकलित की है। यदि आप जो खोज रहे हैं वह आपको नहीं मिल रहा है, तो खोज बार का उपयोग करने या हमसे सीधे संपर्क करने में संकोच न करें।",
+        faqSearchPlaceholder: "अपना प्रश्न खोजें... 🔍",
+        expandAll: "सभी का विस्तार करें",
+        collapseAll: "सभी को संक्षिप्त करें",
+        faqQ1: "यह स्पीकर क्लीनर टूल कैसे काम करता है?",
+        faqA1: "यह ध्वनि तरंगें बजाता है जो आपके स्पीकर को कंपन कराती हैं, जिससे अंदर फंसे पानी और धूल को बाहर निकालने में मदद मिलती है। उच्च-आवृत्ति कंपन प्रभावी रूप से फंसे नमी और कणों को हटाते हैं, बेहतर ध्वनि गुणवत्ता के लिए आपके स्पीकर के रास्ते साफ करते हैं। यह विधि सुरक्षित और गैर-आक्रामक है।",
+        faqQ2: "क्या यह सभी स्मार्टफ़ोन के साथ संगत है?",
+        faqA2: "हाँ, यह टूल iPhones, Android फ़ोन (Samsung, Google Pixel, OnePlus, Xiaomi, आदि), टैबलेट और बिल्ट-इन स्पीकर वाले स्मार्टवॉच सहित सभी आधुनिक स्मार्टफ़ोन पर सार्वभौमिक रूप से काम करने के लिए डिज़ाइन किया गया है। यह एक वेब-आधारित टूल है, इसलिए किसी विशिष्ट ऐप इंस्टॉलेशन की आवश्यकता नहीं है।",
+        faqQ3: "मुझे कितनी बार सफाई करनी चाहिए?",
+        faqA3: "इष्टतम परिणामों के लिए, विशेष रूप से महत्वपूर्ण पानी के संपर्क के बाद, सफाई चक्र को लगातार 2-3 बार चलाना आमतौर पर पर्याप्त होता है। आप पूरी तरह से सफाई सुनिश्चित करने के लिए रन के बीच आवृत्ति को थोड़ा समायोजित करने का भी प्रयास कर सकते हैं। नियमित रखरखाव के लिए, महीने में एक बार पर्याप्त हो सकता है।",
+        faqQ4: "क्या यह उपकरण मुफ़्त और सुरक्षित है?",
+        faqA4: "बिल्कुल, FixedMySpeaker.com बिना किसी छिपे शुल्क, सदस्यता या दखल देने वाले विज्ञापनों के 100% उपयोग करने के लिए स्वतंत्र है। यह सीधे आपके ब्राउज़र में संचालित होता है, यह सुनिश्चित करता है कि आपके डिवाइस से कोई डेटा एकत्र, संग्रहीत या प्रसारित न हो, जिससे यह पूरी तरह से सुरक्षित और निजी हो जाता है।",
+        faqQ5: "क्या यह भौतिक स्पीकर क्षति की मरम्मत कर सकता है?",
+        faqA5: "नहीं, यह उपकरण पानी या धूल से रुकावटों को दूर करने के लिए डिज़ाइन किया गया है। यह भौतिक हार्डवेयर क्षति की मरम्मत नहीं कर सकता है, जैसे कि फटी हुई स्पीकर झिल्ली, एक दोषपूर्ण कॉइल, या डिस्कनेक्ट किए गए तार। यदि सफाई के बाद भी आपके स्पीकर की समस्याएं बनी रहती हैं, तो हम एक पेशेवर फोन मरम्मत तकनीशियन से परामर्श करने की सलाह देते हैं।",
+        faqQ6: "सफाई से पहले अपने फोन को कैसे तैयार करें?",
+        faqA6: "सफाई प्रक्रिया शुरू करने से पहले, सुनिश्चित करें कि आपके फोन का वॉल्यूम अधिकतम पर सेट है। पानी को स्वाभाविक रूप से बाहर निकलने देने के लिए स्पीकर को नीचे की ओर इंगित करें। आप पानी के निष्कासन में सहायता के लिए फोन को नरम सतह पर धीरे से टैप कर सकते हैं या हल्के से हिला सकते हैं।",
+        faqQ7: "क्या मुझे किसी विशिष्ट आवृत्ति का उपयोग करना चाहिए?",
+        faqA7: "440 हर्ट्ज की डिफ़ॉल्ट आवृत्ति एक अच्छा प्रारंभिक बिंदु है और अक्सर प्रभावी होती है। हालाँकि, आप 100 हर्ट्ज और 1000 हर्ट्ज के बीच आवृत्ति स्लाइडर के साथ प्रयोग कर सकते हैं। विभिन्न आवृत्तियाँ विभिन्न प्रकार की रुकावटों या स्पीकर डिज़ाइनों के लिए बेहतर काम कर सकती हैं। जैसे ही आप समायोजित करते हैं ध्वनि में परिवर्तन सुनें।",
+        ratingTitle: "इस उपकरण को रेट करें",
+        ratingDescription: "आपकी प्रतिक्रिया हमें बेहतर बनाने में मदद करती है! फोन स्पीकर क्लीनर आपके लिए कितना उपयोगी था?",
+        ratingPlaceholder: "अपना अनुभव या सुझाव यहाँ साझा करें...",
+        submitFeedback: "प्रतिक्रिया जमा करें",
+        testimonialTitle: "💬 उपयोगकर्ता क्या कह रहे हैं",
+        testimonialPara: "हमारे संतुष्ट उपयोगकर्ताओं से सीधे सुनें जिन्होंने FixedMySpeaker.com का उपयोग करके अपने फोन की ऑडियो गुणवत्ता को सफलतापूर्वक बहाल किया है। उनके अनुभव हमारे ऑनलाइन स्पीकर सफाई उपकरण की प्रभावशीलता, उपयोग में आसानी और सुविधा को उजागर करते हैं। हमें गर्व है कि हमने इतने सारे लोगों को महंगी मरम्मत से बचने और एक बार फिर स्पष्ट ध्वनि का आनंद लेने में मदद की है।",
+        subscribeTitle: "📢 नवीनतम अपडेट और युक्तियों के लिए सदस्यता लें!",
+        subscribeDescription: "हमारे नवीनतम उपकरणों, सुविधाओं, विशेष प्रस्तावों और अपने फोन के स्पीकर स्वास्थ्य को बनाए रखने के लिए आवश्यक युक्तियों के साथ अद्यतित रहें। हमारे समुदाय में शामिल हों और अपने ऑडियो अनुभव को बढ़ाने वाले किसी भी अपडेट को कभी न चूकें।",
+        subscribePlaceholder: "आपका जीमेल पता",
+        subscribeBtn: "🔔 सदस्यता लें",
+        adminViewEmails: "🔐 व्यवस्थापक: ईमेल देखें",
+        footerText: "© विशाल मिश्रा २०२५ | सर्वाधिकार सुरक्षित।",
+        chatOnWhatsApp: "व्हाट्सएप पर चैट करें"
+      }
+    };
+
+    function changeLanguage(event) {
+      const lang = event.target.value;
+      const t = translations[lang];
+
+      // Helper function to set text or HTML content
+      const setContent = (id, content, isHtml = false) => {
+          const el = document.getElementById(id);
+          if (el) {
+              if (isHtml) el.innerHTML = content;
+              else el.innerText = content;
+          }
+      };
+      const setPlaceholder = (id, content) => {
+          const el = document.getElementById(id);
+          if (el) el.placeholder = content;
+      };
+
+      setContent("headerTitle", t.headerTitle);
+      setContent("headerDescription", t.headerDescription);
+      document.querySelector('label[for="languageSelect"]').innerText = t.chooseLanguage; // Label for language select
+
+      setContent("cleaningPanelTitle", t.cleaningPanelTitle);
+      setContent("freqLabelText", t.freqLabelText);
+      document.querySelector('#frequencyLabel strong').previousSibling.nodeValue = t.frequencyLabel + " "; // Text before strong
+      setContent("timerLabel", t.timerLabel.split(':')[0] + ": "); // Text before span
+      document.querySelector('.voice-assistant label[for="langSelect"]').innerText = t.assistantLanguage;
+      setContent("voiceGuideBtn", t.guideMe);
+      setContent("startBtn", t.startBtn);
+      setContent("stopBtn", t.stopBtn);
+      document.querySelector('.share-buttons p').innerText = t.shareExperience;
+
+      // How it Works Section
+      document.querySelector('#how-it-works h2').innerText = t.howItWorksTitle;
+      document.querySelector('#how-it-works p:nth-of-type(1)').innerHTML = t.howItWorksPara1; // First p
+      document.querySelector('#how-it-works p:nth-of-type(2)').innerHTML = t.howItWorksPara2; // Second p
+
+      // About Us Section
+      document.querySelector('#about-us h2').innerText = t.aboutUsTitle;
+      document.querySelector('#about-us div p').innerHTML = t.aboutUsPara;
+
+      // Features Section
+      document.querySelector('#features h2').innerText = t.featuresTitle;
+      document.querySelector('#features p:nth-of-type(1)').innerHTML = t.featuresPara1; // First p
+      const featureListItems = document.querySelectorAll('#features ul li');
+      if (featureListItems.length >= 7) {
+          featureListItems[0].innerHTML = t.feature1;
+          featureListItems[1].innerHTML = t.feature2;
+          featureListItems[2].innerHTML = t.feature3;
+          featureListItems[3].innerHTML = t.feature4;
+          featureListItems[4].innerHTML = t.feature5;
+          featureListItems[5].innerHTML = t.feature6;
+          featureListItems[6].innerHTML = t.feature7;
+      }
+      document.querySelector('#features p:nth-of-type(2)').innerHTML = t.featuresPara2; // Second p
+
+      // Terms & Conditions Section
+      document.querySelector('#terms h2').innerText = t.termsTitle;
+      document.querySelector('#terms p').innerHTML = t.termsPara;
+
+      // Privacy Policy Section
+      document.querySelector('#privacy h2').innerText = t.privacyTitle;
+      document.querySelector('#privacy p').innerHTML = t.privacyPara;
+
+      // Blogs Section
+      setContent("blogsTitle", t.blogsTitle);
+      document.querySelector('#blog-section > p').innerHTML = t.blogsPara; // Para directly under blog-section
+
+      // FAQ Section
+      setContent("faqTitle", t.faqTitle);
+      document.querySelector('#faq-section-wrapper > p').innerHTML = t.faqPara; // Para directly under faq-section-wrapper
+      setPlaceholder("faqSearch", t.faqSearchPlaceholder);
+      document.querySelector('.faq-toggle button:nth-child(1)').innerText = t.expandAll;
+      document.querySelector('.faq-toggle button:nth-child(2)').innerText = t.collapseAll;
+
+      const faqItems = document.querySelectorAll('#faqContainer .faq-item');
+      if (faqItems.length >= 7) {
+          faqItems[0].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ1;
+          faqItems[0].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA1;
+          faqItems[1].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ2;
+          faqItems[1].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA2;
+          faqItems[2].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ3;
+          faqItems[2].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA3;
+          faqItems[3].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ4;
+          faqItems[3].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA4;
+          faqItems[4].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ5;
+          faqItems[4].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA5;
+          faqItems[5].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ6;
+          faqItems[5].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA6;
+          faqItems[6].querySelector('.faq-question span[itemprop="name"]').innerText = t.faqQ7;
+          faqItems[6].querySelector('.faq-answer div[itemprop="text"]').innerText = t.faqA7;
+      }
+
+      // Rating Widget Section
+      document.querySelector('#ratingWidgetContainer h2').innerText = t.ratingTitle;
+      document.querySelector('#ratingWidgetContainer .rating-box > p').innerText = t.ratingDescription;
+      setPlaceholder("comment", t.ratingPlaceholder);
+      setContent("submitBtn", t.submitFeedback);
+
+      // Testimonial Section
+      document.querySelector('#testimonial-section .testimonial-title').innerText = t.testimonialTitle;
+      document.querySelector('#testimonial-section > p').innerHTML = t.testimonialPara;
+
+
+      // Subscribe Section
+      document.querySelector('#subscribe-section h2').innerText = t.subscribeTitle;
+      document.querySelector('#subscribe-section > p:first-of-type').innerText = t.subscribeDescription; // The p directly under h2
+      setPlaceholder("gmailInput", t.subscribePlaceholder);
+      document.querySelector('#subscribe-section button[type="submit"]').innerText = t.subscribeBtn;
+      setContent("adminViewEmailsBtn", t.adminViewEmails);
+
+      // Footer
+      document.querySelector('footer').innerText = t.footerText;
+      // Floating WhatsApp Button
+      const waButton = document.getElementById('whatsapp-fixed-btn');
+      if (waButton) {
+        // Keep the image, only change the text part
+        const textNode = Array.from(waButton.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+        if(textNode) textNode.nodeValue = " " + t.chatOnWhatsApp; // Add space for separation
+      }
+    }
+
     function shareTool() { /* ... Same shareTool function ... */ }
-    // scrollToTop is handled by its own script block now
-    // saveCleaningHistory and updateHistoryUI if needed (were in original)
 </script>
 
 <!-- Click sound source (if needed globally, or can be specific) -->
@@ -1487,7 +1916,7 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
     if(authActionBtn) authActionBtn.innerText = isSignUpForm ? 'Sign Up' : 'Sign In';
     if(toggleAuthLink) toggleAuthLink.innerText = isSignUpForm ? 'Already have an account? Sign In' : "Don't have an account? Sign Up";
   }
-  
+
   if (toggleAuthLink) {
     toggleAuthLink.addEventListener('click', () => {
         isSignUpForm = !isSignUpForm;
@@ -1521,7 +1950,7 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
         }
     });
   }
-  
+
   // Make functions available globally for onclick attributes from HTML
   window.logoutUser = async () => { // Renamed from logout
     try { await signOut(auth); /* location.reload(); // Reload can be disruptive */ }
@@ -1529,7 +1958,7 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
   };
 
   window.triggerProfileUpload = () => { if(uploadProfileInputEl) uploadProfileInputEl.click(); };
-  
+
   window.sendVerificationEmail = async () => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
       try { await sendEmailVerification(auth.currentUser); alert("Verification email sent."); }
@@ -1665,18 +2094,15 @@ body.dark-mode #subscribe-section #adminViewEmailsBtn {
            setTheme(event.matches ? 'dark' : 'light');
        }
    });
-   
+
    // Ensure all animations get triggered after load
    window.addEventListener('load', () => {
       document.getElementById('loader').style.display = 'none';
       document.querySelectorAll('.animate').forEach((element, index) => {
         setTimeout(() => {
-          element.classList.add('visible');
-        }, index * 200); // Slightly faster animation stagger
+          element.classList.add('visible'); // Add a class to trigger CSS animation/transition
+        }, index * 150); // Stagger animation start
       });
-      // Initialize theme one last time after all DOM is surely ready
-      // setTheme(localStorage.getItem('themePreference') || (prefersDarkScheme.matches ? 'dark' : 'light'));
-      // The initial setTheme calls should cover this.
     });
 </script>
 
