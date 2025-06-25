@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/png" href="images/favicon.png.png">
+  <link rel="icon" type="image/png" href="images/favicon.png.png"> <!-- Make sure this path is correct or use an absolute URL if hosted elsewhere -->
   <title>Fix My Speakers - Eject water from your phone's speakers</title>
   <!-- SEO Meta Tags -->
   <meta name="description" content="A free online tool that cleans your phone's speaker by playing a specific sound frequency. This sound wave ejects water and removes dust, fixing muffled audio on both Android and iPhone devices.">
@@ -14,7 +14,7 @@
   <!-- Open Graph (Facebook/LinkedIn) -->
   <meta property="og:title" content="Fix My Speaker | Online Water & Dust Remover Tool">
   <meta property="og:description" content="Use this free online tool to remove water and dust from your phone's speaker using a specially designed sound wave. It's 100% free, safe, and works on all devices.">
-  <meta property="og:image" content="https://fixedmyspeaker.com/images/speaker-cleaner-preview.jpg">
+  <meta property="og:image" content="https://fixedmyspeaker.com/images/speaker-cleaner-preview.jpg"> <!-- Make sure this image exists and is accessible -->
   <meta property="og:url" content="https://fixedmyspeaker.com/">
   <meta property="og:type" content="website">
 
@@ -22,11 +22,13 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Fix My Speaker | The Ultimate Speaker Cleaner Tool">
   <meta name="twitter:description" content="Eject water and dust from your speaker using our proven high-frequency sound method. Fast, safe, and completely online.">
-  <meta name="twitter:image" content="https://fixedmyspeaker.com/images/speaker-cleaner-preview.jpg">
-  
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3010913100191778"
+  <meta name="twitter:image" content="https://fixedmyspeaker.com/images/speaker-cleaner-preview.jpg"> <!-- Make sure this image exists and is accessible -->
+
+  <!-- IMPORTANT: Replace with YOUR AdSense Publisher ID -->
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3010913100191778"
      crossorigin="anonymous"></script>
-  
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -168,7 +170,7 @@
       padding-top: 60px; /* Space for the fixed nav bar */
     }
 
-    /* --- ADDED: Sticky Navigation Bar --- */
+    /* --- Sticky Navigation Bar --- */
     nav {
         position: fixed;
         top: 0;
@@ -210,9 +212,10 @@
         color: var(--primary-text);
         background-color: var(--primary);
     }
-    .nav-toggle, .nav-theme-switch {
+    .nav-toggle { /* Container for theme switch and hamburger */
         display: flex;
         align-items: center;
+        gap: 15px; /* Space between theme switch and hamburger */
     }
     .hamburger {
         display: none; /* Hidden on desktop */
@@ -221,6 +224,8 @@
         border: none;
         font-size: 2rem;
         color: var(--current-text);
+        padding: 0; /* ensure no extra padding */
+        line-height: 1; /* ensure it's vertically centered better */
     }
 
     header {
@@ -260,16 +265,16 @@
       opacity: 0;
       transform: translateY(25px);
       animation: fadeInUp 0.7s forwards ease-out;
-      animation-delay: 0.2s;
+      /* animation-delay: 0.2s; /* Handled by JS for staggered animation */
     }
 
     body.dark-mode section {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
-    #blog-section, #testimonial-section, #ratingWidgetContainer { /* Transparent background sections */
+    #blog-section, #testimonial-section { /* Transparent background sections */
         background: transparent;
         box-shadow: none;
-        padding-left: 0;
+        padding-left: 0; /* Let inner content manage padding if needed */
         padding-right: 0;
     }
 
@@ -279,26 +284,32 @@
         margin-bottom: 1rem;
         font-weight: 600;
     }
-    section > h2 {
+    section > h2 { /* Targeting h2 direct child of section for section titles */
         margin-bottom: 1.5rem;
         font-size: 2rem;
         text-align: center;
         padding-bottom: 0.75rem;
         border-bottom: 2px solid var(--primary);
-        display: block;
-        width: fit-content;
+        display: block; /* To allow margin auto to work for centering */
+        width: fit-content; /* So border only spans text */
         margin-left: auto;
         margin-right: auto;
     }
 
+    /* Specific title styling for sections with transparent backgrounds */
+    #blog-section > h2, #testimonial-section > h2 {
+        /* If they need different styling, add here. Otherwise, they inherit above. */
+    }
+
+
     p, li {
         font-size: 1.05rem;
-        color: var(--current-text);
+        color: var(--current-text); /* Ensure p and li inherit text color correctly */
         margin-bottom: 1rem;
     }
     ul { padding-left: 1.5rem; }
     li { margin-bottom: 0.5rem; }
-    strong { color: var(--current-text); font-weight: 600; }
+    strong { color: var(--current-text); font-weight: 600; } /* Ensure strong inherits correctly */
     a { color: var(--current-link-color); text-decoration: none; transition: color 0.2s, text-decoration 0.2s; }
     a:hover { text-decoration: underline; color: var(--primary); }
 
@@ -390,8 +401,9 @@
             width: 100%; flex-direction: column;
             background-color: var(--current-nav-bg);
             padding: 20px; gap: 15px;
-            transform: translateY(-120%);
+            transform: translateY(-120%); /* Start off-screen */
             transition: transform 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow when open */
         }
         .nav-links.active {
             transform: translateY(0);
@@ -400,13 +412,17 @@
             display: block;
         }
         header h1 { font-size: 2rem; } header p { font-size: 1rem; }
-        section { padding: 1.25rem; } section > h2 { font-size: 1.6rem; }
+        section { padding: 1.5rem; /* Adjusted padding for sections on mobile */ } 
+        section > h2 { font-size: 1.6rem; }
         p, li { font-size: 0.95rem; }
+        /* .nav-toggle is already flex, so hamburger should align with theme switch */
     }
     @media (max-width: 600px) {
       header h1 { font-size: 1.8rem; } header p { font-size: 0.9rem; }
       .btn { display: block; width: 100%; margin: 8px 0; }
-      section { padding: 1rem; } h2 { font-size: 1.5rem; } p, li { font-size: 0.9rem; }
+      section { padding: 1.25rem; } /* Further adjust padding for smaller screens */
+      section > h2 { font-size: 1.5rem; } 
+      p, li { font-size: 0.9rem; }
       #whatsapp-fixed-btn { bottom: 15px; left: 15px; width: 50px; height: 50px; }
       #whatsapp-fixed-btn img { width: 26px; height: 26px; }
       #scrollTopBtn { width: 42px; height: 42px; bottom: 15px; right: 15px; }
@@ -415,23 +431,22 @@
 
   </style>
 </head>
-<body class="">
+<body class=""> <!-- Add 'animate-sections' class if you want to control animation via a body class -->
 
   <div id="loader">Loading Tool...</div>
 
-  <!-- ADDED: Sticky Navigation Bar -->
   <nav id="navbar">
     <div class="nav-logo">
       <a href="#">FixMySpeaker</a>
     </div>
-    <div class="nav-toggle">
+    <div class="nav-toggle"> <!-- Grouping theme switch and hamburger -->
         <div class="theme-switch-wrapper">
             <label class="theme-switch" for="darkModeToggleCheckbox">
                 <input type="checkbox" id="darkModeToggleCheckbox" aria-label="Toggle dark mode">
                 <span class="slider round"></span>
             </label>
         </div>
-        <button class="hamburger" id="hamburger">☰</button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
     </div>
     <ul class="nav-links" id="nav-links">
       <li><a href="#tool" class="active">Tool</a></li>
@@ -525,27 +540,30 @@
       </ul>
     </section>
     
-    <section class="animate" id="blog-section">
-      <h2 id="blogsTitle" style="font-size: 2rem; margin-bottom: 1.5rem;">📰 Our Blog & Guides</h2>
-      <p style="font-size: 1.1rem; line-height: 1.75; text-align: justify; margin-bottom: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <section id="blog-section">
+      <h2 id="blogsTitle">📰 Our Blog & Guides</h2>
+      <p style="font-size: 1.1rem; line-height: 1.75; text-align: justify; margin-bottom: 2rem; max-width: 900px; margin-left: auto; margin-right: auto; padding: 0 1.25rem;">
           Dive into our articles, tips, and updates related to speaker maintenance and audio technology. Our blog covers the science behind sound wave cleaning, practical advice on preventing speaker damage, and guides for getting the most out of your devices.
       </p>
       <div id="blogContainer" style="max-width: 900px; margin-left: auto; margin-right: auto;"></div>
     </section>
 
     <style>
-       #blog-section > p { padding: 0 1.25rem; }
+       /* #blog-section > p { padding: 0 1.25rem; } /* Moved padding to inline style above for specificity */
        .blog-item {
         background: var(--current-card-bg); margin-bottom: 1.5rem; padding: 1.25rem;
         border-left: 5px solid var(--primary); border-radius: 10px;
         box-shadow: 0 3px 10px rgba(0,0,0,0.07);
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        opacity: 0; /* Initial state for animation */
+        transform: translateY(20px); /* Initial state for animation */
       }
-      .blog-item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+      .blog-item:hover { transform: translateY(-3px) !important; box-shadow: 0 5px 15px rgba(0,0,0,0.1); } /* Add !important to override JS animation if needed during hover */
       body.dark-mode .blog-item { box-shadow: 0 3px 12px rgba(0,0,0,0.25); }
       body.dark-mode .blog-item:hover { box-shadow: 0 5px 18px rgba(0,0,0,0.3); }
       .blog-item h3 { margin-bottom: 0.5rem; font-size: 1.3rem; color: var(--current-link-color); font-weight: 600; }
-      .blog-item h3:hover { color: var(--primary); }
+      .blog-item h3 a { text-decoration: none; color: inherit; } 
+      .blog-item h3 a:hover { color: var(--primary); }
       .blog-item p { margin: 0.5rem 0; font-size: 1rem; color: var(--current-text-muted); }
       .read-more { display: inline-block; margin-top: 0.6rem; text-decoration: none; color: var(--primary); font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: color 0.2s; }
       .read-more:hover { color: var(--current-link-color); text-decoration: underline; }
@@ -582,11 +600,11 @@
       if (blogContainer) {
           blogs.forEach((blog, index) => {
               const blogItem = document.createElement('article');
-              blogItem.className = 'blog-item';
+              blogItem.className = 'blog-item'; // JS will animate this later
               blogItem.setAttribute('itemscope', '');
               blogItem.setAttribute('itemtype', 'http://schema.org/BlogPosting');
               blogItem.innerHTML = `
-              <h3 itemprop="headline"><a href="#blog-full-${index}" onclick="toggleBlogDetails(event, ${index})" style="text-decoration:none; color:inherit;">${blog.title}</a></h3>
+              <h3 itemprop="headline"><a href="#blog-full-${index}" onclick="toggleBlogDetails(event, ${index})">${blog.title}</a></h3>
               <p itemprop="description">${blog.summary}</p>
               <p style="font-size:0.85rem;"><small>By <strong itemprop="author">${blog.author}</strong> • <time itemprop="datePublished" datetime="${new Date(blog.date).toISOString().split('T')[0]}">${blog.date}</time></small></p>
               <a class="read-more" href="#blog-full-${index}" onclick="toggleBlogDetails(event, ${index})">Read more →</a>
@@ -610,12 +628,12 @@
       }
     </script>
     
-    <section class="animate" itemscope itemtype="https://schema.org/FAQPage" id="faq-section-wrapper">
+    <section class="animate-section" itemscope itemtype="https://schema.org/FAQPage" id="faq-section-wrapper"> <!-- Added animate-section for JS hook -->
       <h2 id="faqTitle">Frequently Asked Questions (FAQ) 🤔</h2>
-      <p style="font-size: 1.1rem; line-height: 1.75; text-align: justify; margin-bottom: 2rem;">
+      <p style="font-size: 1.1rem; line-height: 1.75; text-align: justify; margin-bottom: 2rem; padding: 0 1.25rem;">
         Have questions about how FixedMySpeaker.com works, its compatibility, or best practices? We've compiled a list of the most frequently asked questions to provide you with quick and clear answers.
       </p>
-      <div class="faq-container" id="faqContainer">
+      <div class="faq-container" id="faqContainer" style="padding: 0 1.25rem;"> <!-- Added padding to container for mobile -->
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <div class="faq-question"><span itemprop="name">Is this tool safe for my phone's speaker?</span><span class="faq-arrow">▼</span></div>
           <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><div itemprop="text">Yes. The sound frequencies used are within the safe operating range for modern smartphone speakers. The process is designed for short durations, which is not long enough to cause damage. It's a much safer alternative to using physical objects like pins or compressed air, which can permanently damage the delicate speaker components.</div></div>
@@ -635,6 +653,9 @@
       </div>
     </section>
     <style>
+      #faq-section-wrapper { /* Ensure this section also gets animated if it has .animate-section */
+        opacity: 0; transform: translateY(20px);
+      }
       .faq-item { margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); overflow: hidden; background: var(--current-card-bg); border-left: 5px solid var(--primary); }
       body.dark-mode .faq-item { box-shadow: 0 3px 12px rgba(0,0,0,0.25); }
       .faq-question { background: var(--current-faq-question-bg); padding: 1.1rem 1.35rem; font-size: 1.1rem; font-weight: 600; cursor: pointer; position: relative; transition: background-color 0.2s ease; display: flex; justify-content: space-between; align-items: center; color: var(--current-text); }
@@ -656,15 +677,18 @@
                 arrow.textContent = faqItem.classList.contains('active') ? '▲' : '▼';
             }
           });
+          // Set initial arrow state
           const arrow = question.querySelector('.faq-arrow');
-          if (arrow) { arrow.textContent = question.parentElement.classList.contains('active') ? '▲' : '▼'; }
+          if (arrow && question.parentElement) { // Added null check for parentElement
+             arrow.textContent = question.parentElement.classList.contains('active') ? '▲' : '▼';
+          }
         });
       });
     </script>
     
-    <section id="testimonial-section" class="animate">
-      <h2 class="testimonial-title" style="font-size: 2rem; margin-bottom: 1.5rem; text-align:center;">💬 What Users Are Saying</h2>
-      <div class="testimonial-carousel">
+    <section id="testimonial-section"> <!-- This section has its own transparent bg style -->
+      <h2 class="testimonial-title">💬 What Users Are Saying</h2>
+      <div class="testimonial-carousel" style="max-width:800px; margin:auto; overflow:hidden; background:var(--current-card-bg); border-radius:12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); padding: 2rem 1.5rem;">
         <div class="testimonial-slide active">
           <img class="testimonial-img" src="https://i.postimg.cc/y86Ct8qy/Untitled-design.png" alt="User photo: Alex Johnson" />
           <p class="testimonial-text">“My iPhone 13’s speaker was completely muffled after getting caught in the rain. I was skeptical, but this tool actually worked. I saw little water droplets vibrate out of the speaker grill. Sound is back to being crystal clear. A total lifesaver!”</p>
@@ -688,11 +712,11 @@
       </div>
     </section>
     <style>
-      #testimonial-section { background: transparent !important; box-shadow: none !important; padding: 2.5rem 0 !important; text-align: center; }
-      .testimonial-carousel { position:relative; max-width:800px; margin:auto; overflow:hidden; background:var(--current-card-bg); border-radius:12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); padding: 2rem 1.5rem; }
+      /* #testimonial-section { background: transparent !important; box-shadow: none !important; padding: 2.5rem 0 !important; text-align: center; } /* Base style set in main CSS */
+      /* .testimonial-carousel is styled inline for now, but could be moved here */
       body.dark-mode .testimonial-carousel { box-shadow: 0 5px 25px rgba(0,0,0,0.3); }
-      .testimonial-slide { display:none; text-align:center; animation:fadeSlideIn 0.5s ease-in-out; }
-      .testimonial-slide.active { display:block; }
+      .testimonial-slide { display:none; text-align:center; animation:fadeSlideIn 0.5s ease-in-out; opacity: 0; transform: translateY(20px); }
+      .testimonial-slide.active { display:block; opacity: 1; transform: translateY(0); }
       .testimonial-img { width:100px; height:100px; object-fit:cover; border-radius:50%; margin-bottom:1.25rem; box-shadow:0 2px 10px rgba(0,0,0,0.15); border: 3px solid var(--primary); }
       .testimonial-text { font-size:1.1rem; font-style:italic; color:var(--current-text); margin:1rem 0 1.5rem; line-height: 1.7; }
       .testimonial-name { font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:0.3rem; }
@@ -704,26 +728,45 @@
     </style>
     <script>
       let currentSlideIdx = 0;
-      const testimonialSlides = document.querySelectorAll('#testimonial-section .testimonial-slide');
-      const testimonialDots = document.querySelectorAll('#testimonial-section .testimonial-dot');
+      let testimonialSlides = []; // Initialize as empty array
+      let testimonialDots = [];   // Initialize as empty array
       let testimonialSlideInterval;
+
       function changeSlide(index) {
-        if (!testimonialSlides.length) return;
+        if (!testimonialSlides.length || !testimonialDots.length || !testimonialSlides[currentSlideIdx] || !testimonialDots[currentSlideIdx]) return; 
         testimonialSlides[currentSlideIdx].classList.remove('active');
         testimonialDots[currentSlideIdx].classList.remove('active');
         currentSlideIdx = (index + testimonialSlides.length) % testimonialSlides.length;
-        testimonialSlides[currentSlideIdx].classList.add('active');
-        testimonialDots[currentSlideIdx].classList.add('active');
+        if (testimonialSlides[currentSlideIdx] && testimonialDots[currentSlideIdx]) { // Check again before adding class
+            testimonialSlides[currentSlideIdx].classList.add('active');
+            testimonialDots[currentSlideIdx].classList.add('active');
+        }
       }
       function nextTestimonialSlide() { changeSlide(currentSlideIdx + 1); }
-      function startSlider() { testimonialSlideInterval = setInterval(nextTestimonialSlide, 6000); }
-      function pauseSlider() { clearInterval(testimonialSlideInterval); }
-      document.addEventListener('DOMContentLoaded', startSlider);
-      const carouselEl = document.querySelector('#testimonial-section .testimonial-carousel');
-      if(carouselEl) {
-        carouselEl.addEventListener('mouseover', pauseSlider);
-        carouselEl.addEventListener('mouseout', startSlider);
+      function startSlider() { 
+          if (testimonialSlides.length > 0) { 
+            testimonialSlideInterval = setInterval(nextTestimonialSlide, 6000); 
+          }
       }
+      function pauseSlider() { clearInterval(testimonialSlideInterval); }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        testimonialSlides = document.querySelectorAll('#testimonial-section .testimonial-slide'); // Populate after DOM ready
+        testimonialDots = document.querySelectorAll('#testimonial-section .testimonial-dot');   // Populate after DOM ready
+
+        if (testimonialSlides.length > 0 && testimonialDots.length > 0) { 
+             if (testimonialSlides[0] && testimonialDots[0]) { // Check if first elements exist
+                testimonialSlides[0].classList.add('active');
+                testimonialDots[0].classList.add('active');
+             }
+        }
+        startSlider(); 
+        const carouselEl = document.querySelector('#testimonial-section .testimonial-carousel');
+        if(carouselEl) {
+          carouselEl.addEventListener('mouseover', pauseSlider);
+          carouselEl.addEventListener('mouseout', startSlider);
+        }
+      });
     </script>
     
     <section id="about-us">
@@ -765,12 +808,6 @@
       </p>
     </section>
 
-    <!-- REMOVED: Related Searches Section -->
-    
-    <!-- REMOVED: User Rating/Feedback Widget to simplify -->
-    
-    <!-- REMOVED: Subscription Section to simplify -->
-
     <footer>© Bishal Mishra 2024  | All rights reserved. <br> <a href="https://fixedmyspeaker.com" style="color: var(--current-footer-text); text-decoration: underline;">FixedMySpeaker.com</a> ❤️</footer>
 
     <a href="https://wa.me/+9779827801575" target="_blank" id="whatsapp-fixed-btn"
@@ -779,7 +816,7 @@
              alt="WhatsApp icon" style="width: 32px; height: 32px;" />
     </a>
     
-    <button id="scrollTopBtn" aria-label="Scroll to Top" title="Scroll to Top" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 9998; background: transparent; border: none; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: opacity 0.3s, transform 0.3s;">
+    <button id="scrollTopBtn" aria-label="Scroll to Top" title="Scroll to Top" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 9998; background: transparent; border: none; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: opacity 0.3s, transform 0.3s, display 0.3s;">
       <svg width="52" height="52" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="45" stroke="var(--current-border)" stroke-width="8" fill="var(--current-card-bg)" />
         <circle id="progressCircle" cx="50" cy="50" r="45" stroke="var(--primary)" stroke-width="8" fill="none"
@@ -834,7 +871,7 @@
         }
 
         function startCleaning() {
-          stopSound();
+          stopSound(); 
           const freqSlider = document.getElementById('freqSlider');
           if (!freqSlider) return;
           const freq = parseInt(freqSlider.value);
@@ -846,29 +883,31 @@
             analyserNode.fftSize = 2048;
             oscillator.type = 'square';
             oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gainNode.gain.setValueAtTime(0.7, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.7, audioCtx.currentTime); 
             oscillator.connect(gainNode);
             gainNode.connect(analyserNode);
             analyserNode.connect(audioCtx.destination);
             oscillator.start();
             playClickSound();
-            if (visualizerCanvasCtx) drawVisualizer();
-            currentCountdown = 30;
+            if (visualizerCanvasCtx) drawVisualizer(); 
+            
+            currentCountdown = 30; 
             const countdownDisplay = document.getElementById('countdown');
             if (countdownDisplay) countdownDisplay.textContent = currentCountdown;
-            clearInterval(countdownIntervalGlobal);
+            
+            clearInterval(countdownIntervalGlobal); 
             countdownIntervalGlobal = setInterval(() => {
               currentCountdown--;
               if (countdownDisplay) countdownDisplay.textContent = currentCountdown;
               if (currentCountdown <= 0) {
                 stopSound();
                 if (countdownDisplay) countdownDisplay.textContent = "Done!";
-                setTimeout(() => { if (countdownDisplay) countdownDisplay.textContent = "30";}, 2000);
+                setTimeout(() => { if (countdownDisplay) countdownDisplay.textContent = "30";}, 2000); 
               }
             }, 1000);
           } catch (e) {
             console.error("Error starting audio: ", e);
-            alert("Could not start audio. Please check your browser permissions.");
+            alert("Could not start audio. Please check your browser permissions or try a different browser.");
           }
         }
 
@@ -877,23 +916,37 @@
           if (oscillator) { try { oscillator.stop(); } catch (e) {} oscillator.disconnect(); oscillator = null; }
           if (gainNode) { gainNode.disconnect(); gainNode = null; }
           if (analyserNode) { analyserNode.disconnect(); analyserNode = null; }
-          if (audioCtx && audioCtx.state !== 'closed') { audioCtx.close().catch(e => {}); audioCtx = null; }
+          if (audioCtx && audioCtx.state !== 'closed') { 
+            audioCtx.close().catch(e => {console.warn("AudioContext close error:", e)}); 
+            audioCtx = null; 
+          }
           clearInterval(countdownIntervalGlobal);
           const countdownDisplay = document.getElementById('countdown');
-          if (currentCountdown > 0 && countdownDisplay) { countdownDisplay.textContent = "0"; }
-          if (visualizerCanvasCtx) { visualizerCanvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height); }
+          if (currentCountdown > 0 && countdownDisplay && countdownDisplay.textContent !== "Done!" && countdownDisplay.textContent !== "30") {
+             countdownDisplay.textContent = "0"; 
+          }
+          if (visualizerCanvasCtx) { 
+              visualizerCanvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+              visualizerCanvasCtx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--current-viz-bg').trim();
+              visualizerCanvasCtx.fillRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+          }
         }
 
         function updateFrequencyLabel() {
             const freqSlider = document.getElementById('freqSlider');
             const freqLabel = document.getElementById('freqLabel');
             if (freqSlider && freqLabel) { freqLabel.textContent = freqSlider.value; }
-            if (oscillator && audioCtx) { oscillator.frequency.setValueAtTime(parseInt(freqSlider.value), audioCtx.currentTime); }
+            if (oscillator && audioCtx && audioCtx.state === 'running') { 
+                oscillator.frequency.setValueAtTime(parseInt(freqSlider.value), audioCtx.currentTime); 
+            }
         }
 
         function playClickSound() {
           const clickAudio = document.getElementById("clickSound");
-          if (clickAudio) { clickAudio.currentTime = 0; clickAudio.play().catch(error => {}); }
+          if (clickAudio) { 
+            clickAudio.currentTime = 0; 
+            clickAudio.play().catch(error => { /* Ignore autoplay block for minor sound */ }); 
+          }
         }
 
         // --- UI Control Scripts ---
@@ -903,29 +956,47 @@
               loader.style.opacity = '0';
               setTimeout(() => { loader.style.display = 'none'; }, 300);
             }
-            document.querySelectorAll('section.animate, .blog-item.animate, #testimonial-section.animate').forEach((element, index) => {
-              setTimeout(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-              }, index * 120);
+            
+            // Staggered animation for sections and blog items
+            const animatedElements = document.querySelectorAll('section, .blog-item, #testimonial-section > .testimonial-carousel, #faq-section-wrapper');
+            animatedElements.forEach((element, index) => {
+                // Ensure section itself has the base opacity/transform if it's not a blog-item
+                if (!element.classList.contains('blog-item')) { // blog-items have their own style rule
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                }
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 120 + 200); // Add base delay (200ms) + stagger
             });
+
 
             // Scroll-to-Top Button
             const scrollBtn = document.getElementById("scrollTopBtn");
             const progressCircle = document.getElementById("progressCircle");
             if (scrollBtn && progressCircle) {
-                const circumference = 2 * Math.PI * 45;
+                const circumference = 2 * Math.PI * 45; 
                 progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+                progressCircle.style.strokeDashoffset = circumference; 
+
                 const updateScrollProgress = () => {
-                    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                     const percentScrolled = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+                    
                     progressCircle.style.strokeDashoffset = circumference * (1 - percentScrolled);
-                    scrollBtn.style.display = scrollTop > 200 ? "block" : "none";
+                    if (scrollTop > 200) {
+                        scrollBtn.style.display = "block";
+                        setTimeout(() => scrollBtn.style.opacity = "1", 10); // Fade in
+                    } else {
+                        scrollBtn.style.opacity = "0";
+                        setTimeout(() => scrollBtn.style.display = "none", 300); // Fade out then hide
+                    }
                 };
                 scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
                 window.addEventListener("scroll", updateScrollProgress, { passive: true });
-                updateScrollProgress();
+                updateScrollProgress(); 
             }
             
             // Hamburger Menu Toggle
@@ -934,30 +1005,67 @@
             if (hamburger && navLinks) {
                 hamburger.addEventListener('click', () => {
                     navLinks.classList.toggle('active');
+                    hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active').toString());
                 });
                 document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', () => navLinks.classList.remove('active'));
+                    link.addEventListener('click', () => {
+                         navLinks.classList.remove('active');
+                         hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+                document.addEventListener('click', (event) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                        navLinks.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
                 });
             }
             
             // Active Nav Link on Scroll
-            const sections = document.querySelectorAll('section[id]');
-            const navLi = document.querySelectorAll('nav .nav-links a');
+            const sectionsForNav = document.querySelectorAll('main > section[id]'); 
+            const navLiAnchors = document.querySelectorAll('nav .nav-links a');
             window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
+                let currentSectionId = '';
+                let minDistance = Infinity;
+
+                sectionsForNav.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 100) { // a bit of offset
-                        current = section.getAttribute('id');
+                    const distance = Math.abs(pageYOffset - (sectionTop - 70)); // 70px offset for nav
+
+                    if (pageYOffset >= sectionTop - 75 && pageYOffset < sectionTop + section.offsetHeight - 75) {
+                         currentSectionId = section.getAttribute('id');
+                         // If we are directly within a section, prioritize it.
+                         minDistance = 0; // effectively prioritize this
+                    } else if (minDistance !== 0 && distance < minDistance) { 
+                        // For sections not directly in view, find the closest one
+                        // This helps highlight the "next" section when scrolling past a short one quickly
+                        // but only if we are not already perfectly inside another one.
+                        minDistance = distance;
+                        if (!currentSectionId) currentSectionId = section.getAttribute('id'); // Tentatively set
                     }
                 });
-                navLi.forEach(a => {
+                
+                // If after checking all, we are still not "inside" a section but found a "closest", use it
+                // Or if we are at the top, default to 'tool'
+                if (!currentSectionId && minDistance === Infinity && pageYOffset < sectionsForNav[0].offsetTop - 75) {
+                    currentSectionId = 'tool';
+                }
+
+
+                navLiAnchors.forEach(a => {
                     a.classList.remove('active');
-                    if (a.getAttribute('href') == '#' + current) {
+                    if (a.getAttribute('href') === '#' + currentSectionId) {
                         a.classList.add('active');
                     }
                 });
-            });
+                
+                // Fallback for very top of page or if no section is matched
+                if (!document.querySelector('nav .nav-links a.active') && navLiAnchors.length > 0) {
+                     const toolLink = document.querySelector('nav .nav-links a[href="#tool"]');
+                     if (toolLink) toolLink.classList.add('active');
+                }
+
+            }, { passive: true });
 
             // Dark/Light Mode Toggle
             const darkModeToggle = document.getElementById('darkModeToggleCheckbox');
@@ -984,11 +1092,14 @@
                 });
             }
 
-            prefersDarkScheme.addEventListener('change', (event) => {
-               if (!localStorage.getItem('themePreference_fixedmyspeaker')) {
+            prefersDarkScheme.addEventListener('change', (event) => { 
+               if (!localStorage.getItem('themePreference_fixedmyspeaker')) { 
                    setTheme(event.matches ? 'dark' : 'light');
                }
             });
+
+            updateFrequencyLabel(); // Initial frequency label update
+            document.querySelector('nav .nav-links a[href="#tool"]')?.classList.add('active'); // Ensure tool is active on load
         });
     </script>
 
