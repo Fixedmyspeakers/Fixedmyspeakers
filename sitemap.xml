@@ -1,37 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-https://fixedmyspeaker.com/sitemap.xml
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://fixedmyspeaker.com/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <lastmod>2025-01-01T12:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-</urlset>
-
-
-  <!-- FAQ Section -->
-  <url>
-    <loc>https://fixedmyspeaker.com/#faq-section</loc>
-    <lastmod>2024-05-15</lastmod>
-    <priority>0.80</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
-  <!-- Blog Section (if included on same page) -->
-  <url>
-    <loc>https://fixedmyspeaker.com/#blog</loc>
-    <lastmod>2024-05-15</lastmod>
-    <priority>0.70</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
-  <!-- Hindi Version -->
-  <url>
-    <loc>https://fixedmyspeaker.com/?lang=hi</loc>
-    <lastmod>2024-05-15</lastmod>
-    <priority>0.70</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
 </urlset>
